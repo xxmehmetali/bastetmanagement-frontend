@@ -1,6 +1,7 @@
 import { Project } from "./Project";
+import { Model } from "../Model";
 
-export interface Corporation {
+export interface Corporation extends Model {
   id: string;
   name: string;
   description: string;

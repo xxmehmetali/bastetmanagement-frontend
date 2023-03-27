@@ -1,4 +1,6 @@
-export interface MeetingPlatform {
+import { Model } from "../Model";
+
+export interface MeetingPlatform extends Model {
   id: string;
   name: string;
   description: string;

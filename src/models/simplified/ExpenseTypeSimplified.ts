@@ -1,7 +1,7 @@
-export interface User {
-    id: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-  }
-  
+import { Model } from "../Model";
+
+export interface ExpenseTypeSimplified extends Model {
+  id: string;
+  name: string;
+  description: string;
+}

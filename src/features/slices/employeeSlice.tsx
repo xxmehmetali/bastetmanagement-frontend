@@ -1,7 +1,7 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import { PagedDataResult } from "../../results/PagedDataResult";
-import { apiSlice } from "../api/apiSlice";
+import { employeeApi } from "../api/employeeApi";
 
 const initialState = {
     loading: false,

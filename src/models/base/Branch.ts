@@ -1,7 +1,8 @@
 import { Corporation } from "./Corporation";
 import { Employee } from "./Employee";
+import { Model } from "../Model";
 
-export interface Branch {
+export interface Branch extends Model {
   id: string;
   name: string;
   description: string;

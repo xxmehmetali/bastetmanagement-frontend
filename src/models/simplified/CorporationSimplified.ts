@@ -1,7 +1,9 @@
-export interface User {
-    id: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-  }
-  
+import { Model } from "../Model";
+
+export interface CorparationSimplified extends Model {
+  id: string;
+  name: string;
+  description: string;
+  taxNumber: string;
+  foundationDate: string;
+}

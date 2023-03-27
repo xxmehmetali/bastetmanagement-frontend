@@ -1,4 +1,6 @@
-export interface Occupation {
+import { Model } from "../Model";
+
+export interface Occupation extends Model {
   id: string;
   occupation: string;
   detail: string;

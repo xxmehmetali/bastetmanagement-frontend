@@ -1,9 +1,10 @@
 import { Priority } from "../enums/Priority";
 import { TaskStatus } from "../enums/TaskStatus";
+import { Model } from "../Model";
 import { Context } from "./Context";
 import { Employee } from "./Employee";
 
-export interface Task {
+export interface Task extends Model {
   id: string;
   name: string;
   description: string;

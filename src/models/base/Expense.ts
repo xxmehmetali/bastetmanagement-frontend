@@ -1,7 +1,8 @@
+import { Model } from "../Model";
 import { Employee } from "./Employee";
 import { ExpenseType } from "./ExpenseType";
 
-export interface Expense {
+export interface Expense extends Model {
   id: string;
   name: string;
   description: string;

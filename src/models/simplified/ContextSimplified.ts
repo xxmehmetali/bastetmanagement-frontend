@@ -1,7 +1,8 @@
-export interface User {
+import { Model } from "../Model";
+
+export interface ContextSimplified extends Model {
     id: number;
-    firstName: string;
-    lastName: string;
-    email: string;
+    name: string;
+    description: string;
   }
   

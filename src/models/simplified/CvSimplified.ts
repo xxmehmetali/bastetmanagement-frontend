@@ -1,7 +1,7 @@
-export interface User {
-    id: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-  }
-  
+import { Model } from "../Model";
+
+export interface CvSimplified extends Model {
+  id: string;
+  cvFile: string;
+  CvKeywords: string;
+}
