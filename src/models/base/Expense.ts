@@ -10,4 +10,6 @@ export interface Expense extends Model {
   vaucherNo: number;
   expenseType: ExpenseType;
   spentDateTime: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }

@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { applicantApi } from "../features/api/applicantApi";
 import { applicantMeetingApi } from "../features/api/applicantMeetingApi";
 import { branchApi } from "../features/api/branchApi";
@@ -18,6 +18,13 @@ import { projectApi } from "../features/api/projectApi";
 import { socialActivityApi } from "../features/api/socialActivityApi";
 import { socialActivityTypeApi } from "../features/api/socialActivityTypeApi";
 import { taskApi } from "../features/api/taskApi";
+import { pageDetailSlice } from "../features/slices/pageDetailSlice";
+import { userApi } from "../features/api/userApi";
+
+// const reducer = combineReducers({
+//     pageDetailSlice.reducers
+//   })
+  
 
 export const store = configureStore({
     reducer: {
@@ -40,7 +47,14 @@ export const store = configureStore({
         [socialActivityApi.reducerPath] : socialActivityApi.reducer,
         [socialActivityTypeApi.reducerPath] : socialActivityTypeApi.reducer,
         [taskApi.reducerPath] : taskApi.reducer,
+        [userApi.reducerPath] : userApi.reducer,
+        // pageDetailSlice
     },
     middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(applicantApi.middleware, applicantMeetingApi.middleware, branchApi.middleware, contextApi.middleware, corporationApi.middleware, currencyApi.middleware, cvApi.middleware, dayoffApi.middleware, departmentApi.middleware, employeeApi.middleware, expenseApi.middleware, expenseTypeApi.middleware, meetingApi.middleware, meetingplatformApi.middleware, occupationApi.middleware, projectApi.middleware, socialActivityApi.middleware, socialActivityTypeApi.middleware, taskApi.middleware),
+    getDefaultMiddleware().concat(applicantApi.middleware, applicantMeetingApi.middleware, branchApi.middleware, contextApi.middleware, corporationApi.middleware, currencyApi.middleware, cvApi.middleware, dayoffApi.middleware, departmentApi.middleware, employeeApi.middleware, expenseApi.middleware, expenseTypeApi.middleware, meetingApi.middleware, meetingplatformApi.middleware, occupationApi.middleware, projectApi.middleware, socialActivityApi.middleware, socialActivityTypeApi.middleware, taskApi.middleware, userApi.middleware,),
 })
+
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof store.getState>
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = typeof store.dispatch

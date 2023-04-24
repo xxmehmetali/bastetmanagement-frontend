@@ -20,7 +20,7 @@ export const meetingplatformApi = createApi({
             query: (pagination : Pagination) => apiUrlProvider.meetingplatform + `/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
         }),
         getMeetingPlatformsPagedSimplified: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.meetingplatform + `/simplified/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.meetingplatform + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
 

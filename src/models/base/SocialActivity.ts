@@ -12,4 +12,6 @@ export interface SocialActivity extends Model {
   employees: Employee[];
   expense: Expense;
   socialActivityType: SocialActivityType;
+  createdAt: Date;
+  updatedAt: Date;
 }

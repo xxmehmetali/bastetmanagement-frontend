@@ -4,4 +4,6 @@ export interface SocialActivityType extends Model {
   id: string;
   name: string;
   description: string;
+  createdAt: Date;
+  updatedAt: Date;
 }

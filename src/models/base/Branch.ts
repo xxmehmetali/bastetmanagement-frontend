@@ -9,7 +9,6 @@ export interface Branch extends Model {
   phoneNumber: string;
   address: string;
   corporation: Corporation;
-  employees: Employee[];
   createdAt: Date;
   updatedAt: Date;
 }

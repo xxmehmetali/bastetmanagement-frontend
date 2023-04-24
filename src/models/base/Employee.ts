@@ -17,4 +17,6 @@ export interface Employee extends Model {
   endDate: Date;
   branch: Branch;
   department: Department;
+  createdAt: Date;
+  updatedAt: Date;
 }

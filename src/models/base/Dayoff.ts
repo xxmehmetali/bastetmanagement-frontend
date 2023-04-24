@@ -2,10 +2,13 @@ import { Employee } from "./Employee";
 import { Model } from "../Model";
 
 export interface Dayoff extends Model {
-  id: string;
-  beginDate: Date;
-  endDate: Date;
-  isPaid: boolean;
-  reason: string;
-  employee: Employee;
+    id: string;
+    employee: Employee;
+    beginDate: Date;
+    endDate: Date;
+    reason: string;
+    isPaid: boolean;
+    createdAt: Date;
+    updatedAt: Date;
 }
+ 

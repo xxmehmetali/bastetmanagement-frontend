@@ -21,7 +21,7 @@ export const projectApi = createApi({
         }),
 
         getProjectsPagedSimplified: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.project + `/simplified/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.project + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
 

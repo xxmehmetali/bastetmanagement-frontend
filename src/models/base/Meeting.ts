@@ -9,4 +9,6 @@ export interface Meeting extends Model {
   meetingUrl: string;
   beginHour: Date;
   endHour: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }

@@ -8,4 +8,6 @@ export interface Corporation extends Model {
   taxNumber: string;
   foundationDate: Date;
   projects: Project[];
+  createdAt: Date;
+  updatedAt: Date;
 }

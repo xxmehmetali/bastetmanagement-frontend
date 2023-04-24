@@ -2,10 +2,24 @@ import React from 'react'
 import { Col, Container, Row } from 'react-bootstrap';
 import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import navigationUrlProvider from '../providers/navigationUrlProvider';
 
 import Menu from '../layouts/Menu';
+import ApplicantDetail from '../pages/model/detail/ApplicantDetail';
+import BranchDetail from '../pages/model/detail/BranchDetail';
+import ContextDetail from '../pages/model/detail/ContextDetail';
+import CorporationDetail from '../pages/model/detail/CorporationDetail';
+import CurrencyDetail from '../pages/model/detail/CurrencyDetail';
+import CvDetail from '../pages/model/detail/CvDetail';
+import DayoffDetail from '../pages/model/detail/DayoffDetail';
 import EmployeeDetail from '../pages/model/detail/EmployeeDetail';
+import ExpenseDetail from '../pages/model/detail/ExpenseDetail';
+import MeetingDetail from '../pages/model/detail/MeetingDetail';
+import MeetingPlatformDetail from '../pages/model/detail/MeetingPlatformDetail';
+import OccupationDetail from '../pages/model/detail/OccupationDetail';
+import ProjectDetail from '../pages/model/detail/ProjectDetail';
 import SocialActivityDetail from '../pages/model/detail/SocialActivityDetail';
+import TaskDetail from '../pages/model/detail/TaskDetail';
 import ApplicantList from '../pages/model/list/ApplicantList';
 import BranchList from '../pages/model/list/BranchList';
 import ContextList from '../pages/model/list/ContextList';
@@ -22,14 +36,22 @@ import OccupationList from '../pages/model/list/OccupationList';
 import ProjectList from '../pages/model/list/ProjectList';
 import RoleList from '../pages/model/list/RoleList';
 import SocialActivityList from '../pages/model/list/SocialActivityList';
+import SocialActivityTypeList from '../pages/model/list/SocialActivityTypeList';
+
 import TaskList from '../pages/model/list/TaskList';
 import UserList from '../pages/model/list/UserList';
+import ApplicantMeetingList from '../pages/model/list/ApplicantMeetingList';
+import DepartmentDetail from '../pages/model/detail/DepartmentDetail';
+import DepartmentList from '../pages/model/list/DepartmentList';
+import ApplicantMeetingDetail from '../pages/model/detail/ApplicantMeetingDetail';
+import SocialActivityTypeDetail from '../pages/model/detail/SocialActivityTypeDetail';
+import ExpenseTypeDetail from '../pages/model/detail/ExpenseTypeDetail';
+import ExpenseTypeList from '../pages/model/list/ExpenseTypeList';
 
 export default function Dashboard() {
     return (
         <div>
             <ToastContainer position="bottom-right" />
-            DASHBOARD
 
             {/* burda eğer login olmadıysa menuyu göster  */}
             {/* <Menu /> */}
@@ -42,36 +64,68 @@ export default function Dashboard() {
                     return (
                         <Container>
                             <Row>
-                                <Col md="3">
+                                <Col md="2">
+
+                                    {/* Login sreen if user not authenticated */}
                                     <Login />
+
+
+                                    {/* Accesible menus screen if user authenticated */}
+                                    <Menu/>
+
                                 </Col>
-                                <Col md="9">
+                                <Col md="10">
                                     <Routes>
                                         {/* KALDIRILACAK ALTTAKİ */}
                                         <Route path='/' element={<EmployeeList />} />
 
 
 
-                                        <Route path='/model/employee' element={<EmployeeList />} />
-                                        <Route path='/model/applicant' element={<ApplicantList />} />
-                                        <Route path='/model/branch' element={<BranchList/> } />
-                                        <Route path='/model/context' element={<ContextList />} />
-                                        <Route path='/model/corporation' element={<CorporationList />} />
-                                        <Route path='/model/currency' element={<CurrencyList />} />
-                                        <Route path='/model/cv' element={<CvList />} />
-                                        <Route path='/model/dayoff' element={<DayoffList />} />
-                                        <Route path='/model/expense' element={<ExpenseList />} />
-                                        <Route path='/model/meeting' element={<MeetingList />} />
-                                        <Route path='/model/meetingPlatform' element={<MeetingPlatformList />} />
-                                        <Route path='/model/occupation' element={<OccupationList />} />
-                                        <Route path='/model/project' element={<ProjectList />} />
-                                        <Route path='/model/role' element={<RoleList />} />
-                                        <Route path='/model/socialActivity' element={<SocialActivityList />} />
-                                        <Route path='/model/task' element={<TaskList />} />
-                                        <Route path='/model/user' element={<UserList />} />
+                                        {/* <Route path={(() => {return new String(employeeListUrl).toString() })()} element={<EmployeeList />} /> */}
+                                        <Route path={navigationUrlProvider.applicantListUrl} element={<ApplicantList />} />
+                                        <Route path={navigationUrlProvider.applicantmeetingListUrl} element={<ApplicantMeetingList />} />
+                                        <Route path={navigationUrlProvider.employeeListUrl} element={<EmployeeList />} />
+                                        <Route path={navigationUrlProvider.branchListUrl} element={<BranchList />} />
+                                        <Route path={navigationUrlProvider.contextListUrl} element={<ContextList />} />
+                                        <Route path={navigationUrlProvider.corporationListUrl} element={<CorporationList />} />
+                                        <Route path={navigationUrlProvider.currencyListUrl} element={<CurrencyList />} />
+                                        <Route path={navigationUrlProvider.cvListUrl} element={<CvList />} />
+                                        <Route path={navigationUrlProvider.dayoffListUrl} element={<DayoffList />} />
+                                        <Route path={navigationUrlProvider.departmentListUrl} element={<DepartmentList />} />
+                                        <Route path={navigationUrlProvider.expenseListUrl} element={<ExpenseList />} />
+                                        <Route path={navigationUrlProvider.expensetypeListUrl} element={<ExpenseTypeList />} />
+                                        <Route path={navigationUrlProvider.meetingListUrl} element={<MeetingList />} />
+                                        <Route path={navigationUrlProvider.meetingplatformListUrl} element={<MeetingPlatformList />} />
+                                        <Route path={navigationUrlProvider.occupationListUrl} element={<OccupationList />} />
+                                        <Route path={navigationUrlProvider.projectListUrl} element={<ProjectList />} />
+                                        <Route path={navigationUrlProvider.roleListUrl} element={<RoleList />} />
+                                        <Route path={navigationUrlProvider.socialActivityListUrl} element={<SocialActivityList />} />
+                                        <Route path={navigationUrlProvider.socialActivityTypeListUrl} element={<SocialActivityTypeList />} />
+                                        <Route path={navigationUrlProvider.taskListUrl} element={<TaskList />} />
+                                        <Route path={navigationUrlProvider.userListUrl} element={<UserList />} />
 
 
-                                        <Route path='/model/employeeDetail/:id' element={<EmployeeDetail />} />
+                                        <Route path={navigationUrlProvider.employeeDetailUrl + ":id"} element={<EmployeeDetail />} />
+                                        <Route path={navigationUrlProvider.applicantDetailUrl + ":id"} element={<ApplicantDetail />} />
+                                        <Route path={navigationUrlProvider.applicantmeetingDetailUrl + ":id"} element={<ApplicantMeetingDetail />} />
+                                        <Route path={navigationUrlProvider.branchDetailUrl + ":id"} element={<BranchDetail />} />
+                                        <Route path={navigationUrlProvider.contextDetailUrl + ":id"} element={<ContextDetail />} />
+                                        <Route path={navigationUrlProvider.corporationDetailUrl + ":id"} element={<CorporationDetail />} />
+                                        <Route path={navigationUrlProvider.currencyDetailUrl + ":id"} element={<CurrencyDetail />} />
+                                        <Route path={navigationUrlProvider.cvDetailUrl + ":id"} element={<CvDetail />} />
+                                        <Route path={navigationUrlProvider.dayoffDetailUrl + ":id"} element={<DayoffDetail />} />
+                                        <Route path={navigationUrlProvider.departmentDetailUrl + ":id"} element={<DepartmentDetail />} />
+                                        <Route path={navigationUrlProvider.expenseDetailUrl + ":id"} element={<ExpenseDetail />} />
+                                        <Route path={navigationUrlProvider.expensetypeDetailUrl + ":id"} element={<ExpenseTypeDetail />} />
+                                        <Route path={navigationUrlProvider.meetingDetailUrl + ":id"} element={<MeetingDetail />} />
+                                        <Route path={navigationUrlProvider.meetingplatformDetailUrl + ":id"} element={<MeetingPlatformDetail />} />
+                                        <Route path={navigationUrlProvider.occupationDetailUrl + ":id"} element={<OccupationDetail />} />
+                                        <Route path={navigationUrlProvider.projectDetailUrl + ":id"} element={<ProjectDetail />} />
+                                        {/* <Route path='/model/roleDetail/:id' element={<Role/>} /> */}
+                                        <Route path={navigationUrlProvider.socialActivityDetailUrl + ":id"} element={<SocialActivityDetail />} />
+                                        <Route path={navigationUrlProvider.socialActivityTypeDetailUrl + ":id"} element={<SocialActivityTypeDetail />} />
+                                        <Route path={navigationUrlProvider.taskDetailUrl + ":id"} element={<TaskDetail />} />
+                                        {/* <Route path='/model/userDetail/:id' element={<UserDet />} /> */}
                                     </Routes>
                                 </Col>
                             </Row>
@@ -84,21 +138,8 @@ export default function Dashboard() {
                 }
             })()}
 
-            <Container>
-                <Row>
-                    <Col md="3">
-                        <Menu />
-                    </Col>
-                    <Col md="9">
-                        <Routes>
-                            {/* <Route path='/' element={<ProductList />} />
-                            <Route path='/products' element={<ProductList />} />
-                            <Route path='/products/:productId' element={<ProductDetail />} />
-                            <Route path='/cart' element={<CartDetail />} /> */}
-                        </Routes>
-                    </Col>
-                </Row>
-            </Container>
+            {/* ALTTAKİ NE İŞ BURAYI İNCELE */}
+
         </div>
 
     )

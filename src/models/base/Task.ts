@@ -15,4 +15,6 @@ export interface Task extends Model {
   assignedTo: Employee;
   reviewer: Employee;
   context: Context;
+  createdAt: Date;
+  updatedAt: Date;
 }

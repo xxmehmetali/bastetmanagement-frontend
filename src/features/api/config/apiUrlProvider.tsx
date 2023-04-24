@@ -9,9 +9,12 @@ const apiVersionUrl = "/api/v1"
 // Simplified Prefix
 const simplifiedPrefix = "/simplified"
 
+// Model Prefix
+const modelPrefix = "/model"
+
 // Endpoints
 const applicant = "/applicant"
-const applicantmeeting ="/applicantmeeting"
+const applicantmeeting ="/applicantMeeting"
 const branch= "/branch"
 const context = "/context"
 const corporation = "/corporation"
@@ -21,16 +24,16 @@ const dayoff = "/dayoff"
 const department = "/department"
 const employee = "/employee"
 const expense = "/expense"
-const expensetype = "/expensetype"
+const expensetype = "/expenseType"
 const meeting = "/meeting"
-const meetingplatform = "/meetingplatform"
+const meetingplatform = "/meetingPlatform"
 const occupation = "/occupation"
 const project = "/project"
 const role = "/role"
-const socialActivity = "/socialactivity"
+const socialActivity = "/socialActivity"
 const socialActivityType = "/socialActivityType"
 const task = "/task"
 const user = "/user"
 
 const apiBaseUrl = apiDevelopmentBaseUrl + apiVersionUrl 
-export default {apiBaseUrl, apiVersionUrl, simplifiedPrefix, applicant, applicantmeeting, branch, context, corporation, currency, cv, dayoff, department, employee, expense, expensetype, meeting, meetingplatform, occupation, project, role, socialActivity, socialActivityType, task, user};
+export default {apiBaseUrl, apiVersionUrl, simplifiedPrefix, modelPrefix, applicant, applicantmeeting, branch, context, corporation, currency, cv, dayoff, department, employee, expense, expensetype, meeting, meetingplatform, occupation, project, role, socialActivity, socialActivityType, task, user};
