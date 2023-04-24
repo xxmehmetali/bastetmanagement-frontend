@@ -21,7 +21,7 @@ export const branchApi = createApi({
         }),
 
         getBranchesPagedSimplified: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.branch + `/simplified/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.branch + `/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
 

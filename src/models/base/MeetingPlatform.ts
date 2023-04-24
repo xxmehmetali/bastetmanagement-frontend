@@ -5,4 +5,6 @@ export interface MeetingPlatform extends Model {
   name: string;
   description: string;
   baseUrl: string;
+  createdAt: Date;
+  updatedAt: Date;
 }

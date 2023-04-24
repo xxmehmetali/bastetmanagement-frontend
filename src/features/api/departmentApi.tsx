@@ -21,7 +21,7 @@ export const departmentApi = createApi({
         }),
 
         getDepartmentsPagedSimplified: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.department + `/simplified/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.department + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
 

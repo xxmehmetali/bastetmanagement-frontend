@@ -13,7 +13,7 @@ export interface Applicant extends Model {
   phoneNumber: string;
   nationalId: string;
   gender: Gender;
-  CV: Cv;
+  cv: Cv;
   hrAssessmentStatus: AssesmentStatus;
   technicalAssessmentStatus: AssesmentStatus;
   hrReview: string;

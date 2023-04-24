@@ -19,7 +19,6 @@ export default function Navi() {
                         <Nav.Link href="#features">Features</Nav.Link>
                         <Nav.Link href="#pricing">Pricing</Nav.Link>
                         <Link to="/cart">Go to Cart</Link>
-                    
                     </Nav>
                 </Container>
             </Navbar>
