@@ -1,10 +1,10 @@
 import { Accordion } from 'react-bootstrap';
 import OccupationTableComponent from './OccupationTableComponent';
-import { formatDate } from '../functions/FormatDateFunction';
+import { formatDate } from '../../functions/FormatDateFunction';
 import BranchTableComponent from './BranchTableComponent';
 import DepartmentTableComponent from './DepartmentTableComponent';
 import { Zoom } from 'react-toastify';
-import { Employee } from '../models/base/Employee';
+import { Employee } from '../../models/base/Employee';
 
 export default function EmployeeTableComponent({ employee, employeeList, accordionTitle = "Employee" }: any) {
     employeeList = employeeList as Employee[]

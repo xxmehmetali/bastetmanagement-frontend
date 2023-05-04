@@ -6,7 +6,7 @@ import { Applicant } from '../../../models/base/Applicant';
 import { DataResult } from '../../../results/DataResult';
 import { Table } from 'react-bootstrap';
 import { formatDate } from '../../../functions/FormatDateFunction';
-import CvTableComponent from '../../../components/CvTableComponent';
+import CvTableComponent from '../../../components/tablecomponents/CvTableComponent';
 
 export default function ApplicantDetail() {
   let { id } = useParams();

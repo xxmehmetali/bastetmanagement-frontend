@@ -1,7 +1,7 @@
 import { Accordion } from 'react-bootstrap';
 import EmployeeTableComponent from './EmployeeTableComponent';
-import { EmployeeStatus } from '../models/enums/EmployeeStatus';
-import { formatDate } from '../functions/FormatDateFunction';
+import { EmployeeStatus } from '../../models/enums/EmployeeStatus';
+import { formatDate } from '../../functions/FormatDateFunction';
 
 export default function ExpenseTableComponent({ expense }: any) {
 

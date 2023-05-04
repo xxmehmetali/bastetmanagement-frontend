@@ -8,6 +8,7 @@ import navigationUrlProvider from '../../../providers/navigationUrlProvider';
 import { Table } from 'react-bootstrap';
 import PaginationComponent from '../../../components/PaginationComponent';
 import { formatDate } from '../../../functions/FormatDateFunction';
+import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
 
 export default function CorporationList() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -27,12 +28,7 @@ export default function CorporationList() {
     }
   return (
     <div>
-      {/*     id: string;
-    name: string;
-    description: string;
-    taxNumber: string;
-    foundationDate: Date;
-    projects: Project[]; */}
+     <AddModelButtonComponent buttonName={"Add Corporation"} redirectionUrl={navigationUrlProvider.corporationAddUrl}/>
       <Table striped className='listTable'>
         <thead>
           <tr>

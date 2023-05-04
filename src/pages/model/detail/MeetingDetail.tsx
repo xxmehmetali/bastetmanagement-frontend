@@ -5,7 +5,7 @@ import { useGetMeetingByIdQuery } from '../../../features/api/meetingApi';
 import { DataResult } from '../../../results/DataResult';
 import { Meeting } from '../../../models/base/Meeting';
 import { Table } from 'react-bootstrap';
-import EmployeeTableComponent from '../../../components/EmployeeTableComponent';
+import EmployeeTableComponent from '../../../components/tablecomponents/EmployeeTableComponent';
 import { EmployeeStatus } from '../../../models/enums/EmployeeStatus';
 import { formatDate } from '../../../functions/FormatDateFunction';
 

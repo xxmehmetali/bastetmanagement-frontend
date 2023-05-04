@@ -5,9 +5,9 @@ import { DataResult } from '../../../results/DataResult';
 import { Expense } from '../../../models/base/Expense';
 import { useGetExpenseByIdQuery } from '../../../features/api/expenseApi';
 import { Table } from 'react-bootstrap';
-import ExpenseTypeTableComponent from '../../../components/ExpenseTypeTableComponent';
+import ExpenseTypeTableComponent from '../../../components/tablecomponents/ExpenseTypeTableComponent';
 import exp from 'constants';
-import EmployeeTableComponent from '../../../components/EmployeeTableComponent';
+import EmployeeTableComponent from '../../../components/tablecomponents/EmployeeTableComponent';
 import { EmployeeStatus } from '../../../models/enums/EmployeeStatus';
 import { formatDate } from '../../../functions/FormatDateFunction';
 

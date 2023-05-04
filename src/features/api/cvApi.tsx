@@ -17,11 +17,11 @@ export const cvApi = createApi({
             query: (id : string) => apiUrlProvider.cv + `/simplified/findById/${id}`,
         }),
         getCvsPaged: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.cv + `/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.cv +`/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
         getCvsPagedSimplified: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.cv + `/simplified/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.cv + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
 

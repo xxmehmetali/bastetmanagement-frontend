@@ -17,11 +17,11 @@ export const taskApi = createApi({
             query: (id : string) => apiUrlProvider.task + `/simplified/findById/${id}`,
         }),
         getTasksPaged: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.task + `/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.task + `/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
         getTasksPagedSimplified: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.task + `/simplified/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.task + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
 

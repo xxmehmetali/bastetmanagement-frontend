@@ -6,7 +6,7 @@ import { useGetDayoffByIdQuery } from '../../../features/api/dayoffApi';
 import { DataResult } from '../../../results/DataResult';
 import { useParams } from 'react-router-dom';
 import { Table } from 'react-bootstrap';
-import EmployeeTableComponent from '../../../components/EmployeeTableComponent';
+import EmployeeTableComponent from '../../../components/tablecomponents/EmployeeTableComponent';
 import { formatDate } from '../../../functions/FormatDateFunction';
 
 export default function DayoffDetail() {

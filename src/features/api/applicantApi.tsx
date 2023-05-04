@@ -17,11 +17,11 @@ export const applicantApi = createApi({
             query: (id : string) => apiUrlProvider.applicant + `/simplified/findById/${id}`,
         }),
         getApplicantsPaged: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.applicant + `/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.applicant + `/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
         getApplicantsPagedSimplified: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.applicant + `/simplified/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.applicant + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
 

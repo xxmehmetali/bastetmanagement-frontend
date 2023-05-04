@@ -1,5 +1,5 @@
 import { Accordion } from 'react-bootstrap';
-import { formatDate } from '../functions/FormatDateFunction';
+import { formatDate } from '../../functions/FormatDateFunction';
 
 export default function SocialActivityTypeTableComponent({ socialActivityType }: any) {
 /*,

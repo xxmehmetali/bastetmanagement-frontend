@@ -27,7 +27,6 @@ export const employeeApi = createApi({
             query: (pagination : Pagination) => apiUrlProvider.employee + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
-
     }),
 });
 

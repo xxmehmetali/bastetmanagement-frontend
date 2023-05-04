@@ -17,11 +17,11 @@ export const dayoffApi = createApi({
             query: (id : string) => apiUrlProvider.dayoff + `/simplified/findById/${id}`,
         }),
         getDayoffsPaged: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.dayoff + `/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.dayoff + `/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
         getDayoffsPagedSimplified: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.dayoff + `/simplified/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.dayoff + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
 

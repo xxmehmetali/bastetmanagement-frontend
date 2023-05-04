@@ -47,6 +47,25 @@ import ApplicantMeetingDetail from '../pages/model/detail/ApplicantMeetingDetail
 import SocialActivityTypeDetail from '../pages/model/detail/SocialActivityTypeDetail';
 import ExpenseTypeDetail from '../pages/model/detail/ExpenseTypeDetail';
 import ExpenseTypeList from '../pages/model/list/ExpenseTypeList';
+import EmployeeAdd from '../pages/model/add/EmployeeAdd';
+import ApplicantAdd from '../pages/model/add/ApplicantAdd';
+import ApplicantMeetingAdd from '../pages/model/add/ApplicantMeetingAdd';
+import BranchAdd from '../pages/model/add/BranchAdd';
+import ContextAdd from '../pages/model/add/ContextAdd';
+import CorporationAdd from '../pages/model/add/CorporationAdd';
+import CurrencyAdd from '../pages/model/add/CurrencyAdd';
+import CvAdd from '../pages/model/add/CvAdd';
+import DayoffAdd from '../pages/model/add/DayoffAdd';
+import DepartmentAdd from '../pages/model/add/DepartmentAdd';
+import ExpenseAdd from '../pages/model/add/ExpenseAdd';
+import ExpenseTypeAdd from '../pages/model/add/ExpenseTypeAdd';
+import MeetingAdd from '../pages/model/add/MeetingAdd';
+import MeetingPlatformAdd from '../pages/model/add/MeetingPlatformAdd';
+import OccupationAdd from '../pages/model/add/OccupationAdd';
+import ProjectAdd from '../pages/model/add/ProjectAdd';
+import SocialActivityAdd from '../pages/model/add/SocialActivityAdd';
+import SocialActivityTypeAdd from '../pages/model/add/SocialActivityTypeAdd';
+import TaskAdd from '../pages/model/add/TaskAdd';
 
 export default function Dashboard() {
     return (
@@ -71,7 +90,7 @@ export default function Dashboard() {
 
 
                                     {/* Accesible menus screen if user authenticated */}
-                                    <Menu/>
+                                    <Menu />
 
                                 </Col>
                                 <Col md="10">
@@ -80,7 +99,7 @@ export default function Dashboard() {
                                         <Route path='/' element={<EmployeeList />} />
 
 
-
+                                        {/* LIST */}
                                         {/* <Route path={(() => {return new String(employeeListUrl).toString() })()} element={<EmployeeList />} /> */}
                                         <Route path={navigationUrlProvider.applicantListUrl} element={<ApplicantList />} />
                                         <Route path={navigationUrlProvider.applicantmeetingListUrl} element={<ApplicantMeetingList />} />
@@ -104,7 +123,7 @@ export default function Dashboard() {
                                         <Route path={navigationUrlProvider.taskListUrl} element={<TaskList />} />
                                         <Route path={navigationUrlProvider.userListUrl} element={<UserList />} />
 
-
+                                        {/* DETAIL */}
                                         <Route path={navigationUrlProvider.employeeDetailUrl + ":id"} element={<EmployeeDetail />} />
                                         <Route path={navigationUrlProvider.applicantDetailUrl + ":id"} element={<ApplicantDetail />} />
                                         <Route path={navigationUrlProvider.applicantmeetingDetailUrl + ":id"} element={<ApplicantMeetingDetail />} />
@@ -126,6 +145,30 @@ export default function Dashboard() {
                                         <Route path={navigationUrlProvider.socialActivityTypeDetailUrl + ":id"} element={<SocialActivityTypeDetail />} />
                                         <Route path={navigationUrlProvider.taskDetailUrl + ":id"} element={<TaskDetail />} />
                                         {/* <Route path='/model/userDetail/:id' element={<UserDet />} /> */}
+
+
+                                        {/* ADD */}
+                                        <Route path={navigationUrlProvider.employeeAddUrl} element={<EmployeeAdd />} />
+                                        <Route path={navigationUrlProvider.applicantAddUrl} element={<ApplicantAdd />} />
+                                        <Route path={navigationUrlProvider.applicantmeetingAddUrl} element={<ApplicantMeetingAdd />} />
+                                        <Route path={navigationUrlProvider.branchAddUrl} element={<BranchAdd />} />
+                                        <Route path={navigationUrlProvider.contextAddUrl} element={<ContextAdd />} />
+                                        <Route path={navigationUrlProvider.corporationAddUrl} element={<CorporationAdd />} />
+                                        <Route path={navigationUrlProvider.currencyAddUrl} element={<CurrencyAdd />} />
+                                        <Route path={navigationUrlProvider.cvAddUrl} element={<CvAdd />} />
+                                        <Route path={navigationUrlProvider.dayoffAddUrl} element={<DayoffAdd />} />
+                                        <Route path={navigationUrlProvider.departmentAddUrl} element={<DepartmentAdd />} />
+                                        <Route path={navigationUrlProvider.expenseAddUrl} element={<ExpenseAdd />} />
+                                        <Route path={navigationUrlProvider.expensetypeAddUrl} element={<ExpenseTypeAdd />} />
+                                        <Route path={navigationUrlProvider.meetingAddUrl} element={<MeetingAdd />} />
+                                        <Route path={navigationUrlProvider.meetingplatformAddUrl} element={<MeetingPlatformAdd />} />
+                                        <Route path={navigationUrlProvider.occupationAddUrl} element={<OccupationAdd />} />
+                                        <Route path={navigationUrlProvider.projectAddUrl} element={<ProjectAdd />} />
+                                        {/* <Route path='/model/roleAdd/:id' element={<Role/>} /> */}
+                                        <Route path={navigationUrlProvider.socialActivityAddUrl} element={<SocialActivityAdd />} />
+                                        <Route path={navigationUrlProvider.socialActivityTypeAddUrl} element={<SocialActivityTypeAdd />} />
+                                        <Route path={navigationUrlProvider.taskAddUrl} element={<TaskAdd />} />
+                                        {/* <Route path='/model/userAdd/:id' element={<UserDet />} /> */}
                                     </Routes>
                                 </Col>
                             </Row>

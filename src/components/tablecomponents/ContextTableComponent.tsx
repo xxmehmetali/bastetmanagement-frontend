@@ -1,5 +1,5 @@
 import { Accordion } from 'react-bootstrap';
-import { Context } from '../models/base/Context';
+import { Context } from '../../models/base/Context';
 
 export default function ContextTableComponent({ context, contextList }: any) {
     contextList = contextList as Context[]
