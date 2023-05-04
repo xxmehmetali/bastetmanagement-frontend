@@ -7,8 +7,8 @@ import { Employee } from '../../../models/base/Employee';
 import { strict } from 'assert';
 import { string } from 'yup';
 import { Table } from 'react-bootstrap';
-import BranchTableComponent from '../../../components/BranchTableComponent';
-import DepartmentTableComponent from '../../../components/DepartmentTableComponent';
+import BranchTableComponent from '../../../components/tablecomponents/BranchTableComponent';
+import DepartmentTableComponent from '../../../components/tablecomponents/DepartmentTableComponent';
 
 export default function EmployeeDetail() {
   let { id } = useParams();

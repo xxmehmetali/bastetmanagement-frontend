@@ -17,10 +17,10 @@ export const expenseTypeApi = createApi({
             query: (id : string) => apiUrlProvider.expensetype + `/simplified/findById/${id}`,
         }),
         getExpenseTypesPaged: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.expensetype + `/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.expensetype + `/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
         getExpenseTypesPagedSimplified: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.expensetype + `/simplified/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.expensetype + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
 

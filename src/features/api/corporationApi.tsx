@@ -4,10 +4,12 @@ import { PagedDataResult } from "../../results/PagedDataResult";
 import { Pagination } from "../../results/pagination/Pagination";
 import apiUrlProvider from "./config/apiUrlProvider";
 import apiPaginationConfig from "./config/apiPaginationConfig";
+import { Corporation } from "../../models/base/Corporation";
 
 export const corporationApi = createApi({
     reducerPath: "corporationApi",
     baseQuery: fetchBaseQuery({ baseUrl: apiUrlProvider.apiBaseUrl }),
+    tagTypes: ['corporations'],
     endpoints: (builder) => ({
 
         getCorporationById: builder.query<Model, string>({
@@ -17,15 +19,25 @@ export const corporationApi = createApi({
             query: (id : string) => apiUrlProvider.corporation + `/simplified/findById/${id}`,
         }),
         getCorporationsPaged: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.corporation + `/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.corporation + `/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
         getCorporationsPagedSimplified: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.corporation + `/simplified/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.corporation + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
+
+        addCorporation: builder.mutation<Corporation, Partial<Corporation>>({
+            query: (corporation) => ({
+              url: apiUrlProvider.corporation + `/add`,
+              method: 'POST',
+              body : corporation,
+            }),
+            invalidatesTags: ['corporations'],
+          }),
+
 
 
     }),
 });
 
-export const { useGetCorporationByIdQuery, useGetCorporationByIdSimplifiedQuery, useGetCorporationsPagedQuery, useGetCorporationsPagedSimplifiedQuery } = corporationApi;
+export const { useGetCorporationByIdQuery, useGetCorporationByIdSimplifiedQuery, useGetCorporationsPagedQuery, useGetCorporationsPagedSimplifiedQuery, useAddCorporationMutation } = corporationApi;

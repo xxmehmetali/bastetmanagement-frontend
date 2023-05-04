@@ -5,9 +5,9 @@ import { useGetTaskByIdQuery } from '../../../features/api/taskApi';
 import { Task } from '../../../models/base/Task';
 import { DataResult } from '../../../results/DataResult';
 import { Table } from 'react-bootstrap';
-import EmployeeTableComponent from '../../../components/EmployeeTableComponent';
+import EmployeeTableComponent from '../../../components/tablecomponents/EmployeeTableComponent';
 import { EmployeeStatus } from '../../../models/enums/EmployeeStatus';
-import ContextTableComponent from '../../../components/ContextTableComponent';
+import ContextTableComponent from '../../../components/tablecomponents/ContextTableComponent';
 //OK
 export default function TaskDetail() {
   let { id } = useParams();

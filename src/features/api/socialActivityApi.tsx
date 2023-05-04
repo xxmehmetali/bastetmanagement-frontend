@@ -17,11 +17,11 @@ export const socialActivityApi = createApi({
             query: (id : string) => apiUrlProvider.socialActivity + `/simplified/findById/${id}`,
         }),
         getSocialActivitiesPaged: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.socialActivity + `/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.socialActivity + `/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
         getSocialActivitiesPagedSimplified: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.socialActivity + `/simplified/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.socialActivity + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
 

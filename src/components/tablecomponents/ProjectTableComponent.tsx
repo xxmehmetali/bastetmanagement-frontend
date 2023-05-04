@@ -1,7 +1,7 @@
 import { Accordion } from 'react-bootstrap';
-import { formatDate } from '../functions/FormatDateFunction';
+import { formatDate } from '../../functions/FormatDateFunction';
 import ContextTableComponent from './ContextTableComponent';
-import { Project } from '../models/base/Project';
+import { Project } from '../../models/base/Project';
 
 export default function ProjectTableComponent({ project, projectList, accordionTitle="Project" }: any) {
     projectList = projectList as Project[]

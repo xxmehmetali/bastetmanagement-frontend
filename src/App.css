@@ -89,11 +89,10 @@
 
 .listTable tbody tr:hover {
   /* background-color: rgb(19,101,246); */
-  background: 
-  linear-gradient(45deg,  transparent 0%, transparent 57%, #47a9eb 100%),
-  linear-gradient(-45deg, #1d74ff 0%,  #32afbb 0.3%, #1e78c2 112%,  transparent 19% ),
-  linear-gradient(-90deg, #2771d1 100%, #85c8f0 65%, transparent 20% )
-
+  background:
+    linear-gradient(45deg, transparent 0%, transparent 57%, #47a9eb 100%),
+    linear-gradient(-45deg, #1d74ff 0%, #32afbb 0.3%, #1e78c2 112%, transparent 19%),
+    linear-gradient(-90deg, #2771d1 100%, #85c8f0 65%, transparent 20%)
 }
 
 .listTable tbody tr:hover td {
@@ -106,4 +105,8 @@
 
 
 
-
+.addModelButton {
+  margin-top: 20px;
+  margin-left: 80%;
+  display: block;
+}

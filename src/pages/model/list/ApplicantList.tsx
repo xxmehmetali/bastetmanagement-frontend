@@ -7,6 +7,7 @@ import { Applicant } from '../../../models/base/Applicant';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import navigationUrlProvider from '../../../providers/navigationUrlProvider';
 import PaginationComponent from '../../../components/PaginationComponent';
+import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
 
 export default function ApplicantList() {
     //error varsa toastr ile uyarı göster
@@ -29,6 +30,7 @@ export default function ApplicantList() {
     }
   return (
     <div>
+      <AddModelButtonComponent buttonName={"Add Applicant"} redirectionUrl={navigationUrlProvider.applicantAddUrl}/>
       <Table striped className='listTable'>
         <thead>
           <tr>

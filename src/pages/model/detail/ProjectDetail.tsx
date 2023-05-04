@@ -6,8 +6,8 @@ import { DataResult } from '../../../results/DataResult';
 import { Project } from '../../../models/base/Project';
 import { Table } from 'react-bootstrap';
 import { formatDate } from '../../../functions/FormatDateFunction';
-import ContextTableComponent from '../../../components/ContextTableComponent';
-import CorporationTableComponent from '../../../components/CorporationTableComponent';
+import ContextTableComponent from '../../../components/tablecomponents/ContextTableComponent';
+import CorporationTableComponent from '../../../components/tablecomponents/CorporationTableComponent';
 
 export default function ProjectDetail() {
   let { id } = useParams();

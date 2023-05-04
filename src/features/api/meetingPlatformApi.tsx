@@ -17,7 +17,7 @@ export const meetingplatformApi = createApi({
             query: (id : string) => apiUrlProvider.meetingplatform + `/simplified/findById/${id}`,
         }),
         getMeetingPlatformsPaged: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.meetingplatform + `/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.meetingplatform + `/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
         getMeetingPlatformsPagedSimplified: builder.query<PagedDataResult, Pagination>({
             query: (pagination : Pagination) => apiUrlProvider.meetingplatform + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,

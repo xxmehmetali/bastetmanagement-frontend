@@ -32,8 +32,6 @@ export default function BranchList() {
             <th>Description</th>
             <th>Phone Number</th>
             <th>Address</th>
-            <th>Corporation</th>
-            
           </tr>
         </thead>
         <tbody>
@@ -45,7 +43,6 @@ export default function BranchList() {
                 <td>{branch.description}</td>
                 <td>{branch.phoneNumber}</td>
                 <td>{branch.address}</td>
-                <td>{branch.corporation.name}</td>
               </tr>
             ))}
 

@@ -5,8 +5,8 @@ import { useGetBranchByIdQuery } from '../../../features/api/branchApi';
 import { Branch } from '../../../models/base/Branch';
 import { DataResult } from '../../../results/DataResult';
 import { Table } from 'react-bootstrap';
-import BranchTableComponent from '../../../components/BranchTableComponent';
-import CorporationTableComponent from '../../../components/CorporationTableComponent';
+import BranchTableComponent from '../../../components/tablecomponents/BranchTableComponent';
+import CorporationTableComponent from '../../../components/tablecomponents/CorporationTableComponent';
 
 export default function BranchDetail() {
   let { id } = useParams();

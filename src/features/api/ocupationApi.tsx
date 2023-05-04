@@ -17,10 +17,10 @@ export const occupationApi = createApi({
             query: (id : string) => apiUrlProvider.occupation + `/simplified/findById/${id}`,
         }),
         getOccupationsPaged: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.occupation + `/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.occupation + `/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
         getOccupationsPagedSimplified: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.occupation + `/simplified/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.occupation + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
 

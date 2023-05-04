@@ -17,11 +17,11 @@ export const branchApi = createApi({
             query: (id : string) => apiUrlProvider.branch + `/simplified/findById/${id}`,
         }),
         getBranchesPaged: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.branch + `/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.branch + `/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
         getBranchesPagedSimplified: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.branch + `/findAll?page=${pagination.page}&size=${pagination.size}`,
+            query: (pagination : Pagination) => apiUrlProvider.branch + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
 

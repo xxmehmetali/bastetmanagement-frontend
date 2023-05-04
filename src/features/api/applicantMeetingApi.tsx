@@ -17,11 +17,11 @@ export const applicantMeetingApi = createApi({
             query: (id : string) => apiUrlProvider.applicantmeeting + `/simplified/findById/${id}`,
         }),
         getApplicantMeetingsPaged: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.applicantmeeting + `/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.applicantmeeting + `/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
         getApplicantMeetingsPagedSimplified: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.applicantmeeting + `/simplified/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.applicantmeeting + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
 

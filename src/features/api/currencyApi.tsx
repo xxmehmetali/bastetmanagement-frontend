@@ -17,11 +17,11 @@ export const currencyApi = createApi({
             query: (id : string) => apiUrlProvider.currency + `/simplified/findById/${id}`,
         }),
         getCurrenciesPaged: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.currency + `/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.currency + `/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
         getCurrenciesPagedSimplified: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.currency + `/simplified/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.currency + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
 

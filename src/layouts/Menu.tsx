@@ -8,7 +8,7 @@ export default function Menu() {
 
   return (
 
-    <Card style={{ width: '12rem', margin: '0 auto', position: "relative", left: "-50px" }}>
+    <Card style={{ width: '12rem', margin: '20px auto', position: "relative", left: "-50px" }}>
       <Card.Header style={{ background: "#ededed", fontWeight: 700 }}>Accesible Menus</Card.Header>
       <ListGroup variant="flush" className='accessible-menu'>
         <ListGroup.Item as={NavLink} to={navigationUrlProvider.applicantListUrl}>Applicants</ListGroup.Item>

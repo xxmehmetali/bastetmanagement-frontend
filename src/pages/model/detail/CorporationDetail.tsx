@@ -6,7 +6,7 @@ import { useGetCorporationByIdQuery } from '../../../features/api/corporationApi
 import { DataResult } from '../../../results/DataResult';
 import { Corporation } from '../../../models/base/Corporation';
 import { formatDate } from '../../../functions/FormatDateFunction';
-import ProjectTableComponent from '../../../components/ProjectTableComponent';
+import ProjectTableComponent from '../../../components/tablecomponents/ProjectTableComponent';
 
 export default function CorporationDetail() {
   let { id } = useParams();

@@ -6,9 +6,9 @@ import { SocialActivity } from '../../../models/base/SocialActivity';
 import { Table } from 'react-bootstrap';
 import { formatDate } from '../../../functions/FormatDateFunction';
 import { useParams } from 'react-router-dom';
-import EmployeeTableComponent from '../../../components/EmployeeTableComponent';
-import ExpenseTableComponent from '../../../components/ExpenseTableComponent';
-import SocialActivityTypeTableComponent from '../../../components/SocialActivityTypeTableComponent';
+import EmployeeTableComponent from '../../../components/tablecomponents/EmployeeTableComponent';
+import ExpenseTableComponent from '../../../components/tablecomponents/ExpenseTableComponent';
+import SocialActivityTypeTableComponent from '../../../components/tablecomponents/SocialActivityTypeTableComponent';
 
 export default function SocialActivityDetail() {
   let { id } = useParams();

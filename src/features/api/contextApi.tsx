@@ -18,11 +18,11 @@ export const contextApi = createApi({
             query: (id : string) => apiUrlProvider.context + `/simplified/findById/${id}`,
         }),
         getContextsPaged: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.context + `/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.context + `/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
         getContextsPagedSimplified: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.context + `/simplified/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.context + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
 

@@ -17,10 +17,10 @@ export const meetingApi = createApi({
             query: (id : string) => apiUrlProvider.meeting + `/simplified/findById/${id}`,
         }),
         getMeetingsPaged: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.meeting + `/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.meeting + `/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
         getMeetingsPagedSimplified: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.meeting + `/simplified/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.meeting + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
 

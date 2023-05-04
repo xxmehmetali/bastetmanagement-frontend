@@ -17,11 +17,11 @@ export const expenseApi = createApi({
             query: (id : string) => apiUrlProvider.expense + `/simplified/findById/${id}`,
         }),
         getExpensesPaged: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.expense + `/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.expense + `/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
         getExpensesPagedSimplified: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.expense + `/simplified/findAll?page=${pagination?.page || apiPaginationConfig.defaultPageNo}&size=${pagination?.size || apiPaginationConfig.defaultPageSize}`,
+            query: (pagination : Pagination) => apiUrlProvider.expense + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
 

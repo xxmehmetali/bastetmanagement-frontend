@@ -6,9 +6,9 @@ import { ApplicantMeeting } from '../../../models/base/ApplicantMeeting';
 import { useParams } from 'react-router-dom';
 import { Table } from 'react-bootstrap';
 import { formatDate } from '../../../functions/FormatDateFunction';
-import EmployeeTableComponent from '../../../components/EmployeeTableComponent';
+import EmployeeTableComponent from '../../../components/tablecomponents/EmployeeTableComponent';
 import { EmployeeStatus } from '../../../models/enums/EmployeeStatus';
-import MeetingPlatformTableComponent from '../../../components/MeetingPlatformTableComponent';
+import MeetingPlatformTableComponent from '../../../components/tablecomponents/MeetingPlatformTableComponent';
 
 export default function ApplicantMeetingDetail() {
   let { id } = useParams();
