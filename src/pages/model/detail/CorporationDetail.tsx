@@ -2,18 +2,24 @@
 import React from 'react'
 import { Table } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import { useGetCorporationByIdQuery } from '../../../features/api/corporationApi';
+import { useGetCorporationByIdQuery, useGetProjectsByCorporationIdQuery } from '../../../features/api/corporationApi';
 import { DataResult } from '../../../results/DataResult';
 import { Corporation } from '../../../models/base/Corporation';
 import { formatDate } from '../../../functions/FormatDateFunction';
 import ProjectTableComponent from '../../../components/tablecomponents/ProjectTableComponent';
+import { Project } from '../../../models/base/Project';
 
 export default function CorporationDetail() {
   let { id } = useParams();
 
-  const { data: corporationDataResultDataForCorporation, isLoading, error } = useGetCorporationByIdQuery(id || "");
+  const { data: corporationDataResultDataForCorporation, isLoading : corporationDataLoading, error : corporationDataError } = useGetCorporationByIdQuery(id || "");
   const corporationDataResultForCorporation: DataResult<Corporation> = corporationDataResultDataForCorporation as DataResult<Corporation>;
   const corporation: Corporation = (corporationDataResultForCorporation?.data) as Corporation;
+  
+  const { data: projectsForCorporation, isLoading, error } = useGetProjectsByCorporationIdQuery(id || "");
+  const dataResultForProject: DataResult<Project[]> = projectsForCorporation as DataResult<Project[]>;
+  const projects: Project[] = (dataResultForProject?.data) as Project[];
+
 
   if(error){
     return(
@@ -50,7 +56,7 @@ export default function CorporationDetail() {
             </tr>
             <tr>
               <td colSpan={2}>
-                <ProjectTableComponent projectList={corporation.projects} accordionTitle={"Projects"}/>
+                <ProjectTableComponent projectList={projects} accordionTitle={"Projects"}/>
               </td>
             </tr>           
             <tr>

@@ -26,6 +26,10 @@ export const corporationApi = createApi({
             query: (pagination : Pagination) => apiUrlProvider.corporation + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
+        getProjectsByCorporationId: builder.query<Model, string>({
+            query: (id : string) => apiUrlProvider.project + `/findProjectsByCorporationId/${id}`,
+        }),
+
         addCorporation: builder.mutation<Corporation, Partial<Corporation>>({
             query: (corporation) => ({
               url: apiUrlProvider.corporation + `/add`,
@@ -40,4 +44,4 @@ export const corporationApi = createApi({
     }),
 });
 
-export const { useGetCorporationByIdQuery, useGetCorporationByIdSimplifiedQuery, useGetCorporationsPagedQuery, useGetCorporationsPagedSimplifiedQuery, useAddCorporationMutation } = corporationApi;
+export const { useGetCorporationByIdQuery, useGetCorporationByIdSimplifiedQuery, useGetCorporationsPagedQuery, useGetCorporationsPagedSimplifiedQuery, useAddCorporationMutation, useGetProjectsByCorporationIdQuery } = corporationApi;

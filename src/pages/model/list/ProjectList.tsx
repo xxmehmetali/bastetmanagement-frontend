@@ -17,7 +17,6 @@ export default function ProjectList() {
   const { data: pagedDataResultDataForProject, isLoading, error } = useGetProjectsPagedSimplifiedQuery(new Pagination(Number(page)));
   const pagedDataResultForProject: PagedDataResult = pagedDataResultDataForProject as PagedDataResult;
   const projects: Project[] = (pagedDataResultForProject?.data?.content) as Project[];
-  console.log(pagedDataResultForProject)
 
   const totalPages = pagedDataResultForProject?.data?.totalPages || 1;
   const navigate = useNavigate();

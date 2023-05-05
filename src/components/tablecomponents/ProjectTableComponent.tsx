@@ -10,7 +10,7 @@ export default function ProjectTableComponent({ project, projectList, accordionT
         for (let i = 0; i < projectList.length; i++) {
             let proj = projectList[i]
             projectListRenderElement.push(
-                <div style={{ border: "2px solid #a8a8a8", marginBottom: "10px", padding: "10px", borderRadius: "10px" }}>
+                <div style={{ border: "2px solid #a8a8a8", marginBottom: "10px",padding: "10px", borderRadius: "10px" }}>
                     <h4>{accordionTitle} {i + 1}</h4>
                     <br />
                     <tr>
