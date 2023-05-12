@@ -10,6 +10,7 @@ import PaginationComponent from '../../../components/PaginationComponent';
 import navigationUrlProvider from '../../../providers/navigationUrlProvider';
 import { useGetExpenseTypesPagedSimplifiedQuery } from '../../../features/api/expenseTypeApi';
 import { ExpenseType } from '../../../models/base/ExpenseType';
+import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
 
 
 function ExpenseTypeList() {
@@ -37,6 +38,7 @@ function ExpenseTypeList() {
 
     return (
         <div>
+            <AddModelButtonComponent buttonName={"Add Expense Type"} redirectionUrl={navigationUrlProvider.expensetypeAddUrl}/>
             <Table striped className='listTable'>
                 <thead>
                     <tr>

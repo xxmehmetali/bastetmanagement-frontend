@@ -4,10 +4,12 @@ import { PagedDataResult } from "../../results/PagedDataResult";
 import { Pagination } from "../../results/pagination/Pagination";
 import apiUrlProvider from "./config/apiUrlProvider";
 import apiPaginationConfig from "./config/apiPaginationConfig";
+import { Cv } from "../../models/base/Cv";
 
 export const cvApi = createApi({
     reducerPath: "cvApi",
     baseQuery: fetchBaseQuery({ baseUrl: apiUrlProvider.apiBaseUrl }),
+    tagTypes: ['cvs'],
     endpoints: (builder) => ({
 
         getCvById: builder.query<Model, string>({
@@ -24,8 +26,20 @@ export const cvApi = createApi({
             query: (pagination : Pagination) => apiUrlProvider.cv + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
+        getSelectElementCvs: builder.query<Model, void>({
+            query: () => apiUrlProvider.cv + "/" + apiUrlProvider.selectElement + "/findAll",
+        }),
+
+        addCv: builder.mutation<Cv, Partial<Cv>>({
+            query: (cv) => ({
+              url: apiUrlProvider.cv + `/add`,
+              method: 'POST',
+              body : cv,
+            }),
+            invalidatesTags: ['cvs'],
+          }),
 
     }),
 });
 
-export const { useGetCvByIdQuery, useGetCvByIdSimplifiedQuery, useGetCvsPagedQuery, useGetCvsPagedSimplifiedQuery } = cvApi;
+export const { useGetCvByIdQuery, useGetCvByIdSimplifiedQuery, useGetCvsPagedQuery, useGetCvsPagedSimplifiedQuery, useAddCvMutation, useGetSelectElementCvsQuery } = cvApi;

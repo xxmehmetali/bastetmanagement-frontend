@@ -8,6 +8,7 @@ import navigationUrlProvider from '../../../providers/navigationUrlProvider';
 import { Table } from 'react-bootstrap';
 import PaginationComponent from '../../../components/PaginationComponent';
 import { formatDate } from '../../../functions/FormatDateFunction';
+import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
 
 export default function DayoffList() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -25,6 +26,7 @@ export default function DayoffList() {
   }
 return (
   <div>
+    <AddModelButtonComponent buttonName={"Add Dayoff"} redirectionUrl={navigationUrlProvider.dayoffAddUrl}/>
     <Table striped className='listTable'>
       <thead>
         <tr>

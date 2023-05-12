@@ -9,6 +9,7 @@ import { string } from 'yup';
 import { Table } from 'react-bootstrap';
 import BranchTableComponent from '../../../components/tablecomponents/BranchTableComponent';
 import DepartmentTableComponent from '../../../components/tablecomponents/DepartmentTableComponent';
+import OccupationTableComponent from '../../../components/tablecomponents/OccupationTableComponent';
 
 export default function EmployeeDetail() {
   let { id } = useParams();
@@ -64,8 +65,9 @@ export default function EmployeeDetail() {
               <td>{employee.gender}</td>
             </tr>
             <tr>
-              <td>occupation</td>
-              <td>{employee.occupation.id}</td>
+              <td colSpan={2}>
+                <OccupationTableComponent occupation={employee.occupation} />
+              </td>
             </tr>
             <tr>
               <td>Start Date</td>

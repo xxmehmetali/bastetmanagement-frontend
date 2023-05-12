@@ -1,11 +1,12 @@
 
 import React from 'react'
 import { useParams } from 'react-router-dom';
-import { Context } from 'vm';
+
 import { DataResult } from '../../../results/DataResult';
 import { useGetContextByIdQuery } from '../../../features/api/contextApi';
 import { Table } from 'react-bootstrap';
 import { formatDate } from '../../../functions/FormatDateFunction';
+import { Context } from '../../../models/base/Context';
 
 export default function ContextDetail() {
   let { id } = useParams();
@@ -36,7 +37,7 @@ export default function ContextDetail() {
               <td>{context.name}</td>
             </tr>
             <tr>
-              <td>Surname</td>
+              <td>Description</td>
               <td>{context.description}</td>
             </tr>           
             <tr>

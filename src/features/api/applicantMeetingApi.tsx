@@ -4,10 +4,12 @@ import { PagedDataResult } from "../../results/PagedDataResult";
 import { Pagination } from "../../results/pagination/Pagination";
 import apiUrlProvider from "./config/apiUrlProvider";
 import apiPaginationConfig from "./config/apiPaginationConfig";
+import { ApplicantMeeting } from "../../models/base/ApplicantMeeting";
 
 export const applicantMeetingApi = createApi({
     reducerPath: "applicantMeetingApi",
     baseQuery: fetchBaseQuery({ baseUrl: apiUrlProvider.apiBaseUrl }),
+    tagTypes: ['applicantMeetings'],
     endpoints: (builder) => ({
 
         getApplicantMeetingById: builder.query<Model, string>({
@@ -24,8 +26,20 @@ export const applicantMeetingApi = createApi({
             query: (pagination : Pagination) => apiUrlProvider.applicantmeeting + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
+        getSelectElementApplicantMeetings: builder.query<Model, void>({
+            query: () => apiUrlProvider.applicantmeeting + "/" + apiUrlProvider.selectElement + "/findAll",
+        }),
+
+        addApplicantMeetings: builder.mutation<ApplicantMeeting, Partial<ApplicantMeeting>>({
+            query: (applicantMeeting) => ({
+              url: apiUrlProvider.applicantmeeting + `/add`,
+              method: 'POST',
+              body : applicantMeeting,
+            }),
+            invalidatesTags: ['applicantMeetings'],
+          }),
 
     }),
 });
 
-export const { useGetApplicantMeetingByIdQuery, useGetApplicantMeetingByIdSimplifiedQuery, useGetApplicantMeetingsPagedQuery, useGetApplicantMeetingsPagedSimplifiedQuery } = applicantMeetingApi;
+export const { useGetApplicantMeetingByIdQuery, useGetApplicantMeetingByIdSimplifiedQuery, useGetApplicantMeetingsPagedQuery, useGetApplicantMeetingsPagedSimplifiedQuery, useAddApplicantMeetingsMutation, useGetSelectElementApplicantMeetingsQuery } = applicantMeetingApi;

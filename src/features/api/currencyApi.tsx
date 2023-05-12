@@ -4,10 +4,12 @@ import { PagedDataResult } from "../../results/PagedDataResult";
 import { Pagination } from "../../results/pagination/Pagination";
 import apiUrlProvider from "./config/apiUrlProvider";
 import apiPaginationConfig from "./config/apiPaginationConfig";
+import { Currency } from "../../models/base/Currency";
 
 export const currencyApi = createApi({
     reducerPath: "currencyApi",
     baseQuery: fetchBaseQuery({ baseUrl: apiUrlProvider.apiBaseUrl }),
+    tagTypes: ['currencies'],
     endpoints: (builder) => ({
 
         getCurrencyById: builder.query<Model, string>({
@@ -24,8 +26,20 @@ export const currencyApi = createApi({
             query: (pagination : Pagination) => apiUrlProvider.currency + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
+        getSelectElementCurrencies: builder.query<Model, void>({
+            query: () => apiUrlProvider.currency + "/" + apiUrlProvider.selectElement + "/findAll",
+        }),
+
+        addCurrency: builder.mutation<Currency, Partial<Currency>>({
+            query: (currency) => ({
+              url: apiUrlProvider.currency + `/add`,
+              method: 'POST',
+              body : currency,
+            }),
+            invalidatesTags: ['currencies'],
+          }),
 
     }),
 });
 
-export const { useGetCurrenciesPagedQuery, useGetCurrenciesPagedSimplifiedQuery, useGetCurrencyByIdQuery, useGetCurrencyByIdSimplifiedQuery } = currencyApi;
+export const { useGetCurrenciesPagedQuery, useGetCurrenciesPagedSimplifiedQuery, useGetCurrencyByIdQuery, useGetCurrencyByIdSimplifiedQuery, useAddCurrencyMutation, useGetSelectElementCurrenciesQuery } = currencyApi;

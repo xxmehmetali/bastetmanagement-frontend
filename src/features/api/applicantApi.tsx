@@ -4,10 +4,12 @@ import { PagedDataResult } from "../../results/PagedDataResult";
 import { Pagination } from "../../results/pagination/Pagination";
 import apiUrlProvider from "./config/apiUrlProvider";
 import apiPaginationConfig from "./config/apiPaginationConfig";
+import { Applicant } from "../../models/base/Applicant";
 
 export const applicantApi = createApi({
     reducerPath: "applicantApi",
     baseQuery: fetchBaseQuery({ baseUrl: apiUrlProvider.apiBaseUrl }),
+    tagTypes: ['applicants'],
     endpoints: (builder) => ({
 
         getApplicantById: builder.query<Model, string>({
@@ -24,8 +26,20 @@ export const applicantApi = createApi({
             query: (pagination : Pagination) => apiUrlProvider.applicant + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
+        getSelectElementApplicants: builder.query<Model, void>({
+            query: () => apiUrlProvider.applicant + "/" + apiUrlProvider.selectElement + "/findAll",
+        }),
+
+        addApplicant: builder.mutation<Applicant, Partial<Applicant>>({
+            query: (applicant) => ({
+              url: apiUrlProvider.applicant + `/add`,
+              method: 'POST',
+              body : applicant,
+            }),
+            invalidatesTags: ['applicants'],
+          }),
 
     }),
 });
 
-export const { useGetApplicantByIdQuery, useGetApplicantByIdSimplifiedQuery, useGetApplicantsPagedQuery, useGetApplicantsPagedSimplifiedQuery } = applicantApi;
+export const { useGetApplicantByIdQuery, useGetApplicantByIdSimplifiedQuery, useGetApplicantsPagedQuery, useGetApplicantsPagedSimplifiedQuery, useAddApplicantMutation, useGetSelectElementApplicantsQuery } = applicantApi;

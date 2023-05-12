@@ -4,10 +4,12 @@ import { PagedDataResult } from "../../results/PagedDataResult";
 import { Pagination } from "../../results/pagination/Pagination";
 import apiUrlProvider from "./config/apiUrlProvider";
 import apiPaginationConfig from "./config/apiPaginationConfig";
+import { Project } from "../../models/base/Project";
 
 export const projectApi = createApi({
     reducerPath: "projectApi",
     baseQuery: fetchBaseQuery({ baseUrl: apiUrlProvider.apiBaseUrl }),
+    tagTypes: ['projects'],
     endpoints: (builder) => ({
 
         getProjectById: builder.query<Model, string>({
@@ -27,7 +29,20 @@ export const projectApi = createApi({
             query: (id : string) => apiUrlProvider.project + `/findProjectsByCorporationId/${id}`,
         }),
 
+        getSelectElementProjects: builder.query<Model, void>({
+            query: () => apiUrlProvider.project + "/" + apiUrlProvider.selectElement + "/findAll",
+        }),
+
+        addProject: builder.mutation<Project, Partial<Project>>({
+            query: (project) => ({
+              url: apiUrlProvider.project + `/add`,
+              method: 'POST',
+              body : project,
+            }),
+            invalidatesTags: ['projects'],
+          }),
+
     }),
 });
 
-export const { useGetProjectByIdQuery, useGetProjectByIdSimplifiedQuery, useGetProjectsPagedQuery, useGetProjectsPagedSimplifiedQuery } = projectApi;
+export const { useGetProjectByIdQuery, useGetProjectByIdSimplifiedQuery, useGetProjectsPagedQuery, useGetProjectsPagedSimplifiedQuery, useAddProjectMutation, useGetSelectElementProjectsQuery } = projectApi;

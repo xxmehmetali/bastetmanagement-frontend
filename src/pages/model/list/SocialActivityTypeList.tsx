@@ -8,6 +8,7 @@ import { Table } from 'react-bootstrap';
 import PaginationComponent from '../../../components/PaginationComponent';
 import { useGetSocialActivityTypesPagedSimplifiedQuery } from '../../../features/api/socialActivityTypeApi';
 import { SocialActivityType } from '../../../models/base/SocialActivityType';
+import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
 
 export default function SocialActivityTypeList() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -25,6 +26,7 @@ export default function SocialActivityTypeList() {
     }
   return (
     <div>
+      <AddModelButtonComponent buttonName={"Add Social Activity Type"} redirectionUrl={navigationUrlProvider.socialActivityTypeAddUrl}/>
     <Table striped className='listTable'>
       <thead>
         <tr>

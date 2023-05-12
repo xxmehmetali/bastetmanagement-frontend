@@ -7,6 +7,7 @@ import { MeetingPlatform } from '../../../models/base/MeetingPlatform';
 import navigationUrlProvider from '../../../providers/navigationUrlProvider';
 import { Table } from 'react-bootstrap';
 import PaginationComponent from '../../../components/PaginationComponent';
+import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
 
 export default function MeetingPlatformList() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -24,6 +25,7 @@ export default function MeetingPlatformList() {
 
   return (
     <div>
+      <AddModelButtonComponent buttonName={"Add Meeting Platform"} redirectionUrl={navigationUrlProvider.meetingplatformAddUrl}/>
       <Table striped className='listTable'>
         <thead>
           <tr>

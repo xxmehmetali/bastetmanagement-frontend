@@ -7,6 +7,7 @@ import navigationUrlProvider from '../../../providers/navigationUrlProvider';
 import { PagedDataResult } from '../../../results/PagedDataResult';
 import { useGetTasksPagedSimplifiedQuery } from '../../../features/api/taskApi';
 import { Task } from '../../../models/base/Task';
+import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
 
 export default function TaskList() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -24,6 +25,7 @@ export default function TaskList() {
   }
   return (
     <div>
+      <AddModelButtonComponent buttonName={"Add Task"} redirectionUrl={navigationUrlProvider.taskAddUrl}/>
       <Table striped className='listTable'>
         <thead>
           <tr>

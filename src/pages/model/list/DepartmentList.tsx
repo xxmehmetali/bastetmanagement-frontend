@@ -7,6 +7,7 @@ import { Department } from '../../../models/base/Department';
 import navigationUrlProvider from '../../../providers/navigationUrlProvider';
 import { Table } from 'react-bootstrap';
 import PaginationComponent from '../../../components/PaginationComponent';
+import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
 
 export default function DepartmentList() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -24,6 +25,7 @@ export default function DepartmentList() {
 
   return (
     <div>
+      <AddModelButtonComponent buttonName={"Add Department"} redirectionUrl={navigationUrlProvider.departmentAddUrl}/>
       <Table striped className='listTable'>
         <thead>
           <tr>

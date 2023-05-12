@@ -11,6 +11,7 @@ import { Pagination } from "../../results/pagination/Pagination";
 export const employeeApi = createApi({
     reducerPath: "employeeApi",
     baseQuery: fetchBaseQuery({ baseUrl: apiUrlProvider.apiBaseUrl }),
+    tagTypes: ['employees'],
     endpoints: (builder) => ({
 
         getEmployeeById: builder.query<DataResult<Employee>, string>({
@@ -27,7 +28,20 @@ export const employeeApi = createApi({
             query: (pagination : Pagination) => apiUrlProvider.employee + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
+        getSelectElementEmployees: builder.query<Model, void>({
+            query: () => apiUrlProvider.employee + "/" + apiUrlProvider.selectElement + "/findAll",
+        }),
+
+        addEmployee: builder.mutation<Employee, Partial<Employee>>({
+            query: (employee) => ({
+              url: apiUrlProvider.employee + `/add`,
+              method: 'POST',
+              body : employee,
+            }),
+            invalidatesTags: ['employees'],
+          }),
+
     }),
 });
 
-export const { useGetEmployeeByIdQuery, useGetEmployeeByIdSimplifiedQuery, useGetEmployeesPagedQuery, useGetEmployeesPagedSimplifiedQuery } = employeeApi;
+export const { useGetEmployeeByIdQuery, useGetEmployeeByIdSimplifiedQuery, useGetEmployeesPagedQuery, useGetEmployeesPagedSimplifiedQuery, useAddEmployeeMutation, useGetSelectElementEmployeesQuery } = employeeApi;

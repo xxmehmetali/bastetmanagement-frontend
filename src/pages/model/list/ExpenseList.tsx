@@ -8,6 +8,7 @@ import navigationUrlProvider from '../../../providers/navigationUrlProvider';
 import { Table } from 'react-bootstrap';
 import PaginationComponent from '../../../components/PaginationComponent';
 import { formatDate } from '../../../functions/FormatDateFunction';
+import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
 
 export default function ExpenseList() {
   
@@ -26,6 +27,7 @@ export default function ExpenseList() {
   }
 return (
   <div>
+    <AddModelButtonComponent buttonName={"Add Expense"} redirectionUrl={navigationUrlProvider.expenseAddUrl}/>
     <Table striped className='listTable'>
       
       <thead>

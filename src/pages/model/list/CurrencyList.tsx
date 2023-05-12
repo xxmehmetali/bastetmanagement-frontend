@@ -7,6 +7,7 @@ import { Currency } from '../../../models/base/Currency';
 import navigationUrlProvider from '../../../providers/navigationUrlProvider';
 import { Table } from 'react-bootstrap';
 import PaginationComponent from '../../../components/PaginationComponent';
+import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
 
 export default function CurrencyList() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -26,6 +27,7 @@ export default function CurrencyList() {
   }
 return (
   <div>
+    <AddModelButtonComponent buttonName={"Add Currency"} redirectionUrl={navigationUrlProvider.currencyAddUrl}/>
     <Table striped className='listTable'>
       <thead>
         <tr>

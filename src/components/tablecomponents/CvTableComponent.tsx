@@ -5,7 +5,7 @@ export default function CvTableComponent({cv}: any) {
  return (
     <Accordion>
         <Accordion.Item eventKey="0">
-            <Accordion.Header>Department</Accordion.Header>
+            <Accordion.Header>Cv</Accordion.Header>
             <Accordion.Body className='component-accordion-body'>
                 <tr>
                     <td >ID</td>

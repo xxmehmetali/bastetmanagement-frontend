@@ -7,6 +7,7 @@ import { Occupation } from '../../../models/base/Occupation';
 import navigationUrlProvider from '../../../providers/navigationUrlProvider';
 import { Table } from 'react-bootstrap';
 import PaginationComponent from '../../../components/PaginationComponent';
+import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
 
 export default function OccupationList() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -23,6 +24,7 @@ export default function OccupationList() {
   }
   return (
     <div>
+      <AddModelButtonComponent buttonName={"Add Occupation"} redirectionUrl={navigationUrlProvider.occupationAddUrl}/>
       <Table striped className='listTable'>
         <thead>
           <tr>
