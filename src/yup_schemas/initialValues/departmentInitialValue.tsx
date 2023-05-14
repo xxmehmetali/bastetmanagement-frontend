@@ -1,4 +1,7 @@
 export const departmentInitialValue = {
     name: "",
-    description: ""
+    description: "",
+    departmentResponsible: {
+        id: ""
+    }
 }

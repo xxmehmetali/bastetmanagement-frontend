@@ -7,9 +7,19 @@ export const employeeInitialValue = {
     phoneNumber: "",
     nationalId: "",
     gender: Gender.MALE,
-    occupation: "",
+    occupation: {
+        id: ""
+    },
     startDate: new Date(),
     endDate: new Date(),
-    branch: "",
-    department: ""
+    branch: {
+        id: ""
+    },
+    department: {
+        id: ""
+    },
+    salaryAmount: "",
+    salaryCurrency: {
+        id: ""
+    }
 }

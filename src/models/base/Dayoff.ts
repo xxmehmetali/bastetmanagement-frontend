@@ -8,6 +8,7 @@ export interface Dayoff extends Model {
     endDate: Date;
     reason: string;
     isPaid: boolean;
+    description: string;
     createdAt: Date;
     updatedAt: Date;
 }

@@ -8,26 +8,59 @@ import { Button, Form } from 'react-bootstrap';
 import CustomInput from '../../../components/customFormElements/CustomInput';
 import CustomDatePicker from '../../../components/customFormElements/CustomDatePicker';
 import CustomSelect from '../../../components/customFormElements/CustomSelect';
+import { Occupation } from '../../../models/base/Occupation';
+import { GetOccupationSelectElements } from '../../../providers/SelectElementProviders/GetOccupationSelectElements';
+import { OccupationSelectElement } from '../../../models/frontdtos/OccupationSelectElement';
+import { Gender } from '../../../models/enums/Gender';
+import { ToTitleCase } from '../../../functions/ToTitleCase';
+import { BranchSelectElement } from '../../../models/frontdtos/BranchSelectElement';
+import { DepartmentSelectElement } from '../../../models/frontdtos/DepartmentSelectElement';
+import { GetBranchSelectElements } from '../../../providers/SelectElementProviders/GetBranchSelectElements';
+import { GetDepartmentSelectElements } from '../../../providers/SelectElementProviders/GetDepartmentSelectElements';
+import { CurrencySelectElement } from '../../../models/frontdtos/CurrencySelectElement';
+import { GetCurrencySelectElements } from '../../../providers/SelectElementProviders/GetCurrencySelectElements';
+import { ResolveResult } from '../../../functions/toastify/ResolveResult';
 
 export default function EmployeeAdd() {
   const [addEmployee, { isLoading }] = useAddEmployeeMutation();
-  function onSubmit(values: any, actions: any) {
+  async function onSubmit(values: any, actions: any) {
     console.log(values)
-    addEmployee(values)
+    const result = await addEmployee(values)
     actions.resetForm();
+    ResolveResult(result)
   }
+
+  const occupationSelectElementList: OccupationSelectElement[] = GetOccupationSelectElements();
+  const branchSelectElementList: BranchSelectElement[] = GetBranchSelectElements();
+  const departmentSelectElementList: DepartmentSelectElement[] = GetDepartmentSelectElements();
+  const currencySelectElementList: CurrencySelectElement[] = GetCurrencySelectElements();
 
   return (
     <div>
-      {/* <CorporationAddForm/> */}
-      {/* <Calendar value={dateTime24h} onChange={(e) => setDateTime24h(e.value as Date)} showTime hourFormat="24" /> */}
       <Formik
         initialValues={employeeInitialValue}
         validationSchema={yup.object({
           name: yup.string().required("Name required!").min(3, "Name is too short!"),
-          description: yup.string().required("Description required!").min(6, "Description is too short!"),
-          taxNumber: yup.string().required("Tax Number Required!").min(5).max(14),
-          foundationDate: yup.date().required("No Date is entered!")
+          surname: yup.string().required("Description required!").min(6, "Description is too short!"),
+          address: yup.string().required("Tax Number Required!").min(5).max(14),
+          phoneNumber: yup.string().required("Description required!").min(6, "Description is too short!"),
+          nationalId: yup.string().required("Description required!").min(6, "Description is too short!"),
+          gender: yup.mixed().oneOf([Gender.FEMALE, Gender.MALE]).required("Gender required!"),
+          occupation: yup.object().shape({
+            id: yup.string().required("Department Responsible needed!")
+          }),
+          branch: yup.object().shape({
+            id: yup.string().required("Department Responsible needed!")
+          }),
+          department: yup.object().shape({
+            id: yup.string().required("Department Responsible needed!")
+          }),
+          startDate: yup.date().required(),
+          endDate: yup.date().required(),
+          salaryAmount: yup.number().required("Salary Amount required!"),
+          salaryCurrency: yup.object().shape({
+            id: yup.string().required()
+          })
         })}
         onSubmit={onSubmit}
       >
@@ -35,26 +68,74 @@ export default function EmployeeAdd() {
           <Form
             onSubmit={formik.handleSubmit}
           >
-            {/* <CustomInput name="name" placeholder="Enter Name" label={"Name"} />
+            <CustomInput name="name" placeholder="Enter Name" label={"Name"} />
             <CustomInput name="surname" placeholder="Enter Description" type="text" label={"Description"} />
-            <CustomInput name="address" placeholder="Enter Tax Number" type="text" label={"Tax Number"} />
-            <CustomInput name="phoneNumber" placeholder="Enter Tax Number" type="text" label={"Tax Number"} />
-            <CustomInput name="nationalId" placeholder="Enter Tax Number" type="text" label={"Tax Number"} /> */}
-            <CustomSelect name="gender" placeholder="Please Select a Gender" label={"Gender"}>
-              <option value="s">22</option>
-              <option value="2">asd</option>
+            <CustomInput name="address" placeholder="Enter Address" type="text" label={"Address"} />
+            <CustomInput name="phoneNumber" placeholder="Enter Phone Number" type="text" label={"Phone Number"} />
+            <CustomInput name="nationalId" placeholder="Enter National Id" type="text" label={"National Id"} />
+
+            <CustomSelect label="Gender" name="gender">
+              <option value="">Please select a Gender</option>
+              <option value={Gender.MALE}>{ToTitleCase(Gender.MALE)}</option>
+              <option value={Gender.FEMALE}>{ToTitleCase(Gender.FEMALE)}</option>
             </CustomSelect>
-            {/* <CustomInput name="gender" placeholder="Enter Tax Number" type="text" label={"Tax Number"} />
-            gender
-            
-            <CustomInput name="occupation" placeholder="Enter Tax Number" type="text" label={"Tax Number"} />
-            occupation
 
-            <CustomDatePicker name="startDate" label={"Foundation Date"} placeholder="Please provide a Date" />
-            <CustomDatePicker name="endDate" label={"Foundation Date"} placeholder="Please provide a Date" /> */}
+            <CustomSelect label="Occupation"
+              name="occupation.id">
+              <option value="">Please select an Occupation</option>
+              {
+                occupationSelectElementList &&
+                occupationSelectElementList.map((occupationSelectElement: OccupationSelectElement) =>
+                (
+                  <option value={occupationSelectElement.id}>{occupationSelectElement.occupation}</option>
+                )
+                )
+              }
+            </CustomSelect>
+
+            <CustomSelect label="Branch"
+              name="branch.id">
+              <option value="">Please select a Branch</option>
+              {
+                branchSelectElementList &&
+                branchSelectElementList.map((branchSelectElement: BranchSelectElement) =>
+                (
+                  <option value={branchSelectElement.id}>{branchSelectElement.name}</option>
+                )
+                )
+              }
+            </CustomSelect>
+
+            <CustomSelect label="Department"
+              name="department.id">
+              <option value="">Please select a Department</option>
+              {
+                departmentSelectElementList &&
+                departmentSelectElementList.map((departmentSelectElement: DepartmentSelectElement) =>
+                (
+                  <option value={departmentSelectElement.id}>{departmentSelectElement.name}</option>
+                )
+                )
+              }
+            </CustomSelect>
+
+            <CustomInput name="salaryAmount" type label={"Salary Amount"} placeholder="Please provide a Salary Amount" />
+
+            <CustomSelect label="salaryCurrency"
+              name="salaryCurrency.id">
+              <option value="">Please select a Salary Currency</option>
+              {
+                currencySelectElementList &&
+                currencySelectElementList.map((currencySelectElement: CurrencySelectElement) =>
+                (
+                  <option value={currencySelectElement.id}>{currencySelectElement.currencyNameAndSymbol}</option>
+                )
+                )
+              }
+            </CustomSelect>
 
 
-            <Button type="submit" style={{marginTop:"1em"}}>
+            <Button type="submit" style={{ marginTop: "1em" }}>
               Add Corporation
             </Button>
           </Form>
@@ -63,4 +144,3 @@ export default function EmployeeAdd() {
     </div>
   );
 }
-    

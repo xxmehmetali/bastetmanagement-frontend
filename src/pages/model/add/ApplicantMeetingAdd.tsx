@@ -2,7 +2,7 @@
 import React from 'react'
 import { useAddApplicantMeetingsMutation } from '../../../features/api/applicantMeetingApi';
 import { ResolveResult } from '../../../functions/toastify/ResolveResult';
-import { applicantMeetingInitialValue } from '../../../yup_schemas/initialValues/applicantMeetingInitialValue';
+
 import { Formik } from 'formik';
 import * as yup from "yup";
 import { Button, Form } from 'react-bootstrap';
@@ -15,6 +15,8 @@ import { GetMeetingPlatformSelectElements } from '../../../providers/SelectEleme
 import CustomDatePicker from '../../../components/customFormElements/CustomDatePicker';
 import { ApplicantSelectElement } from '../../../models/frontdtos/ApplicantSelectElement';
 import { GetApplicantSelectElements } from '../../../providers/SelectElementProviders/GetApplicantSelectElements';
+import { applicantMeetingInitialValue } from '../../../yup_schemas/initialValues/applicantMeetingInitialValue';
+
 
 export default function ApplicantMeetingAdd() {
 
@@ -31,7 +33,7 @@ export default function ApplicantMeetingAdd() {
 
   const meetingOwnerSelectElementList: EmployeeSelectElement[] = GetEmployeeSelectElements();
   const meetingPlatformSelectElementList: MeetingPlatformSelectElement[] = GetMeetingPlatformSelectElements();
-  const applicantSelectElementList : ApplicantSelectElement[] = GetApplicantSelectElements();
+  const applicantSelectElementList: ApplicantSelectElement[] = GetApplicantSelectElements();
 
   return (
     <div>

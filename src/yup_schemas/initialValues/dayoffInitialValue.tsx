@@ -1,7 +1,10 @@
 export const dayoffInitialValue = {
-    employee: "",
+    employee: {
+        id: ""
+    },
     beginDate: new Date(),
     endDate: new Date(),
     reason: "",
-    isPaid: true
+    isPaid: true,
+    description: ""
 }
