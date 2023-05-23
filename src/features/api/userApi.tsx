@@ -8,7 +8,14 @@ import { User } from "../../models/base/User";
 
 export const userApi = createApi({
     reducerPath: "userApi",
-    baseQuery: fetchBaseQuery({ baseUrl: apiUrlProvider.apiBaseUrl }),
+    baseQuery: fetchBaseQuery({ 
+        baseUrl: apiUrlProvider.apiBaseUrl,
+        prepareHeaders:  (headers, { getState }) => {
+            const loggedInUserInfo = JSON.parse(localStorage.getItem("loggedInUserInfo") || "{}")
+            headers.set('Authorization', "Bearer " + loggedInUserInfo.jwt);
+            return headers;
+          },
+    }),
     tagTypes: ['users'],
     endpoints: (builder) => ({
 
@@ -30,6 +37,10 @@ export const userApi = createApi({
             query: () => apiUrlProvider.user + "/" + apiUrlProvider.selectElement + "/findAll",
         }),
 
+        getCurrentUserProfile: builder.query<Model, void>({
+            query: () => apiUrlProvider.user + "/findCurrentUser",
+        }),
+
         addUser: builder.mutation<User, Partial<User>>({
             query: (user) => ({
               url: apiUrlProvider.user + `/add`,
@@ -42,4 +53,4 @@ export const userApi = createApi({
     }),
 });
 
-export const { useGetUserByIdQuery, useGetUserByIdSimplifiedQuery, useGetUserPagedQuery, useGetUserPagedSimplifiedQuery, useAddUserMutation, useGetSelectElementUsersQuery } = userApi;
+export const { useGetUserByIdQuery, useGetUserByIdSimplifiedQuery, useGetUserPagedQuery, useGetUserPagedSimplifiedQuery, useAddUserMutation, useGetSelectElementUsersQuery, useGetCurrentUserProfileQuery } = userApi;

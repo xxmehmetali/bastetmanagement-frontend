@@ -8,7 +8,14 @@ import { Dayoff } from "../../models/base/Dayoff";
 
 export const dayoffApi = createApi({
     reducerPath: "dayoffApi",
-    baseQuery: fetchBaseQuery({ baseUrl: apiUrlProvider.apiBaseUrl }),
+    baseQuery: fetchBaseQuery({ 
+        baseUrl: apiUrlProvider.apiBaseUrl,
+        prepareHeaders:  (headers, { getState }) => {
+            const loggedInUserInfo = JSON.parse(localStorage.getItem("loggedInUserInfo") || "{}")
+            headers.set('Authorization', "Bearer " + loggedInUserInfo.jwt);
+            return headers;
+          },
+    }),
     tagTypes: ['dayoffs'],
     endpoints: (builder) => ({
 

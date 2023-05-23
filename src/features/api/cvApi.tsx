@@ -8,7 +8,14 @@ import { Cv } from "../../models/base/Cv";
 
 export const cvApi = createApi({
     reducerPath: "cvApi",
-    baseQuery: fetchBaseQuery({ baseUrl: apiUrlProvider.apiBaseUrl }),
+    baseQuery: fetchBaseQuery({ 
+        baseUrl: apiUrlProvider.apiBaseUrl,
+        prepareHeaders:  (headers, { getState }) => {
+            const loggedInUserInfo = JSON.parse(localStorage.getItem("loggedInUserInfo") || "{}")
+            headers.set('Authorization', "Bearer " + loggedInUserInfo.jwt);
+            return headers;
+          },
+    }),
     tagTypes: ['cvs'],
     endpoints: (builder) => ({
 

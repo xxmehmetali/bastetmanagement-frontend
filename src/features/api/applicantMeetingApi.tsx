@@ -8,22 +8,29 @@ import { ApplicantMeeting } from "../../models/base/ApplicantMeeting";
 
 export const applicantMeetingApi = createApi({
     reducerPath: "applicantMeetingApi",
-    baseQuery: fetchBaseQuery({ baseUrl: apiUrlProvider.apiBaseUrl }),
+    baseQuery: fetchBaseQuery({
+        baseUrl: apiUrlProvider.apiBaseUrl,
+        prepareHeaders: (headers, { getState }) => {
+            const loggedInUserInfo = JSON.parse(localStorage.getItem("loggedInUserInfo") || "{}")
+            headers.set('Authorization', "Bearer " + loggedInUserInfo.jwt);
+            return headers;
+        },
+    }),
     tagTypes: ['applicantMeetings'],
     endpoints: (builder) => ({
 
         getApplicantMeetingById: builder.query<Model, string>({
-            query: (id : string) => apiUrlProvider.applicantmeeting + `/findById/${id}`,
+            query: (id: string) => apiUrlProvider.applicantmeeting + `/findById/${id}`,
         }),
         getApplicantMeetingByIdSimplified: builder.query<Model, string>({
-            query: (id : string) => apiUrlProvider.applicantmeeting + `/simplified/findById/${id}`,
+            query: (id: string) => apiUrlProvider.applicantmeeting + `/simplified/findById/${id}`,
         }),
         getApplicantMeetingsPaged: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.applicantmeeting + `/findAll?page=${pagination.page}&size=${pagination.size}`,
+            query: (pagination: Pagination) => apiUrlProvider.applicantmeeting + `/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
         getApplicantMeetingsPagedSimplified: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.applicantmeeting + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
+            query: (pagination: Pagination) => apiUrlProvider.applicantmeeting + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
         getSelectElementApplicantMeetings: builder.query<Model, void>({
@@ -32,12 +39,12 @@ export const applicantMeetingApi = createApi({
 
         addApplicantMeetings: builder.mutation<ApplicantMeeting, Partial<ApplicantMeeting>>({
             query: (applicantMeeting) => ({
-              url: apiUrlProvider.applicantmeeting + `/add`,
-              method: 'POST',
-              body : applicantMeeting,
+                url: apiUrlProvider.applicantmeeting + `/add`,
+                method: 'POST',
+                body: applicantMeeting,
             }),
             invalidatesTags: ['applicantMeetings'],
-          }),
+        }),
 
     }),
 });

@@ -8,7 +8,14 @@ import { SocialActivityType } from "../../models/base/SocialActivityType";
 
 export const socialActivityTypeApi = createApi({
     reducerPath: "socialActivityTypeApi",
-    baseQuery: fetchBaseQuery({ baseUrl: apiUrlProvider.apiBaseUrl }),
+    baseQuery: fetchBaseQuery({ 
+        baseUrl: apiUrlProvider.apiBaseUrl,
+        prepareHeaders:  (headers, { getState }) => {
+            const loggedInUserInfo = JSON.parse(localStorage.getItem("loggedInUserInfo") || "{}")
+            headers.set('Authorization', "Bearer " + loggedInUserInfo.jwt);
+            return headers;
+          },
+    }),
     tagTypes: ['socialActivityTypes'],
     endpoints: (builder) => ({
 

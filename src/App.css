@@ -139,3 +139,11 @@ body {
 .Toastify__toast-icon {
   margin-right: 80px !important;
 }
+
+.authForm {
+  border: 1px solid #dbdbdb;
+  border-radius: 3px;
+  width: 50%;
+  margin: auto;
+  padding: 1em;
+}

@@ -1,18 +1,19 @@
 
 import React from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useGetEmployeeByIdQuery } from '../../../features/api/employeeApi';
 import { DataResult } from '../../../results/DataResult';
 import { Employee } from '../../../models/base/Employee';
 import { strict } from 'assert';
 import { string } from 'yup';
-import { Table } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
 import BranchTableComponent from '../../../components/tablecomponents/BranchTableComponent';
 import DepartmentTableComponent from '../../../components/tablecomponents/DepartmentTableComponent';
 import OccupationTableComponent from '../../../components/tablecomponents/OccupationTableComponent';
+import navigationUrlProvider from '../../../providers/navigationUrlProvider';
 
 export default function EmployeeDetail() {
-  let { id } = useParams();
+  let { id }  = useParams();
 
   const { data: employeeDataResultDataForEmployee, isLoading, error } = useGetEmployeeByIdQuery(id || "");
   const employeeDataResultForEmployee: DataResult<Employee> = employeeDataResultDataForEmployee as DataResult<Employee>;
@@ -20,6 +21,10 @@ export default function EmployeeDetail() {
 
   console.log(employee)
 
+  const navigate = useNavigate();
+  function handleNavigateToUpdate(id: string) {
+    navigate(navigationUrlProvider.employeeUpdateUrl + id)
+  }
 
   if (error) {
     return (
@@ -29,7 +34,7 @@ export default function EmployeeDetail() {
 
   return (
     <div>
-
+      <Button onClick={() => { (handleNavigateToUpdate(id?.toString() || "")) }}>Update</Button>
       {employee &&
         <Table striped className='detailTable'>
           <thead>

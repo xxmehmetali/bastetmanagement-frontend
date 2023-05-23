@@ -10,7 +10,14 @@ import { Pagination } from "../../results/pagination/Pagination";
 
 export const employeeApi = createApi({
     reducerPath: "employeeApi",
-    baseQuery: fetchBaseQuery({ baseUrl: apiUrlProvider.apiBaseUrl }),
+    baseQuery: fetchBaseQuery({ 
+        baseUrl: apiUrlProvider.apiBaseUrl,
+        prepareHeaders:  (headers, { getState }) => {
+            const loggedInUserInfo = JSON.parse(localStorage.getItem("loggedInUserInfo") || "{}")
+            headers.set('Authorization', "Bearer " + loggedInUserInfo.jwt);
+            return headers;
+          },
+    }),
     tagTypes: ['employees'],
     endpoints: (builder) => ({
 
@@ -41,7 +48,17 @@ export const employeeApi = createApi({
             invalidatesTags: ['employees'],
           }),
 
+          updateEmployee: builder.mutation<Employee, Partial<Employee>>({
+            query: (employee) => ({
+              url: apiUrlProvider.employee + `/update`,
+              method: 'POST',
+              body : JSON.parse(JSON.stringify(employee)),
+            }),
+            invalidatesTags: ['employees'],
+          }),
+
+
     }),
 });
 
-export const { useGetEmployeeByIdQuery, useGetEmployeeByIdSimplifiedQuery, useGetEmployeesPagedQuery, useGetEmployeesPagedSimplifiedQuery, useAddEmployeeMutation, useGetSelectElementEmployeesQuery } = employeeApi;
+export const { useGetEmployeeByIdQuery, useGetEmployeeByIdSimplifiedQuery, useGetEmployeesPagedQuery, useGetEmployeesPagedSimplifiedQuery, useAddEmployeeMutation, useGetSelectElementEmployeesQuery, useUpdateEmployeeMutation } = employeeApi;

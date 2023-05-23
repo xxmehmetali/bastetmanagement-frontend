@@ -20,14 +20,17 @@ import { GetDepartmentSelectElements } from '../../../providers/SelectElementPro
 import { CurrencySelectElement } from '../../../models/frontdtos/CurrencySelectElement';
 import { GetCurrencySelectElements } from '../../../providers/SelectElementProviders/GetCurrencySelectElements';
 import { ResolveResult } from '../../../functions/toastify/ResolveResult';
+import { useNavigate } from 'react-router-dom';
+import navigationUrlProvider from '../../../providers/navigationUrlProvider';
+import { Employee } from '../../../models/base/Employee';
 
 export default function EmployeeAdd() {
   const [addEmployee, { isLoading }] = useAddEmployeeMutation();
   async function onSubmit(values: any, actions: any) {
-    console.log(values)
-    const result = await addEmployee(values)
-    actions.resetForm();
-    ResolveResult(result)
+    console.log(values as Employee)
+    // const result = await addEmployee(values)
+    // actions.resetForm();
+    // ResolveResult(result)
   }
 
   const occupationSelectElementList: OccupationSelectElement[] = GetOccupationSelectElements();
@@ -38,7 +41,8 @@ export default function EmployeeAdd() {
   return (
     <div>
       <Formik
-        initialValues={employeeInitialValue}
+        // initialValues={employeeInitialValue}
+        initialValues={new employeeInitialValue()}
         validationSchema={yup.object({
           name: yup.string().required("Name required!").min(3, "Name is too short!"),
           surname: yup.string().required("Description required!").min(6, "Description is too short!"),

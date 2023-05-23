@@ -78,8 +78,8 @@ export default function ApplicantDetail() {
               <td>{applicant.technicalReview}</td>
             </tr>
             <tr>
-              <td>Applicant Meeting XXXXXX</td>
-              <td>{applicant.id}</td>
+              <td>BURAYI DÜZELT MEETİNG İ AYRI ÇEK  Applicant Meeting XXXXXX</td>
+              <td>veri yok ula</td>
             </tr>
             <tr>
               <td>Created At</td>

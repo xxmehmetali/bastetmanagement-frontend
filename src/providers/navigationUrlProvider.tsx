@@ -26,7 +26,16 @@ const user = "/user"
 const model = '/model';
 const detailWord = 'Detail'
 const addWord = 'Add'
+const updateWord = 'Update'
 const slash = '/'
+
+// Authentication
+const register = "/register"
+const login = "/login"
+const auth = "/auth"
+
+// Personal
+const profile = "/profile"
 
 // List
 const applicantListUrl = model + applicant
@@ -99,8 +108,12 @@ const socialActivityTypeAddUrl =  model + socialActivityType + addWord + slash
 const taskAddUrl =  model + task + addWord + slash
 const userAddUrl =  model + user + addWord + slash
 
+// Update
+const employeeUpdateUrl = model + employee + updateWord + slash
 
 export default {applicantListUrl, employeeListUrl, applicantmeetingListUrl, branchListUrl, contextListUrl, corporationListUrl, currencyListUrl, cvListUrl, dayoffListUrl, departmentListUrl, expenseListUrl, expensetypeListUrl, meetingListUrl, meetingplatformListUrl, occupationListUrl, projectListUrl, roleListUrl, socialActivityListUrl, socialActivityTypeListUrl, taskListUrl, userListUrl,
     applicantDetailUrl, applicantmeetingDetailUrl, branchDetailUrl, contextDetailUrl, corporationDetailUrl, currencyDetailUrl, cvDetailUrl, dayoffDetailUrl, departmentDetailUrl, employeeDetailUrl, expenseDetailUrl, expensetypeDetailUrl, roleDetailUrl, meetingDetailUrl, meetingplatformDetailUrl, occupationDetailUrl, projectDetailUrl, socialActivityDetailUrl, socialActivityTypeDetailUrl, taskDetailUrl, userDetailUrl,
-    applicantAddUrl, applicantmeetingAddUrl, branchAddUrl, contextAddUrl, corporationAddUrl, currencyAddUrl, cvAddUrl, dayoffAddUrl, departmentAddUrl, employeeAddUrl, expenseAddUrl, expensetypeAddUrl, roleAddUrl, meetingAddUrl, meetingplatformAddUrl, occupationAddUrl, projectAddUrl, socialActivityAddUrl, socialActivityTypeAddUrl, taskAddUrl, userAddUrl
+    applicantAddUrl, applicantmeetingAddUrl, branchAddUrl, contextAddUrl, corporationAddUrl, currencyAddUrl, cvAddUrl, dayoffAddUrl, departmentAddUrl, employeeAddUrl, expenseAddUrl, expensetypeAddUrl, roleAddUrl, meetingAddUrl, meetingplatformAddUrl, occupationAddUrl, projectAddUrl, socialActivityAddUrl, socialActivityTypeAddUrl, taskAddUrl, userAddUrl,
+    employeeUpdateUrl,
+    register, login, auth, profile
 }

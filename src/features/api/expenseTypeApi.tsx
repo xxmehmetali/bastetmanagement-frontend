@@ -8,7 +8,14 @@ import { ExpenseType } from "../../models/base/ExpenseType";
 
 export const expenseTypeApi = createApi({
     reducerPath: "expenseTypeApi",
-    baseQuery: fetchBaseQuery({ baseUrl: apiUrlProvider.apiBaseUrl }),
+    baseQuery: fetchBaseQuery({ 
+        baseUrl: apiUrlProvider.apiBaseUrl,
+        prepareHeaders:  (headers, { getState }) => {
+            const loggedInUserInfo = JSON.parse(localStorage.getItem("loggedInUserInfo") || "{}")
+            headers.set('Authorization', "Bearer " + loggedInUserInfo.jwt);
+            return headers;
+          },
+    }),
     tagTypes: ['expenseTypes'],
     endpoints: (builder) => ({
 

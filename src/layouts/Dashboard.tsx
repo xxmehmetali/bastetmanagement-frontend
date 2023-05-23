@@ -1,6 +1,6 @@
 import React from 'react'
 import { Col, Container, Row } from 'react-bootstrap';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import navigationUrlProvider from '../providers/navigationUrlProvider';
 
@@ -29,7 +29,6 @@ import CvList from '../pages/model/list/CvList';
 import DayoffList from '../pages/model/list/DayoffList';
 import EmployeeList from '../pages/model/list/EmployeeList';
 import ExpenseList from '../pages/model/list/ExpenseList';
-import Login from '../pages/model/list/Login';
 import MeetingList from '../pages/model/list/MeetingList';
 import MeetingPlatformList from '../pages/model/list/MeetingPlatformList';
 import OccupationList from '../pages/model/list/OccupationList';
@@ -66,11 +65,28 @@ import ProjectAdd from '../pages/model/add/ProjectAdd';
 import SocialActivityAdd from '../pages/model/add/SocialActivityAdd';
 import SocialActivityTypeAdd from '../pages/model/add/SocialActivityTypeAdd';
 import TaskAdd from '../pages/model/add/TaskAdd';
+import Auth from '../pages/model/auth/Auth';
+import Register from '../pages/model/auth/Register';
+import { useSelector } from 'react-redux';
+import { RootState } from '../app/store';
+import Login from '../pages/model/auth/Login';
+import Profile from '../pages/profile/Profile';
+import EmployeeUpdate from '../pages/model/update/EmployeeUpdate';
 
 export default function Dashboard() {
+    const { isUserLoggedIn } = useSelector((state: RootState) => state.userSlice);
     return (
         <div>
             <ToastContainer position="bottom-right" />
+            <Routes>
+                {/* Login sreen if user not authenticated */}
+
+
+                {/* KALDIRILACAK ALTTAKİ */}
+
+
+            </Routes>
+
 
             {/* burda eğer login olmadıysa menuyu göster  */}
             {/* <Menu /> */}
@@ -79,28 +95,17 @@ export default function Dashboard() {
             {/* LOGİN OLDUYSA AŞAĞIYI GÖSTER */}
 
             {(() => {
-                if (true) {
+                if (isUserLoggedIn) {
+                    // if (true) {
                     return (
                         <Container>
                             <Row>
                                 <Col md="2">
-
-                                    {/* Login sreen if user not authenticated */}
-                                    <Login />
-
-
-                                    {/* Accesible menus screen if user authenticated */}
                                     <Menu />
-
                                 </Col>
                                 <Col md="10">
                                     <Routes>
-                                        {/* KALDIRILACAK ALTTAKİ */}
-                                        <Route path='/' element={<EmployeeList />} />
-
-
                                         {/* LIST */}
-                                        {/* <Route path={(() => {return new String(employeeListUrl).toString() })()} element={<EmployeeList />} /> */}
                                         <Route path={navigationUrlProvider.applicantListUrl} element={<ApplicantList />} />
                                         <Route path={navigationUrlProvider.applicantmeetingListUrl} element={<ApplicantMeetingList />} />
                                         <Route path={navigationUrlProvider.employeeListUrl} element={<EmployeeList />} />
@@ -146,7 +151,6 @@ export default function Dashboard() {
                                         <Route path={navigationUrlProvider.taskDetailUrl + ":id"} element={<TaskDetail />} />
                                         {/* <Route path='/model/userDetail/:id' element={<UserDet />} /> */}
 
-
                                         {/* ADD */}
                                         <Route path={navigationUrlProvider.employeeAddUrl} element={<EmployeeAdd />} />
                                         <Route path={navigationUrlProvider.applicantAddUrl} element={<ApplicantAdd />} />
@@ -169,6 +173,16 @@ export default function Dashboard() {
                                         <Route path={navigationUrlProvider.socialActivityTypeAddUrl} element={<SocialActivityTypeAdd />} />
                                         <Route path={navigationUrlProvider.taskAddUrl} element={<TaskAdd />} />
                                         {/* <Route path='/model/userAdd/:id' element={<UserDet />} /> */}
+
+
+                                        {/* UPDATE */}
+                                        <Route path={navigationUrlProvider.employeeUpdateUrl + ":id"} element={<EmployeeUpdate />} />
+
+
+
+                                        {/* PERSONAL */}
+                                        <Route path={navigationUrlProvider.profile} element={<Profile />} />
+
                                     </Routes>
                                 </Col>
                             </Row>
@@ -176,7 +190,19 @@ export default function Dashboard() {
                     )
                 } else {
                     return (
-                        ""
+                        <Container>
+                            <Row>
+                                <Col md="12">
+                                    <Routes>
+                                        <Route path='/' element={<Navigate to={navigationUrlProvider.auth} replace />} />
+                                        <Route path={navigationUrlProvider.auth} element={<Auth />} />
+                                        <Route path={navigationUrlProvider.login} element={<Login />} />
+                                        <Route path={navigationUrlProvider.register} element={<Register />} />
+                                        <Route path={navigationUrlProvider.employeeUpdateUrl + ":id"} element={<EmployeeUpdate />} />
+                                    </Routes>
+                                </Col>
+                            </Row>
+                        </Container>
                     )
                 }
             })()}

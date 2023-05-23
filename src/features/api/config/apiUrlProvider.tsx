@@ -3,8 +3,24 @@
 const apiDevelopmentBaseUrl = "http://localhost:8080"
 const apiProductionBaseUrl = "http://localhost:8080"
 
+//http://localhost:8080/api/auth/
+
 // Api Versions
-const apiVersionUrl = "/api/v1"
+const apiV1 = "/v1"
+const currentApi = apiV1
+
+// Api
+const pureApi = "/api"
+const apiVersionUrl = pureApi + currentApi
+
+// Authentication
+const auth = "/auth"
+const login = "/login"
+const register = "/register"
+
+const authApi = apiProductionBaseUrl + pureApi + auth
+const loginApi = authApi + login
+const registerApi = authApi + register
 
 // Simplified Prefix
 const simplifiedPrefix = "/simplified"
@@ -39,4 +55,36 @@ const task = "/task"
 const user = "/user"
 
 const apiBaseUrl = apiDevelopmentBaseUrl + apiVersionUrl 
-export default {apiBaseUrl, apiVersionUrl, simplifiedPrefix, modelPrefix, applicant, applicantmeeting, branch, context, corporation, currency, cv, dayoff, department, employee, expense, expensetype, meeting, meetingplatform, occupation, project, role, socialActivity, socialActivityType, task, user, selectElement};
+export default {
+    apiBaseUrl, 
+    apiVersionUrl, 
+    simplifiedPrefix, 
+    modelPrefix, 
+    applicant, 
+    applicantmeeting, 
+    branch, 
+    context, 
+    corporation, 
+    currency, 
+    cv, 
+    dayoff, 
+    department, 
+    employee,
+    expense, 
+    expensetype, 
+    meeting, 
+    meetingplatform, 
+    occupation, 
+    project, 
+    role, 
+    socialActivity, 
+    socialActivityType, 
+    task, 
+    user, 
+    selectElement,
+    authApi,
+    loginApi,
+    registerApi,
+    login,
+    register
+};
