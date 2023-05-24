@@ -37,16 +37,30 @@ export const currencyApi = createApi({
             query: () => apiUrlProvider.currency + "/" + apiUrlProvider.selectElement + "/findAll",
         }),
 
-        addCurrency: builder.mutation<Currency, Partial<Currency>>({
-            query: (currency) => ({
-              url: apiUrlProvider.currency + `/add`,
-              method: 'POST',
-              body : currency,
-            }),
-            invalidatesTags: ['currencies'],
-          }),
-
+    addCurrency: builder.mutation<Currency, Partial<Currency>>({
+      query: (currency) => ({
+        url: apiUrlProvider.currency + `/add`,
+        method: "POST",
+        body: currency,
+      }),
+      invalidatesTags: ["currencies"],
     }),
+    deleteCurrencyById: builder.mutation({
+      query: (id: string) => ({
+        url: apiUrlProvider.currency + `/deleteById?id=${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["currencies"],
+    }),
+  }),
 });
 
-export const { useGetCurrenciesPagedQuery, useGetCurrenciesPagedSimplifiedQuery, useGetCurrencyByIdQuery, useGetCurrencyByIdSimplifiedQuery, useAddCurrencyMutation, useGetSelectElementCurrenciesQuery } = currencyApi;
+export const {
+  useGetCurrenciesPagedQuery,
+  useGetCurrenciesPagedSimplifiedQuery,
+  useGetCurrencyByIdQuery,
+  useGetCurrencyByIdSimplifiedQuery,
+  useAddCurrencyMutation,
+  useGetSelectElementCurrenciesQuery,
+  useDeleteCurrencyByIdMutation
+} = currencyApi;

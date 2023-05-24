@@ -37,16 +37,33 @@ export const socialActivityApi = createApi({
             query: () => apiUrlProvider.socialActivity + "/" + apiUrlProvider.selectElement + "/findAll",
         }),
 
-        addSocialActivity: builder.mutation<SocialActivity, Partial<SocialActivity>>({
-            query: (socialActivity) => ({
-              url: apiUrlProvider.socialActivity + `/add`,
-              method: 'POST',
-              body : socialActivity,
-            }),
-            invalidatesTags: ['socialActivities'],
-          }),
-
+    addSocialActivity: builder.mutation<
+      SocialActivity,
+      Partial<SocialActivity>
+    >({
+      query: (socialActivity) => ({
+        url: apiUrlProvider.socialActivity + `/add`,
+        method: "POST",
+        body: socialActivity,
+      }),
+      invalidatesTags: ["socialActivities"],
     }),
+    deleteSocialActivityById: builder.mutation({
+      query: (id: string) => ({
+        url: apiUrlProvider.socialActivity + `/deleteById?id=${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["socialActivities"],
+    }),
+  }),
 });
 
-export const { useGetSocialActivitiesPagedQuery, useGetSocialActivitiesPagedSimplifiedQuery, useGetSocialActivityByIdQuery, useGetSocialActivityIdSimplifiedQuery, useAddSocialActivityMutation, useGetSelectElementSocialActivitiesQuery } = socialActivityApi;
+export const {
+  useGetSocialActivitiesPagedQuery,
+  useGetSocialActivitiesPagedSimplifiedQuery,
+  useGetSocialActivityByIdQuery,
+  useGetSocialActivityIdSimplifiedQuery,
+  useAddSocialActivityMutation,
+  useGetSelectElementSocialActivitiesQuery,
+  useDeleteSocialActivityByIdMutation
+} = socialActivityApi;

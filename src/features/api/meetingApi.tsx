@@ -36,16 +36,30 @@ export const meetingApi = createApi({
             query: () => apiUrlProvider.meeting + "/" + apiUrlProvider.selectElement + "/findAll",
         }),
 
-        addMeeting: builder.mutation<Meeting, Partial<Meeting>>({
-            query: (meeting) => ({
-              url: apiUrlProvider.meeting + `/add`,
-              method: 'POST',
-              body : meeting,
-            }),
-            invalidatesTags: ['meetings'],
-          }),
-
+    addMeeting: builder.mutation<Meeting, Partial<Meeting>>({
+      query: (meeting) => ({
+        url: apiUrlProvider.meeting + `/add`,
+        method: "POST",
+        body: meeting,
+      }),
+      invalidatesTags: ["meetings"],
     }),
+    deleteMeetingById: builder.mutation({
+      query: (id: string) => ({
+        url: apiUrlProvider.meeting + `/deleteById?id=${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["meetings"],
+    }),
+  }),
 });
 
-export const { useGetMeetingByIdQuery, useGetMeetingByIdSimplifiedQuery, useGetMeetingsPagedQuery, useGetMeetingsPagedSimplifiedQuery, useAddMeetingMutation, useGetSelectElementMeetingsQuery } = meetingApi;
+export const {
+  useGetMeetingByIdQuery,
+  useGetMeetingByIdSimplifiedQuery,
+  useGetMeetingsPagedQuery,
+  useGetMeetingsPagedSimplifiedQuery,
+  useAddMeetingMutation,
+  useGetSelectElementMeetingsQuery,
+  useDeleteMeetingByIdMutation,
+} = meetingApi;

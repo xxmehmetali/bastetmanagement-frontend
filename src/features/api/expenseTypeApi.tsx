@@ -36,16 +36,30 @@ export const expenseTypeApi = createApi({
             query: () => apiUrlProvider.expensetype + "/" + apiUrlProvider.selectElement + "/findAll",
         }),
 
-        addExpenseType: builder.mutation<ExpenseType, Partial<ExpenseType>>({
-            query: (expenseType) => ({
-              url: apiUrlProvider.expensetype + `/add`,
-              method: 'POST',
-              body : expenseType,
-            }),
-            invalidatesTags: ['expenseTypes'],
-          }),
-
+    addExpenseType: builder.mutation<ExpenseType, Partial<ExpenseType>>({
+      query: (expenseType) => ({
+        url: apiUrlProvider.expensetype + `/add`,
+        method: "POST",
+        body: expenseType,
+      }),
+      invalidatesTags: ["expenseTypes"],
     }),
+    deleteExpenseTypeById: builder.mutation({
+      query: (id: string) => ({
+        url: apiUrlProvider.expensetype + `/deleteById?id=${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["expenseTypes"],
+    }),
+  }),
 });
 
-export const { useGetExpenseTypeByIdQuery, useGetExpenseTypeByIdSimplifiedQuery, useGetExpenseTypesPagedQuery, useGetExpenseTypesPagedSimplifiedQuery, useAddExpenseTypeMutation, useGetSelectElementExpenseTypesQuery } = expenseTypeApi;
+export const {
+  useGetExpenseTypeByIdQuery,
+  useGetExpenseTypeByIdSimplifiedQuery,
+  useGetExpenseTypesPagedQuery,
+  useGetExpenseTypesPagedSimplifiedQuery,
+  useAddExpenseTypeMutation,
+  useGetSelectElementExpenseTypesQuery,
+  useDeleteExpenseTypeByIdMutation,
+} = expenseTypeApi;

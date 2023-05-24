@@ -1,11 +1,11 @@
 import React from 'react'
-import { useGetApplicantMeetingsPagedSimplifiedQuery } from '../../../features/api/applicantMeetingApi';
+import { useDeleteApplicantMeetingByIdMutation, useGetApplicantMeetingsPagedSimplifiedQuery } from '../../../features/api/applicantMeetingApi';
 import { Pagination } from '../../../results/pagination/Pagination';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { PagedDataResult } from '../../../results/PagedDataResult';
 import { ApplicantMeeting } from '../../../models/base/ApplicantMeeting';
 import navigationUrlProvider from '../../../providers/navigationUrlProvider';
-import { Table } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
 import PaginationComponent from '../../../components/PaginationComponent';
 import { formatDate } from '../../../functions/FormatDateFunction';
 import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
@@ -19,7 +19,12 @@ export default function ApplicantMeetingList() {
     const applicantMeetings : ApplicantMeeting[] = (pagedDataResultForApplicantMeeting?.data?.content) as ApplicantMeeting[];
 
     const totalPages = pagedDataResultForApplicantMeeting?.data?.totalPages || 1;
-    
+    const [deleteApplicantMeeting, { data }] = useDeleteApplicantMeetingByIdMutation();
+
+    async function handleDelete(id : any) {
+      const result = await deleteApplicantMeeting(id)
+      //ResolveResult(result)
+    }
 
 
     const navigate = useNavigate();
@@ -43,11 +48,20 @@ export default function ApplicantMeetingList() {
 
       {applicantMeetings &&
         applicantMeetings.map((applicantMeetings: ApplicantMeeting) => (
-          <tr onClick={() => { (handleNavigateToDetail(applicantMeetings.id)) }}>
-            <td>{applicantMeetings.meetingOwner.name} {applicantMeetings.meetingOwner.surname}</td>
-            <td>{applicantMeetings.meetingPlatform.name}</td>
-            <td>{formatDate(applicantMeetings.beginHour)}</td>
-            <td>{formatDate(applicantMeetings.endHour)}</td>
+          <tr>
+            <td onClick={() => { (handleNavigateToDetail(applicantMeetings.id)) }}>{applicantMeetings.meetingOwner.name} {applicantMeetings.meetingOwner.surname}</td>
+            <td onClick={() => { (handleNavigateToDetail(applicantMeetings.id)) }}>{applicantMeetings.meetingPlatform.name}</td>
+            <td onClick={() => { (handleNavigateToDetail(applicantMeetings.id)) }}>{formatDate(applicantMeetings.beginHour)}</td>
+            <td onClick={() => { (handleNavigateToDetail(applicantMeetings.id)) }}>{formatDate(applicantMeetings.endHour)}</td>
+            <td>
+                  {" "}
+                  <Button variant="warning">
+                    Update
+                  </Button>{" "}
+                </td>
+                <td>
+                  <Button variant="danger" onClick={() => {handleDelete(applicantMeetings.id)}}>Delete</Button>
+                </td>
           </tr>
         ))}
 

@@ -8,6 +8,7 @@ import { Corporation } from '../../../models/base/Corporation';
 import { formatDate } from '../../../functions/FormatDateFunction';
 import ProjectTableComponent from '../../../components/tablecomponents/ProjectTableComponent';
 import { Project } from '../../../models/base/Project';
+import { Employee } from '../../../models/base/Employee';
 
 export default function CorporationDetail() {
   let { id } = useParams();
@@ -16,16 +17,19 @@ export default function CorporationDetail() {
   const corporationDataResultForCorporation: DataResult<Corporation> = corporationDataResultDataForCorporation as DataResult<Corporation>;
   const corporation: Corporation = (corporationDataResultForCorporation?.data) as Corporation;
   
-  const { data: projectsForCorporation, isLoading, error } = useGetProjectsByCorporationIdQuery(id || "");
-  const dataResultForProject: DataResult<Project[]> = projectsForCorporation as DataResult<Project[]>;
-  const projects: Project[] = (dataResultForProject?.data) as Project[];
+  // const { data: projectsForCorporation, isLoading, error } = useGetProjectsByCorporationIdQuery(id || "");
+  // const dataResultForProject: DataResult<Project[]> = projectsForCorporation as DataResult<Project[]>;
+  // const projects: Project[] = (dataResultForProject?.data) as Project[];
 
+  // const { data: employeeForExpense, isLoading, error } = useGetEmployeesByExpenseIdQuery(id || "");
+  // const dataResultForEmployee: DataResult<Employee[]> = employeeForExpense as DataResult<Employee[]>;
+  // const employees: Employee[] = (dataResultForProject?.data) as Employee[];
 
-  if(error){
-    return(
-      <div>Error</div>
-    )
-  }
+  // if(error){
+  //   return(
+  //     <div>Error</div>
+  //   )
+  // }
 
   return (
     <div>
@@ -54,11 +58,11 @@ export default function CorporationDetail() {
               <td>Foundation Date</td>
               <td>{formatDate(corporation.foundationDate)}</td>
             </tr>
-            <tr>
+            {/* <tr>
               <td colSpan={2}>
                 <ProjectTableComponent projectList={projects} accordionTitle={"Projects"}/>
               </td>
-            </tr>           
+            </tr>            */}
             <tr>
               <td>Created At</td>
               <td>{formatDate(corporation.createdAt)}</td>

@@ -7,8 +7,16 @@ export const taskInitialValue = {
     tags: "",
     taskStatus: TaskStatus.WAITING_FOR_INFO,
     priority: Priority.NOT_DECLARED,
-    assignedFrom: "",
-    assignedTo: "",
-    reviewer: "",
-    context: ""
+    assignedFrom:{
+        id: ""
+    },
+    assignedTo: {
+        id: ""
+    },
+    reviewer:{
+        id: ""
+    },
+    context: {
+        id: ""
+    }
 }

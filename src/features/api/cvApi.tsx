@@ -46,7 +46,22 @@ export const cvApi = createApi({
             invalidatesTags: ['cvs'],
           }),
 
+    deleteCvById: builder.mutation({
+      query: (id: string) => ({
+        url: apiUrlProvider.cv + `/deleteById?id=${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["cvs"],
     }),
+  }),
 });
 
-export const { useGetCvByIdQuery, useGetCvByIdSimplifiedQuery, useGetCvsPagedQuery, useGetCvsPagedSimplifiedQuery, useAddCvMutation, useGetSelectElementCvsQuery } = cvApi;
+export const {
+  useGetCvByIdQuery,
+  useGetCvByIdSimplifiedQuery,
+  useGetCvsPagedQuery,
+  useGetCvsPagedSimplifiedQuery,
+  useAddCvMutation,
+  useGetSelectElementCvsQuery,
+  useDeleteCvByIdMutation,
+} = cvApi;

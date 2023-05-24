@@ -46,7 +46,22 @@ export const dayoffApi = createApi({
             invalidatesTags: ['dayoffs'],
           }),
 
+    deleteDayoffsById: builder.mutation({
+      query: (id: string) => ({
+        url: apiUrlProvider.dayoff + `/deleteById?id=${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["dayoffs"],
     }),
+  }),
 });
 
-export const { useGetDayoffByIdQuery, useGetDayoffByIdSimplifiedQuery, useGetDayoffsPagedQuery, useGetDayoffsPagedSimplifiedQuery, useAddDayoffMutation, useGetSelectElementDayoffsQuery } = dayoffApi;
+export const {
+  useGetDayoffByIdQuery,
+  useGetDayoffByIdSimplifiedQuery,
+  useGetDayoffsPagedQuery,
+  useGetDayoffsPagedSimplifiedQuery,
+  useAddDayoffMutation,
+  useGetSelectElementDayoffsQuery,
+  useDeleteDayoffsByIdMutation,
+} = dayoffApi;

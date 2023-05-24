@@ -24,6 +24,7 @@ export const applicantApi = createApi({
         }),
         getApplicantByIdSimplified: builder.query<Model, string>({
             query: (id : string) => apiUrlProvider.applicant + `/simplified/findById/${id}`,
+            providesTags: ["applicants"]
         }),
         getApplicantsPaged: builder.query<PagedDataResult, Pagination>({
             query: (pagination : Pagination) => apiUrlProvider.applicant + `/findAll?page=${pagination.page}&size=${pagination.size}`,
@@ -31,6 +32,7 @@ export const applicantApi = createApi({
 
         getApplicantsPagedSimplified: builder.query<PagedDataResult, Pagination>({
             query: (pagination : Pagination) => apiUrlProvider.applicant + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
+            providesTags: ["applicants"]
         }),
 
         getSelectElementApplicants: builder.query<Model, void>({
@@ -44,9 +46,17 @@ export const applicantApi = createApi({
               body : applicant,
             }),
             invalidatesTags: ['applicants'],
-          }),
+        }),
+        
+        deleteApplicantById: builder.mutation({
+            query: (id : string) => ({
+              url: apiUrlProvider.applicant + `/deleteById?id=${id}`,
+              method: 'DELETE',
+            }),
+            invalidatesTags: ['applicants'],
 
+        }),
     }),
 });
 
-export const { useGetApplicantByIdQuery, useGetApplicantByIdSimplifiedQuery, useGetApplicantsPagedQuery, useGetApplicantsPagedSimplifiedQuery, useAddApplicantMutation, useGetSelectElementApplicantsQuery } = applicantApi;
+export const { useGetApplicantByIdQuery, useGetApplicantByIdSimplifiedQuery, useGetApplicantsPagedQuery, useGetApplicantsPagedSimplifiedQuery, useAddApplicantMutation, useGetSelectElementApplicantsQuery, useDeleteApplicantByIdMutation } = applicantApi;

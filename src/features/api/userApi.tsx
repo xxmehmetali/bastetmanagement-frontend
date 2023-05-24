@@ -8,7 +8,7 @@ import { User } from "../../models/base/User";
 
 export const userApi = createApi({
     reducerPath: "userApi",
-    baseQuery: fetchBaseQuery({ 
+    baseQuery: fetchBaseQuery({
         baseUrl: apiUrlProvider.apiBaseUrl,
         prepareHeaders:  (headers, { getState }) => {
             const loggedInUserInfo = JSON.parse(localStorage.getItem("loggedInUserInfo") || "{}")
@@ -49,8 +49,15 @@ export const userApi = createApi({
             }),
             invalidatesTags: ['users'],
           }),
+          deleteUserById: builder.mutation({
+            query: (id : string) => ({
+              url: apiUrlProvider.user + `/deleteById?id=${id}`,
+              method: 'DELETE',
+            }),
+            invalidatesTags: ['users'],
 
+        }),
     }),
 });
 
-export const { useGetUserByIdQuery, useGetUserByIdSimplifiedQuery, useGetUserPagedQuery, useGetUserPagedSimplifiedQuery, useAddUserMutation, useGetSelectElementUsersQuery, useGetCurrentUserProfileQuery } = userApi;
+export const { useGetUserByIdQuery, useGetUserByIdSimplifiedQuery, useGetUserPagedQuery, useGetUserPagedSimplifiedQuery, useAddUserMutation, useGetSelectElementUsersQuery, useGetCurrentUserProfileQuery,useDeleteUserByIdMutation } = userApi;

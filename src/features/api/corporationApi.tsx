@@ -50,9 +50,23 @@ export const corporationApi = createApi({
             invalidatesTags: ['corporations'],
           }),
 
-
-
+    deleteCorporationById: builder.mutation({
+      query: (id: string) => ({
+        url: apiUrlProvider.corporation + `/deleteById?id=${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["corporations"],
     }),
+  }),
 });
 
-export const { useGetCorporationByIdQuery, useGetCorporationByIdSimplifiedQuery, useGetCorporationsPagedQuery, useGetCorporationsPagedSimplifiedQuery, useAddCorporationMutation, useGetProjectsByCorporationIdQuery, useGetSelectElementCorporationsQuery } = corporationApi;
+export const {
+  useGetCorporationByIdQuery,
+  useGetCorporationByIdSimplifiedQuery,
+  useGetCorporationsPagedQuery,
+  useGetCorporationsPagedSimplifiedQuery,
+  useAddCorporationMutation,
+  useGetProjectsByCorporationIdQuery,
+  useGetSelectElementCorporationsQuery,
+  useDeleteCorporationByIdMutation,
+} = corporationApi;

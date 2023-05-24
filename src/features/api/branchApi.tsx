@@ -8,7 +8,7 @@ import { Branch } from "../../models/base/Branch";
 
 export const branchApi = createApi({
     reducerPath: "branchApi",
-    baseQuery: fetchBaseQuery({ 
+    baseQuery: fetchBaseQuery({
         baseUrl: apiUrlProvider.apiBaseUrl,
         prepareHeaders:  (headers, { getState }) => {
             const loggedInUserInfo = JSON.parse(localStorage.getItem("loggedInUserInfo") || "{}")
@@ -46,8 +46,22 @@ export const branchApi = createApi({
             invalidatesTags: ['branches'],
           }),
 
-
+    deleteBranchById: builder.mutation({
+      query: (id: string) => ({
+        url: apiUrlProvider.branch + `/deleteById?id=${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["branches"],
     }),
+  }),
 });
 
-export const { useGetBranchByIdQuery, useGetBranchByIdSimplifiedQuery, useGetBranchesPagedQuery, useGetBranchesPagedSimplifiedQuery, useAddBranchMutation, useGetSelectElementBranchesQuery } = branchApi;
+export const {
+  useGetBranchByIdQuery,
+  useGetBranchByIdSimplifiedQuery,
+  useGetBranchesPagedQuery,
+  useGetBranchesPagedSimplifiedQuery,
+  useAddBranchMutation,
+  useGetSelectElementBranchesQuery,
+  useDeleteBranchByIdMutation,
+} = branchApi;

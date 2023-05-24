@@ -45,8 +45,22 @@ export const meetingplatformApi = createApi({
             invalidatesTags: ['meetingPlatforms'],
           }),
 
-
+    deleteMeetingPlatformsById: builder.mutation({
+      query: (id: string) => ({
+        url: apiUrlProvider.meetingplatform + `/deleteById?id=${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["meetingPlatforms"],
     }),
+  }),
 });
 
-export const { useGetMeetingPlatformByIdQuery, useGetMeetingPlatformByIdSimplifiedQuery, useGetMeetingPlatformsPagedQuery, useGetMeetingPlatformsPagedSimplifiedQuery, useAddMeetingPlatformMutation, useGetSelectElementMeetingPlatformsQuery } = meetingplatformApi;
+export const {
+  useGetMeetingPlatformByIdQuery,
+  useGetMeetingPlatformByIdSimplifiedQuery,
+  useGetMeetingPlatformsPagedQuery,
+  useGetMeetingPlatformsPagedSimplifiedQuery,
+  useAddMeetingPlatformMutation,
+  useGetSelectElementMeetingPlatformsQuery,
+  useDeleteMeetingPlatformsByIdMutation,
+} = meetingplatformApi;

@@ -28,6 +28,7 @@ const detailWord = 'Detail'
 const addWord = 'Add'
 const updateWord = 'Update'
 const slash = '/'
+const deleteWord = 'Delete'
 
 // Authentication
 const register = "/register"

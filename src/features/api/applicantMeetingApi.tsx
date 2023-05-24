@@ -46,7 +46,13 @@ export const applicantMeetingApi = createApi({
             invalidatesTags: ['applicantMeetings'],
         }),
 
+        deleteApplicantMeetingById: builder.mutation({
+            query: (id : string) => ({
+              url: apiUrlProvider.applicantmeeting + `/deleteById`,
+              method: 'DELETE',
+            }),
+        }),
     }),
 });
 
-export const { useGetApplicantMeetingByIdQuery, useGetApplicantMeetingByIdSimplifiedQuery, useGetApplicantMeetingsPagedQuery, useGetApplicantMeetingsPagedSimplifiedQuery, useAddApplicantMeetingsMutation, useGetSelectElementApplicantMeetingsQuery } = applicantMeetingApi;
+export const { useGetApplicantMeetingByIdQuery, useGetApplicantMeetingByIdSimplifiedQuery, useGetApplicantMeetingsPagedQuery, useGetApplicantMeetingsPagedSimplifiedQuery, useAddApplicantMeetingsMutation, useGetSelectElementApplicantMeetingsQuery, useDeleteApplicantMeetingByIdMutation  } = applicantMeetingApi;

@@ -37,16 +37,30 @@ export const taskApi = createApi({
             query: () => apiUrlProvider.task + "/" + apiUrlProvider.selectElement + "/findAll",
         }),
 
-        addTask: builder.mutation<Task, Partial<Task>>({
-            query: (task) => ({
-              url: apiUrlProvider.task + `/add`,
-              method: 'POST',
-              body : task,
-            }),
-            invalidatesTags: ['tasks'],
-          }),
-
+    addTask: builder.mutation<Task, Partial<Task>>({
+      query: (task) => ({
+        url: apiUrlProvider.task + `/add`,
+        method: "POST",
+        body: task,
+      }),
+      invalidatesTags: ["tasks"],
     }),
+    deleteTaskById: builder.mutation({
+      query: (id: string) => ({
+        url: apiUrlProvider.task + `/deleteById?id=${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["tasks"],
+    }),
+  }),
 });
 
-export const { useGetTaskByIdQuery, useGetTaskByIdSimplifiedQuery, useGetTasksPagedQuery, useGetTasksPagedSimplifiedQuery, useAddTaskMutation, useGetSelectElementTasksQuery } = taskApi;
+export const {
+  useGetTaskByIdQuery,
+  useGetTaskByIdSimplifiedQuery,
+  useGetTasksPagedQuery,
+  useGetTasksPagedSimplifiedQuery,
+  useAddTaskMutation,
+  useGetSelectElementTasksQuery,
+  useDeleteTaskByIdMutation
+} = taskApi;

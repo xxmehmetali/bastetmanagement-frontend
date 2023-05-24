@@ -4,6 +4,10 @@ export const socialActivityInitialValue = {
     date: new Date(),
     place: "",
     employees: [],
-    expense: "",
-    socialActivityType: ""
+    expense: {
+        id: ""
+    },
+    socialActivityType: {
+        id: ""
+    }
 }

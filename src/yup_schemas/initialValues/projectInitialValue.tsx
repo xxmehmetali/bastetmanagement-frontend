@@ -1,5 +1,9 @@
-export const corporationInitialValue = {
+export const projectInitialValue = {
     name: "",
-    contexts: [],
-    corporation: ""
+    corporation:{
+        id: ""
+    } ,
+    employee:{
+        id: ""
+    } 
 }

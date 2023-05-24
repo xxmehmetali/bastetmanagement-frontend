@@ -10,7 +10,7 @@ import { Pagination } from "../../results/pagination/Pagination";
 
 export const employeeApi = createApi({
     reducerPath: "employeeApi",
-    baseQuery: fetchBaseQuery({ 
+    baseQuery: fetchBaseQuery({
         baseUrl: apiUrlProvider.apiBaseUrl,
         prepareHeaders:  (headers, { getState }) => {
             const loggedInUserInfo = JSON.parse(localStorage.getItem("loggedInUserInfo") || "{}")
@@ -39,26 +39,41 @@ export const employeeApi = createApi({
             query: () => apiUrlProvider.employee + "/" + apiUrlProvider.selectElement + "/findAll",
         }),
 
-        addEmployee: builder.mutation<Employee, Partial<Employee>>({
-            query: (employee) => ({
-              url: apiUrlProvider.employee + `/add`,
-              method: 'POST',
-              body : employee,
-            }),
-            invalidatesTags: ['employees'],
-          }),
-
-          updateEmployee: builder.mutation<Employee, Partial<Employee>>({
-            query: (employee) => ({
-              url: apiUrlProvider.employee + `/update`,
-              method: 'POST',
-              body : JSON.parse(JSON.stringify(employee)),
-            }),
-            invalidatesTags: ['employees'],
-          }),
-
-
+    addEmployee: builder.mutation<Employee, Partial<Employee>>({
+      query: (employee) => ({
+        url: apiUrlProvider.employee + `/add`,
+        method: "POST",
+        body: employee,
+      }),
+      invalidatesTags: ["employees"],
     }),
+    deleteEmployeesById: builder.mutation({
+      query: (id: string) => ({
+        url: apiUrlProvider.employee + `/deleteById?id=${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["employees"],
+    }),
+
+        updateEmployee: builder.mutation<Employee, Partial<Employee>>({
+            query: (employee) => ({
+                url: apiUrlProvider.employee + `/update`,
+                method: 'POST',
+                body : JSON.parse(JSON.stringify(employee)),
+            }),
+            invalidatesTags: ['employees'],
+        }),
+
+  }),
 });
 
-export const { useGetEmployeeByIdQuery, useGetEmployeeByIdSimplifiedQuery, useGetEmployeesPagedQuery, useGetEmployeesPagedSimplifiedQuery, useAddEmployeeMutation, useGetSelectElementEmployeesQuery, useUpdateEmployeeMutation } = employeeApi;
+export const {
+  useGetEmployeeByIdQuery,
+  useGetEmployeeByIdSimplifiedQuery,
+  useGetEmployeesPagedQuery,
+  useGetEmployeesPagedSimplifiedQuery,
+  useAddEmployeeMutation,
+  useGetSelectElementEmployeesQuery,
+  useDeleteEmployeesByIdMutation,
+    useUpdateEmployeeMutation
+} = employeeApi;

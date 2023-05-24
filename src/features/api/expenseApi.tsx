@@ -47,6 +47,15 @@ export const expenseApi = createApi({
         }),
 
     }),
+
 });
 
-export const { useGetExpenseByIdQuery, useGetExpenseByIdSimplifiedQuery, useGetExpensesPagedQuery, useGetExpensesPagedSimplifiedQuery, useAddExpenseMutation, useGetSelectElementExpensesQuery } = expenseApi;
+export const {
+  useGetExpenseByIdQuery,
+  useGetExpenseByIdSimplifiedQuery,
+  useGetExpensesPagedQuery,
+  useGetExpensesPagedSimplifiedQuery,
+  useAddExpenseMutation,
+  useGetSelectElementExpensesQuery,
+
+} = expenseApi;

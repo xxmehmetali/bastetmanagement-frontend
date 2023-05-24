@@ -40,16 +40,32 @@ export const projectApi = createApi({
             query: () => apiUrlProvider.project + "/" + apiUrlProvider.selectElement + "/findAll",
         }),
 
-        addProject: builder.mutation<Project, Partial<Project>>({
-            query: (project) => ({
-              url: apiUrlProvider.project + `/add`,
-              method: 'POST',
-              body : project,
-            }),
-            invalidatesTags: ['projects'],
-          }),
+    addProject: builder.mutation<Project, Partial<Project>>({
+      query: (project) => ({
+        url: apiUrlProvider.project + `/add`,
+        method: "POST",
+        body: project,
+      }),
+      invalidatesTags: ["projects"],
+    }),
+
+    deleteProjectById: builder.mutation({
+        query: (id : string) => ({
+          url: apiUrlProvider.project + `/deleteById?id=${id}`,
+          method: 'DELETE',
+        }),
+        invalidatesTags: ['projects'],
 
     }),
+  }),
 });
 
-export const { useGetProjectByIdQuery, useGetProjectByIdSimplifiedQuery, useGetProjectsPagedQuery, useGetProjectsPagedSimplifiedQuery, useAddProjectMutation, useGetSelectElementProjectsQuery } = projectApi;
+export const {
+  useGetProjectByIdQuery,
+  useGetProjectByIdSimplifiedQuery,
+  useGetProjectsPagedQuery,
+  useGetProjectsPagedSimplifiedQuery,
+  useAddProjectMutation,
+  useGetSelectElementProjectsQuery,
+  useDeleteProjectByIdMutation
+} = projectApi;

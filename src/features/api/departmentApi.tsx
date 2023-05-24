@@ -46,7 +46,22 @@ export const departmentApi = createApi({
             invalidatesTags: ['departments'],
           }),
 
+    deleteDepartmentsById: builder.mutation({
+      query: (id: string) => ({
+        url: apiUrlProvider.department + `/deleteById?id=${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["departments"],
     }),
+  }),
 });
 
-export const { useGetDepartmentByIdQuery, useGetDepartmentByIdSimplifiedQuery, useGetDepartmentsPagedQuery, useGetDepartmentsPagedSimplifiedQuery, useAddDepartmentMutation, useGetSelectElementDepartmentsQuery } = departmentApi;
+export const {
+  useGetDepartmentByIdQuery,
+  useGetDepartmentByIdSimplifiedQuery,
+  useGetDepartmentsPagedQuery,
+  useGetDepartmentsPagedSimplifiedQuery,
+  useAddDepartmentMutation,
+  useGetSelectElementDepartmentsQuery,
+  useDeleteDepartmentsByIdMutation
+} = departmentApi;

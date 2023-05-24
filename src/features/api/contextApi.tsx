@@ -47,7 +47,22 @@ export const contextApi = createApi({
             invalidatesTags: ['contexts'],
           }),
 
+    deleteContextById: builder.mutation({
+      query: (id: string) => ({
+        url: apiUrlProvider.context + `/deleteById?id=${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["contexts"],
     }),
+  }),
 });
 
-export const { useGetContextByIdQuery, useGetContextByIdSimplifiedQuery, useGetContextsPagedQuery, useGetContextsPagedSimplifiedQuery, useAddContextMutation, useGetSelectElementContextsQuery } = contextApi;
+export const {
+  useGetContextByIdQuery,
+  useGetContextByIdSimplifiedQuery,
+  useGetContextsPagedQuery,
+  useGetContextsPagedSimplifiedQuery,
+  useAddContextMutation,
+  useGetSelectElementContextsQuery,
+  useDeleteContextByIdMutation
+} = contextApi;

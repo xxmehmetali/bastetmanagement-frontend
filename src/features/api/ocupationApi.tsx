@@ -36,16 +36,30 @@ export const occupationApi = createApi({
             query: () => apiUrlProvider.occupation + "/" + apiUrlProvider.selectElement + "/findAll",
         }),
 
-        addOccupation: builder.mutation<Occupation, Partial<Occupation>>({
-            query: (occupation) => ({
-              url: apiUrlProvider.occupation + `/add`,
-              method: 'POST',
-              body : occupation,
-            }),
-            invalidatesTags: ['occupations'],
-          }),
-
+    addOccupation: builder.mutation<Occupation, Partial<Occupation>>({
+      query: (occupation) => ({
+        url: apiUrlProvider.occupation + `/add`,
+        method: "POST",
+        body: occupation,
+      }),
+      invalidatesTags: ["occupations"],
     }),
+    deleteOccupationById: builder.mutation({
+      query: (id: string) => ({
+        url: apiUrlProvider.occupation + `/deleteById?id=${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["occupations"],
+    }),
+  }),
 });
 
-export const { useGetOccupationByIdQuery, useGetOccupationByIdSimplifiedQuery, useGetOccupationsPagedQuery, useGetOccupationsPagedSimplifiedQuery, useAddOccupationMutation, useGetSelectElementOccupationsQuery } = occupationApi;
+export const {
+  useGetOccupationByIdQuery,
+  useGetOccupationByIdSimplifiedQuery,
+  useGetOccupationsPagedQuery,
+  useGetOccupationsPagedSimplifiedQuery,
+  useAddOccupationMutation,
+  useGetSelectElementOccupationsQuery,
+  useDeleteOccupationByIdMutation
+} = occupationApi;
