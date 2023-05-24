@@ -4,10 +4,19 @@ import { PagedDataResult } from "../../results/PagedDataResult";
 import { Pagination } from "../../results/pagination/Pagination";
 import apiUrlProvider from "./config/apiUrlProvider";
 import apiPaginationConfig from "./config/apiPaginationConfig";
+import { User } from "../../models/base/User";
 
 export const userApi = createApi({
     reducerPath: "userApi",
-    baseQuery: fetchBaseQuery({ baseUrl: apiUrlProvider.apiBaseUrl }),
+    baseQuery: fetchBaseQuery({ 
+        baseUrl: apiUrlProvider.apiBaseUrl,
+        prepareHeaders:  (headers, { getState }) => {
+            const loggedInUserInfo = JSON.parse(localStorage.getItem("loggedInUserInfo") || "{}")
+            headers.set('Authorization', "Bearer " + loggedInUserInfo.jwt);
+            return headers;
+          },
+    }),
+    tagTypes: ['users'],
     endpoints: (builder) => ({
 
         getUserById: builder.query<Model, string>({
@@ -24,8 +33,24 @@ export const userApi = createApi({
             query: (pagination : Pagination) => apiUrlProvider.user + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
+        getSelectElementUsers: builder.query<Model, void>({
+            query: () => apiUrlProvider.user + "/" + apiUrlProvider.selectElement + "/findAll",
+        }),
+
+        getCurrentUserProfile: builder.query<Model, void>({
+            query: () => apiUrlProvider.user + "/findCurrentUser",
+        }),
+
+        addUser: builder.mutation<User, Partial<User>>({
+            query: (user) => ({
+              url: apiUrlProvider.user + `/add`,
+              method: 'POST',
+              body : user,
+            }),
+            invalidatesTags: ['users'],
+          }),
 
     }),
 });
 
-export const { useGetUserByIdQuery, useGetUserByIdSimplifiedQuery, useGetUserPagedQuery, useGetUserPagedSimplifiedQuery } = userApi;
+export const { useGetUserByIdQuery, useGetUserByIdSimplifiedQuery, useGetUserPagedQuery, useGetUserPagedSimplifiedQuery, useAddUserMutation, useGetSelectElementUsersQuery, useGetCurrentUserProfileQuery } = userApi;

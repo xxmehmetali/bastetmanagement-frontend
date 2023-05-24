@@ -4,10 +4,19 @@ import { PagedDataResult } from "../../results/PagedDataResult";
 import { Pagination } from "../../results/pagination/Pagination";
 import apiUrlProvider from "./config/apiUrlProvider";
 import apiPaginationConfig from "./config/apiPaginationConfig";
+import { Context } from "../../models/base/Context";
 
 export const contextApi = createApi({
     reducerPath: "contextApi",
-    baseQuery: fetchBaseQuery({ baseUrl: apiUrlProvider.apiBaseUrl }),
+    baseQuery: fetchBaseQuery({ 
+        baseUrl: apiUrlProvider.apiBaseUrl,
+        prepareHeaders:  (headers, { getState }) => {
+            const loggedInUserInfo = JSON.parse(localStorage.getItem("loggedInUserInfo") || "{}")
+            headers.set('Authorization', "Bearer " + loggedInUserInfo.jwt);
+            return headers;
+          },
+    }),
+    tagTypes: ['contexts'],
     endpoints: (builder) => ({
 
         
@@ -25,8 +34,20 @@ export const contextApi = createApi({
             query: (pagination : Pagination) => apiUrlProvider.context + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
+        getSelectElementContexts: builder.query<Model, void>({
+            query: () => apiUrlProvider.context + "/" + apiUrlProvider.selectElement + "/findAll",
+        }),
+
+        addContext: builder.mutation<Context, Partial<Context>>({
+            query: (context) => ({
+              url: apiUrlProvider.context + `/add`,
+              method: 'POST',
+              body : context,
+            }),
+            invalidatesTags: ['contexts'],
+          }),
 
     }),
 });
 
-export const { useGetContextByIdQuery, useGetContextByIdSimplifiedQuery, useGetContextsPagedQuery, useGetContextsPagedSimplifiedQuery } = contextApi;
+export const { useGetContextByIdQuery, useGetContextByIdSimplifiedQuery, useGetContextsPagedQuery, useGetContextsPagedSimplifiedQuery, useAddContextMutation, useGetSelectElementContextsQuery } = contextApi;

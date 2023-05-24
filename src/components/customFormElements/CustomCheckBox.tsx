@@ -1,10 +1,13 @@
 import { useField } from "formik";
 
-const CustomCheckbox = ({ label, ...props } : any) => {
+
+
+const CustomCheckbox = ({ label, ...props }: any) => {
   const [field, meta] = useField(props);
 
   return (
     <>
+
       <div className="checkbox">
         <input
           {...field}
@@ -15,6 +18,7 @@ const CustomCheckbox = ({ label, ...props } : any) => {
       </div>
 
       {meta.touched && meta.error && <div className="error">{meta.error}</div>}
+
     </>
   );
 };

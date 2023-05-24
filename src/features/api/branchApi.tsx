@@ -4,10 +4,19 @@ import { PagedDataResult } from "../../results/PagedDataResult";
 import { Pagination } from "../../results/pagination/Pagination";
 import apiUrlProvider from "./config/apiUrlProvider";
 import apiPaginationConfig from "./config/apiPaginationConfig";
+import { Branch } from "../../models/base/Branch";
 
 export const branchApi = createApi({
     reducerPath: "branchApi",
-    baseQuery: fetchBaseQuery({ baseUrl: apiUrlProvider.apiBaseUrl }),
+    baseQuery: fetchBaseQuery({ 
+        baseUrl: apiUrlProvider.apiBaseUrl,
+        prepareHeaders:  (headers, { getState }) => {
+            const loggedInUserInfo = JSON.parse(localStorage.getItem("loggedInUserInfo") || "{}")
+            headers.set('Authorization', "Bearer " + loggedInUserInfo.jwt);
+            return headers;
+          },
+    }),
+    tagTypes: ['branches'],
     endpoints: (builder) => ({
 
         getBranchById: builder.query<Model, string>({
@@ -24,8 +33,21 @@ export const branchApi = createApi({
             query: (pagination : Pagination) => apiUrlProvider.branch + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
+        getSelectElementBranches: builder.query<Model, void>({
+            query: () => apiUrlProvider.branch + "/" + apiUrlProvider.selectElement + "/findAll",
+        }),
+
+        addBranch: builder.mutation<Branch, Partial<Branch>>({
+            query: (branch) => ({
+              url: apiUrlProvider.branch + `/add`,
+              method: 'POST',
+              body : branch,
+            }),
+            invalidatesTags: ['branches'],
+          }),
+
 
     }),
 });
 
-export const { useGetBranchByIdQuery, useGetBranchByIdSimplifiedQuery, useGetBranchesPagedQuery, useGetBranchesPagedSimplifiedQuery } = branchApi;
+export const { useGetBranchByIdQuery, useGetBranchByIdSimplifiedQuery, useGetBranchesPagedQuery, useGetBranchesPagedSimplifiedQuery, useAddBranchMutation, useGetSelectElementBranchesQuery } = branchApi;

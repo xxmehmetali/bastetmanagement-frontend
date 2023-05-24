@@ -1,10 +1,12 @@
 import { Model } from "../Model";
+import { Employee } from "./Employee";
 
 export interface User extends Model {
   id: string;
-  email: string;
-  password: string;
+
   username: string;
-  createdAt: Date;
-  updatedAt: Date;
+
+  email: string;
+
+  employee: Employee;
 }

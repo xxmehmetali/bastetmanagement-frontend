@@ -4,10 +4,19 @@ import { PagedDataResult } from "../../results/PagedDataResult";
 import { Pagination } from "../../results/pagination/Pagination";
 import apiUrlProvider from "./config/apiUrlProvider";
 import apiPaginationConfig from "./config/apiPaginationConfig";
+import { SocialActivityType } from "../../models/base/SocialActivityType";
 
 export const socialActivityTypeApi = createApi({
     reducerPath: "socialActivityTypeApi",
-    baseQuery: fetchBaseQuery({ baseUrl: apiUrlProvider.apiBaseUrl }),
+    baseQuery: fetchBaseQuery({ 
+        baseUrl: apiUrlProvider.apiBaseUrl,
+        prepareHeaders:  (headers, { getState }) => {
+            const loggedInUserInfo = JSON.parse(localStorage.getItem("loggedInUserInfo") || "{}")
+            headers.set('Authorization', "Bearer " + loggedInUserInfo.jwt);
+            return headers;
+          },
+    }),
+    tagTypes: ['socialActivityTypes'],
     endpoints: (builder) => ({
 
         getSocialActivityTypeById: builder.query<Model, string>({
@@ -24,8 +33,20 @@ export const socialActivityTypeApi = createApi({
             query: (pagination : Pagination) => apiUrlProvider.socialActivityType + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
+        getSelectElementSocialActivityTypes: builder.query<Model, void>({
+            query: () => apiUrlProvider.socialActivityType + "/" + apiUrlProvider.selectElement + "/findAll",
+        }),
+
+        addSocialActivityType: builder.mutation<SocialActivityType, Partial<SocialActivityType>>({
+            query: (socialActivityType) => ({
+              url: apiUrlProvider.socialActivityType + `/add`,
+              method: 'POST',
+              body : socialActivityType,
+            }),
+            invalidatesTags: ['socialActivityTypes'],
+          }),
 
     }),
 });
 
-export const { useGetSocialActivityTypeByIdQuery, useGetSocialActivityTypeByIdSimplifiedQuery, useGetSocialActivityTypesPagedQuery, useGetSocialActivityTypesPagedSimplifiedQuery } = socialActivityTypeApi;
+export const { useGetSocialActivityTypeByIdQuery, useGetSocialActivityTypeByIdSimplifiedQuery, useGetSocialActivityTypesPagedQuery, useGetSocialActivityTypesPagedSimplifiedQuery, useAddSocialActivityTypeMutation, useGetSelectElementSocialActivityTypesQuery } = socialActivityTypeApi;

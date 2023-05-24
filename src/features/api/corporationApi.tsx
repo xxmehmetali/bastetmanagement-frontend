@@ -8,7 +8,14 @@ import { Corporation } from "../../models/base/Corporation";
 
 export const corporationApi = createApi({
     reducerPath: "corporationApi",
-    baseQuery: fetchBaseQuery({ baseUrl: apiUrlProvider.apiBaseUrl }),
+    baseQuery: fetchBaseQuery({ 
+        baseUrl: apiUrlProvider.apiBaseUrl,
+        prepareHeaders:  (headers, { getState }) => {
+            const loggedInUserInfo = JSON.parse(localStorage.getItem("loggedInUserInfo") || "{}")
+            headers.set('Authorization', "Bearer " + loggedInUserInfo.jwt);
+            return headers;
+          },
+    }),
     tagTypes: ['corporations'],
     endpoints: (builder) => ({
 
@@ -30,6 +37,10 @@ export const corporationApi = createApi({
             query: (id : string) => apiUrlProvider.project + `/findProjectsByCorporationId/${id}`,
         }),
 
+        getSelectElementCorporations: builder.query<Model, void>({
+            query: () => apiUrlProvider.corporation + "/" + apiUrlProvider.selectElement + "/findAll",
+        }),
+
         addCorporation: builder.mutation<Corporation, Partial<Corporation>>({
             query: (corporation) => ({
               url: apiUrlProvider.corporation + `/add`,
@@ -44,4 +55,4 @@ export const corporationApi = createApi({
     }),
 });
 
-export const { useGetCorporationByIdQuery, useGetCorporationByIdSimplifiedQuery, useGetCorporationsPagedQuery, useGetCorporationsPagedSimplifiedQuery, useAddCorporationMutation, useGetProjectsByCorporationIdQuery } = corporationApi;
+export const { useGetCorporationByIdQuery, useGetCorporationByIdSimplifiedQuery, useGetCorporationsPagedQuery, useGetCorporationsPagedSimplifiedQuery, useAddCorporationMutation, useGetProjectsByCorporationIdQuery, useGetSelectElementCorporationsQuery } = corporationApi;

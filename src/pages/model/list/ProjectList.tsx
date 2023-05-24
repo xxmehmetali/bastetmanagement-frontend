@@ -9,6 +9,7 @@ import { Table } from 'react-bootstrap';
 import PaginationComponent from '../../../components/PaginationComponent';
 import { Project } from '../../../models/base/Project';
 import { formatDate } from '../../../functions/FormatDateFunction';
+import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
 
 export default function ProjectList() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -26,6 +27,7 @@ export default function ProjectList() {
 
   return (
     <div>
+      <AddModelButtonComponent buttonName={"Add Project"} redirectionUrl={navigationUrlProvider.projectAddUrl}/>
       <Table striped className='listTable'>
         <thead>
           <tr>

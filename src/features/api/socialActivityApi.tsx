@@ -4,10 +4,19 @@ import { PagedDataResult } from "../../results/PagedDataResult";
 import { Pagination } from "../../results/pagination/Pagination";
 import apiUrlProvider from "./config/apiUrlProvider";
 import apiPaginationConfig from "./config/apiPaginationConfig";
+import { SocialActivity } from "../../models/base/SocialActivity";
 
 export const socialActivityApi = createApi({
     reducerPath: "socialActivityApi",
-    baseQuery: fetchBaseQuery({ baseUrl: apiUrlProvider.apiBaseUrl }),
+    baseQuery: fetchBaseQuery({ 
+        baseUrl: apiUrlProvider.apiBaseUrl,
+        prepareHeaders:  (headers, { getState }) => {
+            const loggedInUserInfo = JSON.parse(localStorage.getItem("loggedInUserInfo") || "{}")
+            headers.set('Authorization', "Bearer " + loggedInUserInfo.jwt);
+            return headers;
+          },
+    }),
+    tagTypes: ['socialActivities'],
     endpoints: (builder) => ({
 
         getSocialActivityById: builder.query<Model, string>({
@@ -24,8 +33,20 @@ export const socialActivityApi = createApi({
             query: (pagination : Pagination) => apiUrlProvider.socialActivity + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
+        getSelectElementSocialActivities: builder.query<Model, void>({
+            query: () => apiUrlProvider.socialActivity + "/" + apiUrlProvider.selectElement + "/findAll",
+        }),
+
+        addSocialActivity: builder.mutation<SocialActivity, Partial<SocialActivity>>({
+            query: (socialActivity) => ({
+              url: apiUrlProvider.socialActivity + `/add`,
+              method: 'POST',
+              body : socialActivity,
+            }),
+            invalidatesTags: ['socialActivities'],
+          }),
 
     }),
 });
 
-export const { useGetSocialActivitiesPagedQuery, useGetSocialActivitiesPagedSimplifiedQuery, useGetSocialActivityByIdQuery, useGetSocialActivityIdSimplifiedQuery } = socialActivityApi;
+export const { useGetSocialActivitiesPagedQuery, useGetSocialActivitiesPagedSimplifiedQuery, useGetSocialActivityByIdQuery, useGetSocialActivityIdSimplifiedQuery, useAddSocialActivityMutation, useGetSelectElementSocialActivitiesQuery } = socialActivityApi;

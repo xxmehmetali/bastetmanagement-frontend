@@ -25,11 +25,11 @@ export default function CorporationTableComponent({corporation}: any) {
                     <td>Tax Number</td>
                     <td>{corporation.taxNumber}</td>
                 </tr>
-                <tr>
+                {/* <tr>
                     <td colSpan={2} className="inner-table-component-td">
                         <ProjectTableComponent projectList={corporation.projects} />
                     </td>
-                </tr>
+                </tr> */}
             </Accordion.Body>
         </Accordion.Item>
     </Accordion>

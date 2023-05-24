@@ -7,6 +7,7 @@ import { User } from '../../../models/base/User';
 import navigationUrlProvider from '../../../providers/navigationUrlProvider';
 import PaginationComponent from '../../../components/PaginationComponent';
 import { useGetUserPagedSimplifiedQuery } from '../../../features/api/userApi';
+import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
 
 export default function UserList() {
 
@@ -34,6 +35,7 @@ export default function UserList() {
     //USER APİ BACKEND TARAFINDA YOK, BACKEND YAZ
   return (
     <div>
+      <AddModelButtonComponent buttonName={"Add User"} redirectionUrl={navigationUrlProvider.userAddUrl}/>
       <Table striped className='listTable'>
         <thead>
           <tr>

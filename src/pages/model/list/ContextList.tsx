@@ -7,6 +7,7 @@ import { Context } from 'vm';
 import navigationUrlProvider from '../../../providers/navigationUrlProvider';
 import { Table } from 'react-bootstrap';
 import PaginationComponent from '../../../components/PaginationComponent';
+import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
 
 export default function ContextList() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -26,6 +27,7 @@ export default function ContextList() {
   }
 return (
   <div>
+    <AddModelButtonComponent buttonName={"Add Context"} redirectionUrl={navigationUrlProvider.contextAddUrl}/>
     <Table striped className='listTable'>
       <thead>
         <tr>

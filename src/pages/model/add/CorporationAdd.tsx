@@ -39,7 +39,6 @@ export default function CorporationAdd() {
             <CustomInput name="name" placeholder="Enter Name" label={"Name"} />
             <CustomInput name="description" placeholder="Enter Description" type="text" label={"Description"} />
             <CustomInput name="taxNumber" placeholder="Enter Tax Number" type="text" label={"Tax Number"} />
-            {/* <CustomInput name="foundationDate" placeholder="Enter Foundation Date" type="text" label={"Foundation Date"}/> */}
             <CustomDatePicker name="foundationDate" label={"Foundation Date"} placeholder="Please provide a Date" />
 
 

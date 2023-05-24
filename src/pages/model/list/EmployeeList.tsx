@@ -8,6 +8,7 @@ import { Pagination } from '../../../results/pagination/Pagination';
 import PaginationBootstrap from 'react-bootstrap/Pagination';
 import PaginationComponent from '../../../components/PaginationComponent';
 import navigationUrlProvider from '../../../providers/navigationUrlProvider';
+import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
 
 
 function EmployeeList() {
@@ -35,6 +36,7 @@ function EmployeeList() {
 
     return (
         <div>
+            <AddModelButtonComponent buttonName={"Add Employee"} redirectionUrl={navigationUrlProvider.employeeAddUrl}/>
             <Table striped className='listTable'>
                 <thead>
                     <tr>

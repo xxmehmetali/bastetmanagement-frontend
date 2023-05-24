@@ -8,6 +8,7 @@ import navigationUrlProvider from '../../../providers/navigationUrlProvider';
 import { Table } from 'react-bootstrap';
 import PaginationComponent from '../../../components/PaginationComponent';
 import { formatDate } from '../../../functions/FormatDateFunction';
+import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
 
 export default function ApplicantMeetingList() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -28,6 +29,7 @@ export default function ApplicantMeetingList() {
 
   return (
     <div> 
+      <AddModelButtonComponent buttonName={"Add Applicant Meeting"} redirectionUrl={navigationUrlProvider.applicantmeetingAddUrl}/>
       <Table striped className='listTable'>
     <thead>
       <tr>
