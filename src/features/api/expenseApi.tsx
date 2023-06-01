@@ -45,6 +45,13 @@ export const expenseApi = createApi({
             }),
             invalidatesTags: ['expenses'],
         }),
+        deleteExpensesById: builder.mutation({
+            query: (id: string) => ({
+              url: apiUrlProvider.dayoff + `/deleteById?id=${id}`,
+              method: "DELETE",
+            }),
+            invalidatesTags: ["expenses"],
+          }),
 
     }),
 
@@ -57,5 +64,5 @@ export const {
   useGetExpensesPagedSimplifiedQuery,
   useAddExpenseMutation,
   useGetSelectElementExpensesQuery,
-
+    useDeleteExpensesByIdMutation
 } = expenseApi;

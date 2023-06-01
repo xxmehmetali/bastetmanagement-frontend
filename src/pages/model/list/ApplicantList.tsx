@@ -42,6 +42,9 @@ export default function ApplicantList() {
   function handleNavigateToDetail(id: string) {
     navigate(navigationUrlProvider.applicantDetailUrl + id);
   }
+  function handleNavigateToUpdate(id: string) {
+    navigate(navigationUrlProvider.applicantUpdateUrl + id)
+  }
 
 
   return (
@@ -110,8 +113,8 @@ export default function ApplicantList() {
                   {applicant.technicalAssessmentStatus}
                 </td>
                 <td>
-                  {" "}
-                  <Button variant="warning">Update</Button>{" "}
+                  
+                  <Button variant="warning" onClick={() => {handleNavigateToUpdate(applicant.id) }}>Update</Button>
                 </td>
                 <td>
                   <Button variant="danger" onClick={() => {handleDelete(applicant.id)}}>

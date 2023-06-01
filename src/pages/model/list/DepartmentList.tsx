@@ -1,11 +1,11 @@
 import React from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useGetDepartmentsPagedSimplifiedQuery } from '../../../features/api/departmentApi';
+import { useDeleteDepartmentsByIdMutation, useGetDepartmentsPagedSimplifiedQuery } from '../../../features/api/departmentApi';
 import { Pagination } from '../../../results/pagination/Pagination';
 import { PagedDataResult } from '../../../results/PagedDataResult';
 import { Department } from '../../../models/base/Department';
 import navigationUrlProvider from '../../../providers/navigationUrlProvider';
-import { Table } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
 import PaginationComponent from '../../../components/PaginationComponent';
 import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
 
@@ -18,11 +18,19 @@ export default function DepartmentList() {
   const departments: Department[] = (pagedDataResultForDepartment?.data?.content) as Department[];
 
   const totalPages = pagedDataResultForDepartment?.data?.totalPages || 1;
+  const [deleteDepartment, { data }] = useDeleteDepartmentsByIdMutation();
+ 
+  async function handleDelete(id: any) {
+    const result = await deleteDepartment(id);
+    //ResolveResult(result)
+  }
   const navigate = useNavigate();
   function handleNavigateToDetail(id: string) {
     navigate(navigationUrlProvider.departmentDetailUrl + id)
   }
-
+  function handleNavigateToUpdate(id: string) {
+    navigate(navigationUrlProvider.departmentUpdateUrl + id)
+  }
   return (
     <div>
       <AddModelButtonComponent buttonName={"Add Department"} redirectionUrl={navigationUrlProvider.departmentAddUrl}/>
@@ -31,15 +39,25 @@ export default function DepartmentList() {
           <tr>
             <th>Name</th>
             <th>Description</th>
+            <th> </th>
+            <th> </th>
           </tr>
         </thead>
         <tbody>
           {departments &&
             departments.map((dprt: Department) => (
-              <tr onClick={() => { (handleNavigateToDetail(dprt.id)) }}>
-                <td>{dprt.name}</td>
-                <td>{dprt.description}</td>
-              </tr>
+              <tr >
+                <td onClick={() => { (handleNavigateToDetail(dprt.id)) }}>{dprt.name}</td>
+                <td onClick={() => { (handleNavigateToDetail(dprt.id)) }}>{dprt.description}</td>
+                <td>                  
+                  <Button variant="warning" onClick={() => {handleNavigateToUpdate(dprt.id) }}>Update</Button>
+                </td>
+                <td>
+                  <Button variant="danger" onClick={() => {handleDelete(dprt.id)}}>
+                    Delete
+                  </Button>
+                </td>
+             </tr>
             ))}
 
         </tbody>

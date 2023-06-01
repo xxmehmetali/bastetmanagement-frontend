@@ -48,7 +48,7 @@ export const applicantMeetingApi = createApi({
 
         deleteApplicantMeetingById: builder.mutation({
             query: (id : string) => ({
-              url: apiUrlProvider.applicantmeeting + `/deleteById`,
+              url: apiUrlProvider.applicantmeeting + `/deleteById?id=${id}`,
               method: 'DELETE',
             }),
         }),

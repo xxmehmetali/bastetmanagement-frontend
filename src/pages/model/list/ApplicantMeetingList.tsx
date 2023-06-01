@@ -25,7 +25,9 @@ export default function ApplicantMeetingList() {
       const result = await deleteApplicantMeeting(id)
       //ResolveResult(result)
     }
-
+    function handleNavigateToUpdate(id: string) {
+      navigate(navigationUrlProvider.applicatMeetingUpdateUrl + id)
+    }
 
     const navigate = useNavigate();
     function handleNavigateToDetail(id: string) {
@@ -42,6 +44,9 @@ export default function ApplicantMeetingList() {
         <th>Meeting Platform</th>
         <th>Begin Hour</th>
         <th>End Hour</th>
+        <th> </th>
+        <th> </th>
+
       </tr>
     </thead>
     <tbody>
@@ -53,11 +58,10 @@ export default function ApplicantMeetingList() {
             <td onClick={() => { (handleNavigateToDetail(applicantMeetings.id)) }}>{applicantMeetings.meetingPlatform.name}</td>
             <td onClick={() => { (handleNavigateToDetail(applicantMeetings.id)) }}>{formatDate(applicantMeetings.beginHour)}</td>
             <td onClick={() => { (handleNavigateToDetail(applicantMeetings.id)) }}>{formatDate(applicantMeetings.endHour)}</td>
-            <td>
-                  {" "}
-                  <Button variant="warning">
+            <td>                 
+                  <Button variant="warning" onClick={() => {handleNavigateToUpdate(applicantMeetings.id) }} >
                     Update
-                  </Button>{" "}
+                  </Button>
                 </td>
                 <td>
                   <Button variant="danger" onClick={() => {handleDelete(applicantMeetings.id)}}>Delete</Button>

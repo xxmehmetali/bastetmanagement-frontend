@@ -1,11 +1,11 @@
 import React from 'react'
-import { useGetBranchesPagedSimplifiedQuery } from '../../../features/api/branchApi';
+import { useDeleteBranchByIdMutation, useGetBranchesPagedSimplifiedQuery } from '../../../features/api/branchApi';
 import { Pagination } from '../../../results/pagination/Pagination';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { PagedDataResult } from '../../../results/PagedDataResult';
 import { Branch } from '../../../models/base/Branch';
 import navigationUrlProvider from '../../../providers/navigationUrlProvider';
-import { Table } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
 import PaginationComponent from '../../../components/PaginationComponent';
 import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
 
@@ -18,11 +18,21 @@ export default function BranchList() {
   const branches: Branch[] = (pagedDataResultForEmployee?.data?.content) as Branch[];
 
   const totalPages = pagedDataResultForEmployee?.data?.totalPages || 1;
+  const [deleteBranch, { data }] = useDeleteBranchByIdMutation();
 
   const navigate = useNavigate();
   function handleNavigateToDetail(id: string) {
       navigate(navigationUrlProvider.branchDetailUrl + id)
   }
+  async function handleDelete(id: any) {
+    const result = await deleteBranch(id);
+    //ResolveResult(result)
+  }
+  function handleNavigateToUpdate(id: string) {
+    navigate(navigationUrlProvider.branchUpdateUrl + id)
+  }
+
+
   return (
     
     <div>
@@ -34,17 +44,28 @@ export default function BranchList() {
             <th>Description</th>
             <th>Phone Number</th>
             <th>Address</th>
+            <th> </th>
+            <th> </th>
           </tr>
         </thead>
         <tbody>
 
           {branches &&
             branches.map((branch: Branch) => (
-              <tr onClick={() => { (handleNavigateToDetail(branch.id)) }}>
-                <td>{branch.name}</td>
-                <td>{branch.description}</td>
-                <td>{branch.phoneNumber}</td>
-                <td>{branch.address}</td>
+              <tr>
+                <td onClick={() => { (handleNavigateToDetail(branch.id)) }}>{branch.name}</td>
+                <td onClick={() => { (handleNavigateToDetail(branch.id)) }}>{branch.description}</td>
+                <td onClick={() => { (handleNavigateToDetail(branch.id)) }}>{branch.phoneNumber}</td>
+                <td onClick={() => { (handleNavigateToDetail(branch.id)) }}> {branch.address}</td>
+                <td>
+                  
+                  <Button variant="warning" onClick={() => {handleNavigateToUpdate(branch.id) }}>Update</Button>
+                </td>
+                <td>
+                  <Button variant="danger" onClick={() => {handleDelete(branch.id)}}>
+                    Delete
+                  </Button>
+                </td>
               </tr>
             ))}
 

@@ -1,11 +1,11 @@
 import React from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useGetCurrenciesPagedSimplifiedQuery } from '../../../features/api/currencyApi';
+import { useDeleteCurrencyByIdMutation, useGetCurrenciesPagedSimplifiedQuery } from '../../../features/api/currencyApi';
 import { Pagination } from '../../../results/pagination/Pagination';
 import { PagedDataResult } from '../../../results/PagedDataResult';
 import { Currency } from '../../../models/base/Currency';
 import navigationUrlProvider from '../../../providers/navigationUrlProvider';
-import { Table } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
 import PaginationComponent from '../../../components/PaginationComponent';
 import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
 
@@ -18,12 +18,19 @@ export default function CurrencyList() {
   const currencies: Currency[] = (pagedDataResultForCurrency?.data?.content) as Currency[];
 
   const totalPages = pagedDataResultForCurrency?.data?.totalPages || 1;
-  
+  const [deleteCurrency, { data }] = useDeleteCurrencyByIdMutation();
 
+  async function handleDelete(id: any) {
+    const result = await deleteCurrency(id);
+    //ResolveResult(result)
+  }
 
   const navigate = useNavigate();
   function handleNavigateToDetail(id: string) {
       navigate(navigationUrlProvider.currencyDetailUrl + id)
+  }
+  function handleNavigateToUpdate(id: string) {
+    navigate(navigationUrlProvider.currencyUpdateUrl + id)
   }
 return (
   <div>
@@ -33,16 +40,24 @@ return (
         <tr>
           <th>Currency Name</th>
           <th>Currency Symbol</th>
-          
+          <th> </th>
+  
         </tr>
       </thead>
       <tbody>
 
         {currencies &&
           currencies.map((cur: Currency) => (
-            <tr onClick={() => { (handleNavigateToDetail(cur.id)) }}>
-              <td>{cur.currencyName}</td>
-              <td>{cur.currencySymbol}</td>
+            <tr>
+              <td  onClick={() => { (handleNavigateToDetail(cur.id)) }}>{cur.currencyName}</td>
+              <td  onClick={() => { (handleNavigateToDetail(cur.id)) }}>{cur.currencySymbol}</td>
+              <td>
+                  
+                  <Button variant="warning" style={{ marginRight : "1em" }} onClick={() => {handleNavigateToUpdate(cur.id) }}>Update</Button>
+                  <Button variant="danger" onClick={() => {handleDelete(cur.id)}}>
+                    Delete
+                  </Button>
+                </td>
               
             </tr>
           ))}
