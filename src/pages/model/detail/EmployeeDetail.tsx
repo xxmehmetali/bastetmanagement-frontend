@@ -62,6 +62,10 @@ export default function EmployeeDetail() {
               <td>{employee.phoneNumber}</td>
             </tr>
             <tr>
+              <td>Salary Amount</td>
+              <td>{employee.salaryAmount}</td>
+            </tr>          
+            <tr>
               <td>National Id</td>
               <td>{employee.nationalId}</td>
             </tr>
