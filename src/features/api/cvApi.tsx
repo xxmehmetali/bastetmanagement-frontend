@@ -7,52 +7,69 @@ import apiPaginationConfig from "./config/apiPaginationConfig";
 import { Cv } from "../../models/base/Cv";
 
 export const cvApi = createApi({
-    reducerPath: "cvApi",
-    baseQuery: fetchBaseQuery({ 
-        baseUrl: apiUrlProvider.apiBaseUrl,
-        prepareHeaders:  (headers, { getState }) => {
-            const loggedInUserInfo = JSON.parse(localStorage.getItem("loggedInUserInfo") || "{}")
-            headers.set('Authorization', "Bearer " + loggedInUserInfo.jwt);
-            return headers;
-          },
+  reducerPath: "cvApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: apiUrlProvider.apiBaseUrl,
+    prepareHeaders: (headers, { getState }) => {
+      const loggedInUserInfo = JSON.parse(localStorage.getItem("loggedInUserInfo") || "{}")
+      headers.set('Authorization', "Bearer " + loggedInUserInfo.jwt);
+      return headers;
+    },
+  }),
+  tagTypes: ['cvs'],
+  endpoints: (builder) => ({
+
+    getCvById: builder.query<Model, string>({
+      query: (id: string) => apiUrlProvider.cv + `/findById/${id}`,
+      providesTags: ['cvs'],
     }),
-    tagTypes: ['cvs'],
-    endpoints: (builder) => ({
 
-        getCvById: builder.query<Model, string>({
-            query: (id : string) => apiUrlProvider.cv + `/findById/${id}`,
-        }),
-        getCvByIdSimplified: builder.query<Model, string>({
-            query: (id : string) => apiUrlProvider.cv + `/simplified/findById/${id}`,
-        }),
-        getCvsPaged: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.cv +`/findAll?page=${pagination.page}&size=${pagination.size}`,
-        }),
+    getCvByIdSimplified: builder.query<Model, string>({
+      query: (id: string) => apiUrlProvider.cv + `/simplified/findById/${id}`,
+      providesTags: ['cvs'],
+    }),
 
-        getCvsPagedSimplified: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.cv + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
-        }),
+    getCvsPaged: builder.query<PagedDataResult, Pagination>({
+      query: (pagination: Pagination) => apiUrlProvider.cv + `/findAll?page=${pagination.page}&size=${pagination.size}`,
+      providesTags: ['cvs'],
+    }),
 
-        getSelectElementCvs: builder.query<Model, void>({
-            query: () => apiUrlProvider.cv + "/" + apiUrlProvider.selectElement + "/findAll",
-        }),
+    getCvsPagedSimplified: builder.query<PagedDataResult, Pagination>({
+      query: (pagination: Pagination) => apiUrlProvider.cv + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
+      providesTags: ['cvs'],
+    }),
 
-        addCv: builder.mutation<Cv, Partial<Cv>>({
-            query: (cv) => ({
-              url: apiUrlProvider.cv + `/add`,
-              method: 'POST',
-              body : cv,
-            }),
-            invalidatesTags: ['cvs'],
-          }),
+    getSelectElementCvs: builder.query<Model, void>({
+      query: () => apiUrlProvider.cv + "/" + apiUrlProvider.selectElement + "/findAll",
+      providesTags: ['cvs'],
+    }),
+
+    addCv: builder.mutation<Cv, Partial<Cv>>({
+      query: (cv) => ({
+        url: apiUrlProvider.cv + `/add`,
+        method: 'POST',
+        body: cv,
+      }),
+      invalidatesTags: ['cvs'],
+    }),
 
     deleteCvById: builder.mutation({
       query: (id: string) => ({
         url: apiUrlProvider.cv + `/deleteById?id=${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["cvs"],
+      invalidatesTags: ['cvs'],
     }),
+
+    updateCv: builder.mutation<Cv, Partial<Cv>>({
+      query: (cv) => ({
+        url: apiUrlProvider.cv + `/update`,
+        method: 'POST',
+        body: cv,
+      }),
+      invalidatesTags: ['cvs'],
+    }),
+
   }),
 });
 
@@ -64,4 +81,5 @@ export const {
   useAddCvMutation,
   useGetSelectElementCvsQuery,
   useDeleteCvByIdMutation,
+  useUpdateCvMutation
 } = cvApi;

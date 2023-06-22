@@ -9,21 +9,27 @@ import { Button, Table } from 'react-bootstrap';
 import PaginationComponent from '../../../components/PaginationComponent';
 import { formatDate } from '../../../functions/FormatDateFunction';
 import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
+import { ResolveResult } from '../../../functions/toastify/ResolveResult';
 
 export default function ApplicantMeetingList() {
   const [searchParams, setSearchParams] = useSearchParams();
     const page = searchParams.get("page")
 
-    const { data: pagedDataResultDataForApplicantMeeting, isLoading, error } = useGetApplicantMeetingsPagedSimplifiedQuery(new Pagination(Number(page)));
+    const { data: pagedDataResultDataForApplicantMeeting, isLoading, error, isSuccess, status } = useGetApplicantMeetingsPagedSimplifiedQuery(new Pagination(Number(page)));
     const pagedDataResultForApplicantMeeting: PagedDataResult = pagedDataResultDataForApplicantMeeting as PagedDataResult;
     const applicantMeetings : ApplicantMeeting[] = (pagedDataResultForApplicantMeeting?.data?.content) as ApplicantMeeting[];
+
+    //isSuccess just indicates that the request is made successfuly. But Inside of the response, there may be result:error.
+    if(isSuccess)
+      ResolveResult(pagedDataResultForApplicantMeeting)
 
     const totalPages = pagedDataResultForApplicantMeeting?.data?.totalPages || 1;
     const [deleteApplicantMeeting, { data }] = useDeleteApplicantMeetingByIdMutation();
 
     async function handleDelete(id : any) {
+      console.log(id);
       const result = await deleteApplicantMeeting(id)
-      //ResolveResult(result)
+      ResolveResult(result)
     }
     function handleNavigateToUpdate(id: string) {
       navigate(navigationUrlProvider.applicatMeetingUpdateUrl + id)
@@ -52,19 +58,19 @@ export default function ApplicantMeetingList() {
     <tbody>
 
       {applicantMeetings &&
-        applicantMeetings.map((applicantMeetings: ApplicantMeeting) => (
-          <tr>
-            <td onClick={() => { (handleNavigateToDetail(applicantMeetings.id)) }}>{applicantMeetings.meetingOwner.name} {applicantMeetings.meetingOwner.surname}</td>
-            <td onClick={() => { (handleNavigateToDetail(applicantMeetings.id)) }}>{applicantMeetings.meetingPlatform.name}</td>
-            <td onClick={() => { (handleNavigateToDetail(applicantMeetings.id)) }}>{formatDate(applicantMeetings.beginHour)}</td>
-            <td onClick={() => { (handleNavigateToDetail(applicantMeetings.id)) }}>{formatDate(applicantMeetings.endHour)}</td>
+        applicantMeetings.map((applicantMeeting: ApplicantMeeting) => (
+          <tr key={applicantMeeting.id}>
+            <td onClick={() => { (handleNavigateToDetail(applicantMeeting.id)) }}>{applicantMeeting.meetingOwner.name} {applicantMeeting.meetingOwner.surname}</td>
+            <td onClick={() => { (handleNavigateToDetail(applicantMeeting.id)) }}>{applicantMeeting.meetingPlatform.name}</td>
+            <td onClick={() => { (handleNavigateToDetail(applicantMeeting.id)) }}>{formatDate(applicantMeeting.beginHour)}</td>
+            <td onClick={() => { (handleNavigateToDetail(applicantMeeting.id)) }}>{formatDate(applicantMeeting.endHour)}</td>
             <td>                 
-                  <Button variant="warning" onClick={() => {handleNavigateToUpdate(applicantMeetings.id) }} >
+                  <Button variant="warning" onClick={() => {handleNavigateToUpdate(applicantMeeting.id) }} >
                     Update
                   </Button>
                 </td>
                 <td>
-                  <Button variant="danger" onClick={() => {handleDelete(applicantMeetings.id)}}>Delete</Button>
+                  <Button variant="danger" onClick={() => {handleDelete(applicantMeeting.id)}}>Delete</Button>
                 </td>
           </tr>
         ))}

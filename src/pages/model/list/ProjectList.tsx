@@ -10,12 +10,13 @@ import PaginationComponent from '../../../components/PaginationComponent';
 import { Project } from '../../../models/base/Project';
 import { formatDate } from '../../../functions/FormatDateFunction';
 import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
+import { ResolveResult } from '../../../functions/toastify/ResolveResult';
 
 export default function ProjectList() {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get("page")
 
-  const { data: pagedDataResultDataForProject, isLoading, error } = useGetProjectsPagedSimplifiedQuery(new Pagination(Number(page)));
+  const { data: pagedDataResultDataForProject, isLoading, error, isSuccess } = useGetProjectsPagedSimplifiedQuery(new Pagination(Number(page)));
   const pagedDataResultForProject: PagedDataResult = pagedDataResultDataForProject as PagedDataResult;
   const projects: Project[] = (pagedDataResultForProject?.data?.content) as Project[];
 
@@ -26,6 +27,10 @@ export default function ProjectList() {
     const result = await deleteProject(id);
     //ResolveResult(result)
   }
+
+  if (isSuccess)
+    ResolveResult(pagedDataResultForProject)
+
   const navigate = useNavigate();
   function handleNavigateToDetail(id: string) {
     navigate(navigationUrlProvider.projectDetailUrl + id)
@@ -36,7 +41,7 @@ export default function ProjectList() {
 
   return (
     <div>
-      <AddModelButtonComponent buttonName={"Add Project"} redirectionUrl={navigationUrlProvider.projectAddUrl}/>
+      <AddModelButtonComponent buttonName={"Add Project"} redirectionUrl={navigationUrlProvider.projectAddUrl} />
       <Table striped className='listTable'>
         <thead>
           <tr>
@@ -51,14 +56,13 @@ export default function ProjectList() {
               <tr >
                 <td onClick={() => { (handleNavigateToDetail(project.id)) }}>{project.name}</td>
                 <td>
-                  
+
                   <Button variant="warning" style={{ marginRight : "1em" }} onClick={() => {handleNavigateToUpdate(project.id) }}>Update</Button>
                   <Button variant="danger" onClick={() => {handleDelete(project.id)}}>
                     Delete
                   </Button>
                 </td>
               </tr>
-              
             ))}
 
         </tbody>

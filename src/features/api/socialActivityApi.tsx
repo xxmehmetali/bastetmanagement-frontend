@@ -7,54 +7,69 @@ import apiPaginationConfig from "./config/apiPaginationConfig";
 import { SocialActivity } from "../../models/base/SocialActivity";
 
 export const socialActivityApi = createApi({
-    reducerPath: "socialActivityApi",
-    baseQuery: fetchBaseQuery({ 
-        baseUrl: apiUrlProvider.apiBaseUrl,
-        prepareHeaders:  (headers, { getState }) => {
-            const loggedInUserInfo = JSON.parse(localStorage.getItem("loggedInUserInfo") || "{}")
-            headers.set('Authorization', "Bearer " + loggedInUserInfo.jwt);
-            return headers;
-          },
+  reducerPath: "socialActivityApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: apiUrlProvider.apiBaseUrl,
+    prepareHeaders: (headers, { getState }) => {
+      const loggedInUserInfo = JSON.parse(localStorage.getItem("loggedInUserInfo") || "{}")
+      headers.set('Authorization', "Bearer " + loggedInUserInfo.jwt);
+      return headers;
+    },
+  }),
+  tagTypes: ['socialActivities'],
+  endpoints: (builder) => ({
+
+    getSocialActivityById: builder.query<Model, string>({
+      query: (id: string) => apiUrlProvider.socialActivity + `/findById/${id}`,
+      providesTags: ['socialActivities']
     }),
-    tagTypes: ['socialActivities'],
-    endpoints: (builder) => ({
 
-        getSocialActivityById: builder.query<Model, string>({
-            query: (id : string) => apiUrlProvider.socialActivity + `/findById/${id}`,
-        }),
-        getSocialActivityIdSimplified: builder.query<Model, string>({
-            query: (id : string) => apiUrlProvider.socialActivity + `/simplified/findById/${id}`,
-        }),
-        getSocialActivitiesPaged: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.socialActivity + `/findAll?page=${pagination.page}&size=${pagination.size}`,
-        }),
+    getSocialActivityIdSimplified: builder.query<Model, string>({
+      query: (id: string) => apiUrlProvider.socialActivity + `/simplified/findById/${id}`,
+      providesTags: ['socialActivities']
+    }),
 
-        getSocialActivitiesPagedSimplified: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.socialActivity + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
-        }),
+    getSocialActivitiesPaged: builder.query<PagedDataResult, Pagination>({
+      query: (pagination: Pagination) => apiUrlProvider.socialActivity + `/findAll?page=${pagination.page}&size=${pagination.size}`,
+      providesTags: ['socialActivities']
+    }),
 
-        getSelectElementSocialActivities: builder.query<Model, void>({
-            query: () => apiUrlProvider.socialActivity + "/" + apiUrlProvider.selectElement + "/findAll",
-        }),
+    getSocialActivitiesPagedSimplified: builder.query<PagedDataResult, Pagination>({
+      query: (pagination: Pagination) => apiUrlProvider.socialActivity + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
+      providesTags: ['socialActivities']
+    }),
 
-    addSocialActivity: builder.mutation<
-      SocialActivity,
-      Partial<SocialActivity>
-    >({
+    getSelectElementSocialActivities: builder.query<Model, void>({
+      query: () => apiUrlProvider.socialActivity + "/" + apiUrlProvider.selectElement + "/findAll",
+      providesTags: ['socialActivities']
+    }),
+
+    addSocialActivity: builder.mutation<SocialActivity, Partial<SocialActivity>>({
       query: (socialActivity) => ({
         url: apiUrlProvider.socialActivity + `/add`,
         method: "POST",
         body: socialActivity,
       }),
-      invalidatesTags: ["socialActivities"],
+      invalidatesTags: ['socialActivities'],
     }),
+
     deleteSocialActivityById: builder.mutation({
       query: (id: string) => ({
         url: apiUrlProvider.socialActivity + `/deleteById?id=${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["socialActivities"],
+      invalidatesTags: ['socialActivities'],
     }),
+
+    updateSocialActivity: builder.mutation<SocialActivity, Partial<SocialActivity>>({
+      query: (socialActivity) => ({
+        url: apiUrlProvider.socialActivity + `/update`,
+        method: 'POST',
+        body: socialActivity,
+      }),
+      invalidatesTags: ['socialActivities'],
+    }),
+
   }),
 });
 
@@ -65,5 +80,7 @@ export const {
   useGetSocialActivityIdSimplifiedQuery,
   useAddSocialActivityMutation,
   useGetSelectElementSocialActivitiesQuery,
-  useDeleteSocialActivityByIdMutation
+  useDeleteSocialActivityByIdMutation,
+  useUpdateSocialActivityMutation
+
 } = socialActivityApi;

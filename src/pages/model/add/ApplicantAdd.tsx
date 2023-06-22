@@ -34,7 +34,7 @@ export default function ApplicantAdd() {
   return (
     <div>
       <Formik
-        initialValues={applicantInitialValue}
+        initialValues={new applicantInitialValue().toJSON()}
         validationSchema={yup.object({
           name: yup.string().required("Name required!").min(3, "Name is too short!"),
           surname: yup.string().required("Surname required!").min(3, "Surname is too short!"),

@@ -8,14 +8,18 @@ import navigationUrlProvider from '../../../providers/navigationUrlProvider';
 import { Button, Table } from 'react-bootstrap';
 import PaginationComponent from '../../../components/PaginationComponent';
 import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
+import { ResolveResult } from '../../../functions/toastify/ResolveResult';
 
 export default function BranchList() {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get("page")
 
-  const { data: pagedDataResultDataForBranch, isLoading, error } = useGetBranchesPagedSimplifiedQuery(new Pagination(Number(page)));
+  const { data: pagedDataResultDataForBranch, isLoading, error, isSuccess } = useGetBranchesPagedSimplifiedQuery(new Pagination(Number(page)));
   const pagedDataResultForEmployee: PagedDataResult = pagedDataResultDataForBranch  as PagedDataResult;
   const branches: Branch[] = (pagedDataResultForEmployee?.data?.content) as Branch[];
+
+  if(isSuccess)
+    ResolveResult(pagedDataResultForEmployee);
 
   const totalPages = pagedDataResultForEmployee?.data?.totalPages || 1;
   const [deleteBranch, { data }] = useDeleteBranchByIdMutation();

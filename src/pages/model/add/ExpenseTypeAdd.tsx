@@ -1,9 +1,9 @@
 
 import { Formik } from 'formik';
 import React from 'react'
-import { Form } from 'react-router-dom';
+
 import CustomInput from '../../../components/customFormElements/CustomInput';
-import { Button } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { useAddExpenseTypeMutation } from '../../../features/api/expenseTypeApi';
 import { ResolveResult } from '../../../functions/toastify/ResolveResult';
 import { expenseTypeInitialValue } from '../../../yup_schemas/initialValues/expenseTypeInitialValue';
@@ -20,7 +20,7 @@ export default function ExpenseTypeAdd() {
   return (
     <div>
    <Formik
-      initialValues={expenseTypeInitialValue}
+      initialValues={new expenseTypeInitialValue().toJson()}
       validationSchema={yup.object({
         name: yup.string().required("Name required!").min(1, "Name is too short!"),
         description: yup.string().required("Description required!").min(6, "Description is too short!")

@@ -10,27 +10,27 @@ export const userApi = createApi({
     reducerPath: "userApi",
     baseQuery: fetchBaseQuery({
         baseUrl: apiUrlProvider.apiBaseUrl,
-        prepareHeaders:  (headers, { getState }) => {
+        prepareHeaders: (headers, { getState }) => {
             const loggedInUserInfo = JSON.parse(localStorage.getItem("loggedInUserInfo") || "{}")
             headers.set('Authorization', "Bearer " + loggedInUserInfo.jwt);
             return headers;
-          },
+        },
     }),
     tagTypes: ['users'],
     endpoints: (builder) => ({
 
         getUserById: builder.query<Model, string>({
-            query: (id : string) => apiUrlProvider.user + `/findById/${id}`,
+            query: (id: string) => apiUrlProvider.user + `/findById/${id}`,
         }),
         getUserByIdSimplified: builder.query<Model, string>({
-            query: (id : string) => apiUrlProvider.user + `/simplified/findById/${id}`,
+            query: (id: string) => apiUrlProvider.user + `/simplified/findById/${id}`,
         }),
         getUserPaged: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.user + `/findAll?page=${pagination.page}&size=${pagination.size}`,
+            query: (pagination: Pagination) => apiUrlProvider.user + `/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
         getUserPagedSimplified: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.user + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
+            query: (pagination: Pagination) => apiUrlProvider.user + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
         }),
 
         getSelectElementUsers: builder.query<Model, void>({
@@ -43,21 +43,40 @@ export const userApi = createApi({
 
         addUser: builder.mutation<User, Partial<User>>({
             query: (user) => ({
-              url: apiUrlProvider.user + `/add`,
-              method: 'POST',
-              body : user,
+                url: apiUrlProvider.user + `/add`,
+                method: 'POST',
+                body: user,
             }),
             invalidatesTags: ['users'],
-          }),
-          deleteUserById: builder.mutation({
-            query: (id : string) => ({
-              url: apiUrlProvider.user + `/deleteById?id=${id}`,
-              method: 'DELETE',
-            }),
-            invalidatesTags: ['users'],
-
         }),
+        deleteUserById: builder.mutation({
+            query: (id: string) => ({
+                url: apiUrlProvider.user + `/deleteById?id=${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['users'],
+        }),
+
+        updateUser: builder.mutation<User, Partial<User>>({
+            query: (user) => ({
+                url: apiUrlProvider.user + `/update`,
+                method: 'POST',
+                body: user,
+            }),
+            invalidatesTags: ['users'],
+        }),
+
     }),
 });
 
-export const { useGetUserByIdQuery, useGetUserByIdSimplifiedQuery, useGetUserPagedQuery, useGetUserPagedSimplifiedQuery, useAddUserMutation, useGetSelectElementUsersQuery, useGetCurrentUserProfileQuery,useDeleteUserByIdMutation } = userApi;
+export const { 
+    useGetUserByIdQuery, 
+    useGetUserByIdSimplifiedQuery, 
+    useGetUserPagedQuery, 
+    useGetUserPagedSimplifiedQuery, 
+    useAddUserMutation, 
+    useGetSelectElementUsersQuery, 
+    useGetCurrentUserProfileQuery, 
+    useDeleteUserByIdMutation,
+    useUpdateUserMutation
+} = userApi;

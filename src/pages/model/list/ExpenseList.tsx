@@ -9,6 +9,7 @@ import { Button, Table } from 'react-bootstrap';
 import PaginationComponent from '../../../components/PaginationComponent';
 import { formatDate } from '../../../functions/FormatDateFunction';
 import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
+import { ResolveResult } from '../../../functions/toastify/ResolveResult';
 import { useDeleteExpenseTypeByIdMutation } from '../../../features/api/expenseTypeApi';
 
 export default function ExpenseList() {
@@ -16,13 +17,16 @@ export default function ExpenseList() {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get("page")
 
-  const { data: pagedDataResultDataForExpense, isLoading, error } = useGetExpensesPagedSimplifiedQuery(new Pagination(Number(page)));
+  const { data: pagedDataResultDataForExpense, isLoading, error, isSuccess } = useGetExpensesPagedSimplifiedQuery(new Pagination(Number(page)));
   const pagedDataResultForExpense: PagedDataResult = pagedDataResultDataForExpense as PagedDataResult;
   const expenses: Expense[] = (pagedDataResultForExpense?.data?.content) as Expense[];
 
   const totalPages = pagedDataResultForExpense?.data?.totalPages || 1;
   const [deleteExpense, { data }] = useDeleteExpenseTypeByIdMutation();
-  
+
+  if(isSuccess)
+    ResolveResult(pagedDataResultForExpense)
+
   async function handleDelete(id: any) {
     const result = await deleteExpense(id);
     //ResolveResult(result)
@@ -56,10 +60,10 @@ return (
             <tr >
               <td onClick={() => { (handleNavigateToDetail(exp.id)) }}>{exp.name}</td>
               <td onClick={() => { (handleNavigateToDetail(exp.id)) }}>{exp.spendedBy?.name} {exp.spendedBy?.surname}</td>
-              <td onClick={() => { (handleNavigateToDetail(exp.id)) }}>{exp.expenseType.name}</td> 
+              <td onClick={() => { (handleNavigateToDetail(exp.id)) }}>{exp.expenseType.name}</td>
               <td onClick={() => { (handleNavigateToDetail(exp.id)) }}>{formatDate(exp.spentDateTime)}</td>
               <td>
-                  
+
                   <Button variant="warning" onClick={() => {handleNavigateToUpdate(exp.id) }}>Update</Button>
                 </td>
                 <td>

@@ -28,7 +28,7 @@ export default function DepartmentAdd() {
   return (
     <div>
       <Formik
-        initialValues={departmentInitialValue}
+        initialValues={new departmentInitialValue().toJSON()}
         validationSchema={yup.object({
           departmentResponsible: yup.object().shape({
             id: yup.string().required("Department Responsible needed!")

@@ -8,18 +8,23 @@ import navigationUrlProvider from '../../../providers/navigationUrlProvider';
 import { Button, Table } from 'react-bootstrap';
 import PaginationComponent from '../../../components/PaginationComponent';
 import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
+import { ResolveResult } from '../../../functions/toastify/ResolveResult';
 
 export default function DepartmentList() {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get("page")
 
-  const { data: pagedDataResultDataForDepartment, isLoading, error } = useGetDepartmentsPagedSimplifiedQuery(new Pagination(Number(page)));
+  const { data: pagedDataResultDataForDepartment, isLoading, error, isSuccess } = useGetDepartmentsPagedSimplifiedQuery(new Pagination(Number(page)));
   const pagedDataResultForDepartment: PagedDataResult = pagedDataResultDataForDepartment as PagedDataResult;
   const departments: Department[] = (pagedDataResultForDepartment?.data?.content) as Department[];
 
   const totalPages = pagedDataResultForDepartment?.data?.totalPages || 1;
+
+  if(isSuccess)
+    ResolveResult(pagedDataResultForDepartment)
+
   const [deleteDepartment, { data }] = useDeleteDepartmentsByIdMutation();
- 
+
   async function handleDelete(id: any) {
     const result = await deleteDepartment(id);
     //ResolveResult(result)
@@ -49,7 +54,7 @@ export default function DepartmentList() {
               <tr >
                 <td onClick={() => { (handleNavigateToDetail(dprt.id)) }}>{dprt.name}</td>
                 <td onClick={() => { (handleNavigateToDetail(dprt.id)) }}>{dprt.description}</td>
-                <td>                  
+                <td>
                   <Button variant="warning" onClick={() => {handleNavigateToUpdate(dprt.id) }}>Update</Button>
                 </td>
                 <td>

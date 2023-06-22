@@ -1,39 +1,34 @@
-import React from "react";
-import { Button, Table } from "react-bootstrap";
-import { useGetEmployeesPagedSimplifiedQuery } from "../../../features/api/employeeApi";
-import { Employee } from "../../../models/base/Employee";
-import { PagedDataResult } from "../../../results/PagedDataResult";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { Pagination } from "../../../results/pagination/Pagination";
-import PaginationBootstrap from "react-bootstrap/Pagination";
-import PaginationComponent from "../../../components/PaginationComponent";
-import navigationUrlProvider from "../../../providers/navigationUrlProvider";
-import {
-  useDeleteExpenseTypeByIdMutation,
-  useGetExpenseTypesPagedSimplifiedQuery,
-} from "../../../features/api/expenseTypeApi";
-import { ExpenseType } from "../../../models/base/ExpenseType";
-import AddModelButtonComponent from "../../../components/AddModelButtonComponent";
+import React from 'react'
+import {Button, Table} from 'react-bootstrap';
+import { useGetEmployeesPagedSimplifiedQuery } from '../../../features/api/employeeApi';
+import { Employee } from '../../../models/base/Employee';
+import { PagedDataResult } from '../../../results/PagedDataResult';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { Pagination } from '../../../results/pagination/Pagination';
+import PaginationBootstrap from 'react-bootstrap/Pagination';
+import PaginationComponent from '../../../components/PaginationComponent';
+import navigationUrlProvider from '../../../providers/navigationUrlProvider';
+import { useGetExpenseTypesPagedSimplifiedQuery, useDeleteExpenseTypeByIdMutation } from '../../../features/api/expenseTypeApi';
+import { ExpenseType } from '../../../models/base/ExpenseType';
+import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
+import { ResolveResult } from '../../../functions/toastify/ResolveResult';
 
 function ExpenseTypeList() {
-  //error varsa toastr ile uyarı göster
-  //loading ise jsx içinde yükleniyor işareti göster
-  //burada gelen veri simplified olmalı.
-  const [searchParams, setSearchParams] = useSearchParams();
-  const page = searchParams.get("page");
 
-  const {
-    data: pagedDataResultDataForExpenseType,
-    isLoading,
-    error,
-  } = useGetExpenseTypesPagedSimplifiedQuery(new Pagination(Number(page)));
-  const pagedDataResultForExpenseType: PagedDataResult =
-    pagedDataResultDataForExpenseType as PagedDataResult;
+    //error varsa toastr ile uyarı göster
+    //loading ise jsx içinde yükleniyor işareti göster
+    //burada gelen veri simplified olmalı.
+    const [searchParams, setSearchParams] = useSearchParams();
+    const page = searchParams.get("page")
 
-  const expenseTypes: ExpenseType[] = pagedDataResultForExpenseType?.data
-    ?.content as ExpenseType[];
+    const { data: pagedDataResultDataForExpenseType, isLoading, error, isSuccess } = useGetExpenseTypesPagedSimplifiedQuery(new Pagination(Number(page)));
+    const pagedDataResultForExpenseType: PagedDataResult = pagedDataResultDataForExpenseType as PagedDataResult;
+    const expenseTypes: ExpenseType[] = (pagedDataResultForExpenseType?.data?.content) as ExpenseType[];
 
-  const totalPages = pagedDataResultForExpenseType?.data?.totalPages || 1;
+    const totalPages = pagedDataResultForExpenseType?.data?.totalPages || 1;
+
+    if(isSuccess)
+        ResolveResult(pagedDataResultForExpenseType)
   const [deleteExpenseType, { data }] = useDeleteExpenseTypeByIdMutation();
 
   async function handleDelete(id: any) {

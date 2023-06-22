@@ -12,6 +12,7 @@ import navigationUrlProvider from "../../../providers/navigationUrlProvider";
 import PaginationComponent from "../../../components/PaginationComponent";
 import AddModelButtonComponent from "../../../components/AddModelButtonComponent";
 import Modal from "react-bootstrap/Modal";
+import { ResolveResult } from "../../../functions/toastify/ResolveResult";
 
 export default function ApplicantList() {
   //error varsa toastr ile uyarı göster
@@ -24,18 +25,21 @@ export default function ApplicantList() {
     data: pagedDataResultDataForApplicant,
     isLoading,
     error,
+    isSuccess
   } = useGetApplicantsPagedSimplifiedQuery(new Pagination(Number(page)));
-  const pagedDataResultForEmployee: PagedDataResult =
-    pagedDataResultDataForApplicant as PagedDataResult;
+  const pagedDataResultForEmployee: PagedDataResult = pagedDataResultDataForApplicant as PagedDataResult;
   const applicants: Applicant[] = pagedDataResultForEmployee?.data
     ?.content as Applicant[];
+
+  if (isSuccess)
+    ResolveResult(pagedDataResultForEmployee);
 
   const totalPages = pagedDataResultForEmployee?.data?.totalPages || 1;
   const [deleteApplicant, { data }] = useDeleteApplicantByIdMutation();
 
   async function handleDelete(id: any) {
     const result = await deleteApplicant(id);
-    //ResolveResult(result)
+    ResolveResult(result)
   }
 
   const navigate = useNavigate();
@@ -113,11 +117,11 @@ export default function ApplicantList() {
                   {applicant.technicalAssessmentStatus}
                 </td>
                 <td>
-                  
+
                   <Button variant="warning" onClick={() => {handleNavigateToUpdate(applicant.id) }}>Update</Button>
                 </td>
                 <td>
-                  <Button variant="danger" onClick={() => {handleDelete(applicant.id)}}>
+                  <Button variant="danger" onClick={() => { handleDelete(applicant.id) }}>
                     Delete
                   </Button>
                 </td>

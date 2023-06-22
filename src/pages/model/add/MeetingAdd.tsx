@@ -4,13 +4,17 @@ import { useAddMeetingMutation } from '../../../features/api/meetingApi';
 import { ResolveResult } from '../../../functions/toastify/ResolveResult';
 import { Formik } from 'formik';
 import { meetingInitialValue } from '../../../yup_schemas/initialValues/meetingInitialValue';
-import { Form } from 'react-router-dom';
+
 import CustomInput from '../../../components/customFormElements/CustomInput';
-import { Button } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import * as yup from "yup";
 import CustomSelect from '../../../components/customFormElements/CustomSelect';
 import { GetEmployeeSelectElements } from '../../../providers/SelectElementProviders/GetEmployeeSelectElements';
 import { EmployeeSelectElement } from '../../../models/frontdtos/EmployeeSelectElement';
+import { MeetingTypeEnum } from '../../../models/enums/MeetingTypeEnum';
+import CustomDatePicker from '../../../components/customFormElements/CustomDatePicker';
+import { GetMeetingPlatformSelectElements } from '../../../providers/SelectElementProviders/GetMeetingPlatformSelectElements';
+import { MeetingPlatformSelectElement } from '../../../models/frontdtos/MeetingPlatformSelectElement';
 
 export default function MeetingAdd() {
   const [addMeeting, { isLoading }] = useAddMeetingMutation();
@@ -21,64 +25,82 @@ export default function MeetingAdd() {
     ResolveResult(result)
   }
   const meetingOwnerSelectElementList: EmployeeSelectElement[] = GetEmployeeSelectElements();
-  const meetingPlatformSelectElementList: EmployeeSelectElement[] = GetEmployeeSelectElements();
-  
+  const meetingPlatformSelectElementList: MeetingPlatformSelectElement[] = GetMeetingPlatformSelectElements();
+
   return (
     <div>
-   
-    <Formik
-      initialValues={meetingInitialValue}
-      validationSchema={yup.object({
-        meetingUrl: yup.string().required("Meeting Url required!"),
-        description: yup.string().required("Description required!").min(3, "Description is too short!"),
-        baseUrl: yup.string().required("Name required!").min(3, "Name is too short!"),
-        meetingOwner: yup.object().shape({
-          id: yup.string().required().matches(/^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi, "not valid uuid")
-        }),
-        meetingPlatform: yup.object().shape({
-          id: yup.string().required().matches(/^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi, "not valid uuid")
-        })
-      })}
-      onSubmit={onSubmit}
-    >
-      {formik => (
-        <Form
-          onSubmit={formik.handleSubmit}
-        >
-          <CustomInput name="meetingUrl" placeholder="Enter Meeting Url" type="text" label={"Meeting Url"} />
-          <CustomInput name="meetingPlatform" placeholder="Enter Meeting Platform" type="text" label={"meeting Platform"} />
 
-          <CustomSelect label="Meeting Owner"
-              name="meetingOwner">
+      <Formik
+        initialValues={new meetingInitialValue().toJSON()}
+        validationSchema={yup.object({
+          meetingUrl: yup.string().required("Meeting Url required!"),
+          description: yup.string().required("Description required!").min(3, "Description is too short!"),
+          meetingOwner: yup.object().shape({
+            id: yup.string()
+          }),
+          meetingPlatform: yup.object().shape({
+            id: yup.string()
+          }),
+          beginHour: yup.date().required(),
+          endHour: yup.date().required(),
+          topic: yup.string().required(),
+          meetingType: yup.mixed().oneOf(Object.keys(MeetingTypeEnum)).required("Meeting Type required!"),
+        })}
+        onSubmit={onSubmit}
+      >
+        {formik => (
+          <Form
+            onSubmit={formik.handleSubmit}
+          >
+            <CustomInput name="topic" placeholder="Enter Topic" type="text" label={"Topic"} />
+            <CustomInput name="description" placeholder="Enter Description" type="text" label={"Description"} />
+            <CustomInput name="meetingUrl" placeholder="Enter Meeting Url" type="text" label={"Meeting Url"} />
+
+            <CustomSelect label="Meeting Owner" name="meetingOwner.id">
               <option value="">Please select Meeting Owner</option>
               {
                 meetingOwnerSelectElementList &&
-                meetingOwnerSelectElementList.map((meetingOwnerSelectElement : EmployeeSelectElement) =>
+                meetingOwnerSelectElementList.map((meetingOwnerSelectElement: EmployeeSelectElement) =>
                 (
                   <option value={meetingOwnerSelectElement.id}>{meetingOwnerSelectElement.employeeFullName}</option>
                 )
                 )
               }
             </CustomSelect>
-            <CustomSelect label="Meeting Platform"
-              name="meetingPlatform">
+            <CustomSelect label="Meeting Platform" name="meetingPlatform.id">
               <option value="">Please select Meeting Platform</option>
               {
                 meetingPlatformSelectElementList &&
-                meetingPlatformSelectElementList.map((meetingPlatformSelectElement : EmployeeSelectElement) =>
+                meetingPlatformSelectElementList.map((meetingPlatformSelectElement: MeetingPlatformSelectElement) =>
                 (
-                  <option value={meetingPlatformSelectElement.id}>{meetingPlatformSelectElement.employeeFullName}</option>
+                  <option value={meetingPlatformSelectElement.id}>{meetingPlatformSelectElement.name}</option>
                 )
                 )
               }
             </CustomSelect>
-          <Button type="submit" style={{marginTop:"1em"}}>
-            Add Meeting 
-          </Button>
-        </Form>
-      )}
-    </Formik>
-  </div>
+
+            <CustomSelect label="Meeting Type" name="meetingType">
+              <option value="">Please select a Meeting Type</option>
+              {
+                Object.entries(MeetingTypeEnum).map(([key, value]) => (
+                  <option key={key} value={key}>{value}</option>
+                ))
+
+              }
+            </CustomSelect>
+
+            <CustomDatePicker label="Begin Hour"
+              name="beginHour" />
+
+            <CustomDatePicker label="End Hour"
+              name="endHour" />
+
+            <Button type="submit" style={{ marginTop: "1em" }}>
+              Add Meeting
+            </Button>
+          </Form>
+        )}
+      </Formik>
+    </div>
   );
 }
-    

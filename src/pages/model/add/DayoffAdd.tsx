@@ -30,7 +30,7 @@ export default function DayoffAdd() {
   return (
     <div>
       <Formik
-        initialValues={dayoffInitialValue}
+        initialValues={new dayoffInitialValue().toJSON()}
         validationSchema={yup.object({
           employee: yup.object().shape({
             id: yup.string().required("Employee needed!")

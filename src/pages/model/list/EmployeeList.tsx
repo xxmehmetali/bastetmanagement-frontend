@@ -1,9 +1,6 @@
 import React from "react";
 import { Button, Table } from "react-bootstrap";
-import {
-  useDeleteEmployeesByIdMutation,
-  useGetEmployeesPagedSimplifiedQuery,
-} from "../../../features/api/employeeApi";
+import { useDeleteEmployeesByIdMutation, useGetEmployeesPagedSimplifiedQuery } from "../../../features/api/employeeApi";
 import { Employee } from "../../../models/base/Employee";
 import { PagedDataResult } from "../../../results/PagedDataResult";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
@@ -12,27 +9,26 @@ import PaginationBootstrap from "react-bootstrap/Pagination";
 import PaginationComponent from "../../../components/PaginationComponent";
 import navigationUrlProvider from "../../../providers/navigationUrlProvider";
 import AddModelButtonComponent from "../../../components/AddModelButtonComponent";
+import { ResolveResult } from '../../../functions/toastify/ResolveResult';
 
 function EmployeeList() {
-  //error varsa toastr ile uyarı göster
-  //loading ise jsx içinde yükleniyor işareti göster
-  //burada gelen veri simplified olmalı.
-  const [searchParams, setSearchParams] = useSearchParams();
-  const page = searchParams.get("page");
 
-  const {
-    data: pagedDataResultDataForEmployee,
-    isLoading,
-    error,
-  } = useGetEmployeesPagedSimplifiedQuery(new Pagination(Number(page)));
-  const pagedDataResultForEmployee: PagedDataResult =
-    pagedDataResultDataForEmployee as PagedDataResult;
-  console.log(pagedDataResultForEmployee);
-  const employees: Employee[] = pagedDataResultForEmployee?.data
-    ?.content as Employee[];
+    //error varsa toastr ile uyarı göster
+    //loading ise jsx içinde yükleniyor işareti göster
+    //burada gelen veri simplified olmalı.
+    const [searchParams, setSearchParams] = useSearchParams();
+    const page = searchParams.get("page")
+
+    const { data: pagedDataResultDataForEmployee, isLoading, error, isSuccess } = useGetEmployeesPagedSimplifiedQuery(new Pagination(Number(page)));
+    const pagedDataResultForEmployee: PagedDataResult = pagedDataResultDataForEmployee as PagedDataResult;
+    console.log(pagedDataResultForEmployee)
+    const employees: Employee[] = (pagedDataResultForEmployee?.data?.content) as Employee[];
 
   const totalPages = pagedDataResultForEmployee?.data?.totalPages || 1;
   const [deleteEmployee, { data }] = useDeleteEmployeesByIdMutation();
+
+    if(isSuccess)
+        ResolveResult(pagedDataResultForEmployee)
 
   async function handleDelete(id: any) {
     const result = await deleteEmployee(id);
@@ -138,9 +134,10 @@ function EmployeeList() {
         </tbody>
       </Table>
 
-      <PaginationComponent totalPages={totalPages} currentPage={page} />
-    </div>
-  );
+
+            <PaginationComponent totalPages={totalPages} currentPage={page}/>
+        </div>
+    );
 }
 
 export default EmployeeList;

@@ -1,36 +1,29 @@
-import React from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { Pagination } from "../../../results/pagination/Pagination";
-import { PagedDataResult } from "../../../results/PagedDataResult";
-import { Task } from "../../../models/base/Task";
-import navigationUrlProvider from "../../../providers/navigationUrlProvider";
-import { Button, Table } from "react-bootstrap";
-import PaginationComponent from "../../../components/PaginationComponent";
-import {
-  useDeleteSocialActivityTypeByIdMutation,
-  useGetSocialActivityTypesPagedSimplifiedQuery,
-} from "../../../features/api/socialActivityTypeApi";
-import { SocialActivityType } from "../../../models/base/SocialActivityType";
-import AddModelButtonComponent from "../../../components/AddModelButtonComponent";
+import React from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Pagination } from '../../../results/pagination/Pagination';
+import { PagedDataResult } from '../../../results/PagedDataResult';
+import { Task } from '../../../models/base/Task';
+import navigationUrlProvider from '../../../providers/navigationUrlProvider';
+import {Button, Table} from 'react-bootstrap';
+import PaginationComponent from '../../../components/PaginationComponent';
+import { useGetSocialActivityTypesPagedSimplifiedQuery, useDeleteSocialActivityTypeByIdMutation } from '../../../features/api/socialActivityTypeApi';
+import { SocialActivityType } from '../../../models/base/SocialActivityType';
+import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
+import { ResolveResult } from '../../../functions/toastify/ResolveResult';
 
 export default function SocialActivityTypeList() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const page = searchParams.get("page");
+    const [searchParams, setSearchParams] = useSearchParams();
+    const page = searchParams.get("page")
 
-  const {
-    data: pagedDataResultDataForSocialActivityType,
-    isLoading,
-    error,
-  } = useGetSocialActivityTypesPagedSimplifiedQuery(
-    new Pagination(Number(page))
-  );
-  const pagedDataResultForSocialActivityType: PagedDataResult =
-    pagedDataResultDataForSocialActivityType as PagedDataResult;
-  const socialActivityTypes: SocialActivityType[] =
-    pagedDataResultForSocialActivityType?.data?.content as SocialActivityType[];
+    const { data: pagedDataResultDataForSocialActivityType, isLoading, error, isSuccess } = useGetSocialActivityTypesPagedSimplifiedQuery(new Pagination(Number(page)));
+    const pagedDataResultForSocialActivityType: PagedDataResult = pagedDataResultDataForSocialActivityType as PagedDataResult;
+    const socialActivityTypes: SocialActivityType[] = (pagedDataResultForSocialActivityType?.data?.content) as SocialActivityType[];
 
-  const totalPages =
-    pagedDataResultForSocialActivityType?.data?.totalPages || 1;
+    const totalPages = pagedDataResultForSocialActivityType?.data?.totalPages || 1;
+  
+    if (isSuccess)
+      ResolveResult(pagedDataResultForSocialActivityType)
+
   const [deleteSocialActivityType, { data }] =
     useDeleteSocialActivityTypeByIdMutation();
 

@@ -9,22 +9,27 @@ import { useGetTasksPagedSimplifiedQuery } from '../../../features/api/taskApi';
 import { Task } from '../../../models/base/Task';
 import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
 import { useDeleteSocialActivityTypeByIdMutation } from '../../../features/api/socialActivityTypeApi';
+import { ResolveResult } from '../../../functions/toastify/ResolveResult';
 
 export default function TaskList() {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get("page")
 
-  const { data: pagedDataResultDataForTask, isLoading, error } = useGetTasksPagedSimplifiedQuery(new Pagination(Number(page)));
+  const { data: pagedDataResultDataForTask, isLoading, error, isSuccess } = useGetTasksPagedSimplifiedQuery(new Pagination(Number(page)));
   const pagedDataResultForTask: PagedDataResult = pagedDataResultDataForTask as PagedDataResult;
   const tasks: Task[] = (pagedDataResultForTask?.data?.content) as Task[];
 
   const totalPages = pagedDataResultForTask?.data?.totalPages || 1;
   const [deleteTask, { data }] = useDeleteSocialActivityTypeByIdMutation();
-  
+
   async function handleDelete(id: any) {
     const result = await deleteTask(id);
     //ResolveResult(result)
   }
+
+  if (isSuccess)
+    ResolveResult(pagedDataResultForTask)
+
   const navigate = useNavigate();
   function handleNavigateToDetail(id: string) {
     navigate(navigationUrlProvider.taskDetailUrl + id)
@@ -58,7 +63,7 @@ export default function TaskList() {
                 <td onClick={() => { (handleNavigateToDetail(task.id)) }}>{task.taskStatus}</td>
                 <td onClick={() => { (handleNavigateToDetail(task.id)) }}>{task.priority}</td>
                 <td>
-                  
+
                   <Button variant="warning" onClick={() => {handleNavigateToUpdate(task.id) }}>Update</Button>
                 </td>
                 <td>

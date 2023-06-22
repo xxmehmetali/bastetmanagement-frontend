@@ -31,7 +31,7 @@ export default function ProjectAdd() {
   return (
     <div>
      <Formik
-        initialValues={projectInitialValue}
+        initialValues={new projectInitialValue().toJSON()}
         validationSchema={yup.object({
           name: yup
             .string()

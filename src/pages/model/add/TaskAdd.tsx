@@ -38,7 +38,7 @@ export default function TaskAdd() {
     <div>
      
      <Formik
-        initialValues={taskInitialValue}
+        initialValues={new taskInitialValue().toJSON()}
         validationSchema={yup.object({
          
           name: yup.string().required("Name required!").min(1, "Name is too short!"),

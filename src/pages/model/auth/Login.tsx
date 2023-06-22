@@ -48,7 +48,7 @@ export default function Login() {
           </Button>
       </NavLink>
       <Formik
-        initialValues={loginInitialValue}
+        initialValues={new loginInitialValue().toJSON()}
         validationSchema={yup.object({
 
         })}

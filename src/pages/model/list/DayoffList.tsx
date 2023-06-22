@@ -15,11 +15,15 @@ export default function DayoffList() {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get("page")
 
-  const { data: pagedDataResultDataForDayOff, isLoading, error } = useGetDayoffsPagedSimplifiedQuery(new Pagination(Number(page)));
+  const { data: pagedDataResultDataForDayOff, isLoading, error, isSuccess } = useGetDayoffsPagedSimplifiedQuery(new Pagination(Number(page)));
   const pagedDataResultForDayOff: PagedDataResult = pagedDataResultDataForDayOff as PagedDataResult;
   const dayOffs: Dayoff[] = (pagedDataResultForDayOff?.data?.content) as Dayoff[];
 
   const totalPages = pagedDataResultForDayOff?.data?.totalPages || 1;
+
+  if(isSuccess)
+    ResolveResult(pagedDataResultForDayOff)
+
   const [deleteDayoff, { data }] = useDeleteDayoffsByIdMutation();
 
   async function handleDelete(id: any) {
@@ -53,9 +57,9 @@ return (
             <tr >
               <td onClick={() => { (handleNavigateToDetail(dayOff.id)) }}>{dayOff.employee.name} {dayOff.employee.surname}</td>
               <td onClick={() => { (handleNavigateToDetail(dayOff.id)) }}>{formatDate(dayOff.beginDate)}</td>
-              <td onClick={() => { (handleNavigateToDetail(dayOff.id)) }}>{formatDate(dayOff.endDate)}</td> 
+              <td onClick={() => { (handleNavigateToDetail(dayOff.id)) }}>{formatDate(dayOff.endDate)}</td>
               <td>
-                  
+
                   <Button variant="warning" onClick={() => {handleNavigateToUpdate(dayOff.id) }}>Update</Button>
                 </td>
                 <td>

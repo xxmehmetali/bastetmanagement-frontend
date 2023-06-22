@@ -9,12 +9,13 @@ import { Button, Table } from 'react-bootstrap';
 import PaginationComponent from '../../../components/PaginationComponent';
 import { formatDate } from '../../../functions/FormatDateFunction';
 import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
+import { ResolveResult } from '../../../functions/toastify/ResolveResult';
 
 export default function SocialActivityList() {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get("page")
 
-  const { data: pagedDataResultDataForSocialActivities, isLoading, error } = useGetSocialActivitiesPagedSimplifiedQuery(new Pagination(Number(page)));
+  const { data: pagedDataResultDataForSocialActivities, isLoading, error, isSuccess } = useGetSocialActivitiesPagedSimplifiedQuery(new Pagination(Number(page)));
   const pagedDataResultForSocialActivities: PagedDataResult = pagedDataResultDataForSocialActivities as PagedDataResult;
   const socialActivities: SocialActivity[] = (pagedDataResultForSocialActivities?.data?.content) as SocialActivity[];
 
@@ -25,6 +26,10 @@ export default function SocialActivityList() {
     const result = await deleteSocialActivity(id)
     //ResolveResult(result)
   }
+
+  if (isSuccess)
+    ResolveResult(pagedDataResultForSocialActivities)
+
   const navigate = useNavigate();
   function handleNavigateToDetail(id: string) {
       navigate(navigationUrlProvider.socialActivityDetailUrl + id)
@@ -56,7 +61,7 @@ export default function SocialActivityList() {
                 <td  onClick={() => { (handleNavigateToDetail(socialActivity.id)) }}>{formatDate(socialActivity.date)}</td>
                 <td  onClick={() => { (handleNavigateToDetail(socialActivity.id)) }}>{socialActivity.place}</td>
                 <td>
-                  
+
                   <Button variant="warning" onClick={() => {handleNavigateToUpdate(socialActivity.id) }} >
                     Update
                   </Button>

@@ -9,16 +9,21 @@ import { Button, Table } from 'react-bootstrap';
 import PaginationComponent from '../../../components/PaginationComponent';
 import { formatDate } from '../../../functions/FormatDateFunction';
 import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
+import { ResolveResult } from '../../../functions/toastify/ResolveResult';
 
 export default function MeetingList() {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get("page")
 
-  const { data: pagedDataResultDataForMeetingPlatform, isLoading, error } = useGetMeetingsPagedSimplifiedQuery(new Pagination(Number(page)));
+  const { data: pagedDataResultDataForMeetingPlatform, isLoading, error, isSuccess } = useGetMeetingsPagedSimplifiedQuery(new Pagination(Number(page)));
   const pagedDataResultForMeetingPlatform: PagedDataResult = pagedDataResultDataForMeetingPlatform as PagedDataResult;
   const projects: Meeting[] = (pagedDataResultForMeetingPlatform?.data?.content) as Meeting[];
 
   const totalPages = pagedDataResultForMeetingPlatform?.data?.totalPages || 1;
+
+  if(isSuccess)
+    ResolveResult(pagedDataResultForMeetingPlatform)
+
   const [deleteMeeting, { data }] = useDeleteMeetingByIdMutation();
 
   async function handleDelete(id: any) {
@@ -54,7 +59,7 @@ export default function MeetingList() {
                 <td onClick={() => { (handleNavigateToDetail(meeting.id)) }}>{formatDate(meeting.endHour)}</td>
                 <td onClick={() => { (handleNavigateToDetail(meeting.id)) }}>{meeting.meetingUrl}</td>
                 <td>
-                  
+
                   <Button variant="warning" onClick={() => {handleNavigateToUpdate(meeting.id) }}>Update</Button>
                 </td>
                 <td>

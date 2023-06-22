@@ -8,12 +8,13 @@ import navigationUrlProvider from '../../../providers/navigationUrlProvider';
 import { Button, Table } from 'react-bootstrap';
 import PaginationComponent from '../../../components/PaginationComponent';
 import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
+import { ResolveResult } from '../../../functions/toastify/ResolveResult';
 
 export default function OccupationList() {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get("page")
 
-  const { data: pagedDataResultDataForOccupation, isLoading, error } = useGetOccupationsPagedSimplifiedQuery(new Pagination(Number(page)));
+  const { data: pagedDataResultDataForOccupation, isLoading, error, isSuccess } = useGetOccupationsPagedSimplifiedQuery(new Pagination(Number(page)));
   const pagedDataResultForOccupation: PagedDataResult = pagedDataResultDataForOccupation as PagedDataResult;
   const projects: Occupation[] = (pagedDataResultForOccupation?.data?.content) as Occupation[];
 
@@ -23,6 +24,10 @@ export default function OccupationList() {
     const result = await deleteOccupation(id);
     //ResolveResult(result)
   }
+
+  if (isSuccess)
+    ResolveResult(pagedDataResultForOccupation)
+
   const navigate = useNavigate();
   function handleNavigateToDetail(id: string) {
     navigate(navigationUrlProvider.occupationDetailUrl + id)
@@ -32,7 +37,7 @@ export default function OccupationList() {
   }
   return (
     <div>
-      <AddModelButtonComponent buttonName={"Add Occupation"} redirectionUrl={navigationUrlProvider.occupationAddUrl}/>
+      <AddModelButtonComponent buttonName={"Add Occupation"} redirectionUrl={navigationUrlProvider.occupationAddUrl} />
       <Table striped className='listTable'>
         <thead>
           <tr>
@@ -49,7 +54,7 @@ export default function OccupationList() {
                 <td onClick={() => { (handleNavigateToDetail(occupation.id)) }}>{occupation.occupation}</td>
                 <td onClick={() => { (handleNavigateToDetail(occupation.id)) }}>{occupation.detail}</td>
                 <td>
-                  
+
                   <Button variant="warning" onClick={() => {handleNavigateToUpdate(occupation.id) }}>Update</Button>
                 </td>
                 <td>

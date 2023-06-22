@@ -19,12 +19,12 @@ export default function OccupationAdd() {
     actions.resetForm();
     ResolveResult(result)
   }
- 
+  
   return (
     <div>
-   
+
     <Formik
-      initialValues={occupationInitialValue}
+      initialValues={new occupationInitialValue().toJSON()}
       validationSchema={yup.object({
         occupation: yup.string().required("Name required!").min(1, "occupation is too short!"),
         detail: yup.string().required("Detail required!").min(2, "detail is too short!"),

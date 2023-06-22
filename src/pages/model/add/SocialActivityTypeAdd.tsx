@@ -24,7 +24,7 @@ export default function SocialActivityTypeAdd() {
   return (
     <div>
       <Formik
-        initialValues={socialActivityTypeInitialValue}
+        initialValues={new socialActivityTypeInitialValue().toJSON()}
         validationSchema={yup.object({
           name: yup.string().required("Name required!").min(1, "Name is too short!"),
           description: yup.string().required("Description required!").min(3, "Description is too short!"),

@@ -8,16 +8,20 @@ import navigationUrlProvider from '../../../providers/navigationUrlProvider';
 import { Button, Table } from 'react-bootstrap';
 import PaginationComponent from '../../../components/PaginationComponent';
 import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
+import { ResolveResult } from '../../../functions/toastify/ResolveResult';
 
 export default function ContextList() {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get("page")
 
-  const { data: pagedDataResultDataForContext, isLoading, error } = useGetContextsPagedSimplifiedQuery(new Pagination(Number(page)));
+  const { data: pagedDataResultDataForContext, isLoading, error, isSuccess } = useGetContextsPagedSimplifiedQuery(new Pagination(Number(page)));
   const pagedDataResultForContext: PagedDataResult = pagedDataResultDataForContext as PagedDataResult;
   const contexts: Context[] = (pagedDataResultForContext?.data?.content) as Context[];
 
   const totalPages = pagedDataResultForContext?.data?.totalPages || 1;
+
+  if(isSuccess)
+    ResolveResult(pagedDataResultForContext);
   const [deleteContext, { data }] = useDeleteContextByIdMutation();
 
   async function handleDelete(id: any) {
@@ -52,7 +56,7 @@ return (
               <td onClick={() => { (handleNavigateToDetail(context.id)) }}>{context.name}</td>
               <td onClick={() => { (handleNavigateToDetail(context.id)) }}>{context.description}</td>
               <td>
-                  
+
                   <Button variant="warning" onClick={() => {handleNavigateToUpdate(context.id) }}>Update</Button>
                 </td>
                 <td>

@@ -7,35 +7,35 @@ import apiPaginationConfig from "./config/apiPaginationConfig";
 import { Currency } from "../../models/base/Currency";
 
 export const currencyApi = createApi({
-    reducerPath: "currencyApi",
-    baseQuery: fetchBaseQuery({ 
-        baseUrl: apiUrlProvider.apiBaseUrl,
-        prepareHeaders:  (headers, { getState }) => {
-            const loggedInUserInfo = JSON.parse(localStorage.getItem("loggedInUserInfo") || "{}")
-            headers.set('Authorization', "Bearer " + loggedInUserInfo.jwt);
-            return headers;
-          },
+  reducerPath: "currencyApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: apiUrlProvider.apiBaseUrl,
+    prepareHeaders: (headers, { getState }) => {
+      const loggedInUserInfo = JSON.parse(localStorage.getItem("loggedInUserInfo") || "{}")
+      headers.set('Authorization', "Bearer " + loggedInUserInfo.jwt);
+      return headers;
+    },
+  }),
+  tagTypes: ['currencies'],
+  endpoints: (builder) => ({
+
+    getCurrencyById: builder.query<Model, string>({
+      query: (id: string) => apiUrlProvider.currency + `/findById/${id}`,
     }),
-    tagTypes: ['currencies'],
-    endpoints: (builder) => ({
+    getCurrencyByIdSimplified: builder.query<Model, string>({
+      query: (id: string) => apiUrlProvider.currency + `/simplified/findById/${id}`,
+    }),
+    getCurrenciesPaged: builder.query<PagedDataResult, Pagination>({
+      query: (pagination: Pagination) => apiUrlProvider.currency + `/findAll?page=${pagination.page}&size=${pagination.size}`,
+    }),
 
-        getCurrencyById: builder.query<Model, string>({
-            query: (id : string) => apiUrlProvider.currency + `/findById/${id}`,
-        }),
-        getCurrencyByIdSimplified: builder.query<Model, string>({
-            query: (id : string) => apiUrlProvider.currency + `/simplified/findById/${id}`,
-        }),
-        getCurrenciesPaged: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.currency + `/findAll?page=${pagination.page}&size=${pagination.size}`,
-        }),
+    getCurrenciesPagedSimplified: builder.query<PagedDataResult, Pagination>({
+      query: (pagination: Pagination) => apiUrlProvider.currency + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
+    }),
 
-        getCurrenciesPagedSimplified: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.currency + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
-        }),
-
-        getSelectElementCurrencies: builder.query<Model, void>({
-            query: () => apiUrlProvider.currency + "/" + apiUrlProvider.selectElement + "/findAll",
-        }),
+    getSelectElementCurrencies: builder.query<Model, void>({
+      query: () => apiUrlProvider.currency + "/" + apiUrlProvider.selectElement + "/findAll",
+    }),
 
     addCurrency: builder.mutation<Currency, Partial<Currency>>({
       query: (currency) => ({
@@ -43,15 +43,25 @@ export const currencyApi = createApi({
         method: "POST",
         body: currency,
       }),
-      invalidatesTags: ["currencies"],
+      invalidatesTags: ['currencies'],
     }),
     deleteCurrencyById: builder.mutation({
       query: (id: string) => ({
         url: apiUrlProvider.currency + `/deleteById?id=${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["currencies"],
+      invalidatesTags: ['currencies'],
     }),
+
+    updateCurrency: builder.mutation<Currency, Partial<Currency>>({
+      query: (currency) => ({
+        url: apiUrlProvider.currency + `/update`,
+        method: 'POST',
+        body: currency,
+      }),
+      invalidatesTags: ['currencies'],
+    }),
+
   }),
 });
 
@@ -62,5 +72,6 @@ export const {
   useGetCurrencyByIdSimplifiedQuery,
   useAddCurrencyMutation,
   useGetSelectElementCurrenciesQuery,
-  useDeleteCurrencyByIdMutation
+  useDeleteCurrencyByIdMutation,
+  useUpdateCurrencyMutation
 } = currencyApi;

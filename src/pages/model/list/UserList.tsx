@@ -8,6 +8,7 @@ import navigationUrlProvider from '../../../providers/navigationUrlProvider';
 import PaginationComponent from '../../../components/PaginationComponent';
 import { useDeleteUserByIdMutation, useGetUserPagedSimplifiedQuery } from '../../../features/api/userApi';
 import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
+import { ResolveResult } from '../../../functions/toastify/ResolveResult';
 
 export default function UserList() {
 
@@ -17,23 +18,26 @@ export default function UserList() {
     const [searchParams, setSearchParams] = useSearchParams();
     const page = searchParams.get("page")
 
-    const { data: pagedDataResultDataForApplicant, isLoading, error } = useGetUserPagedSimplifiedQuery(new Pagination(Number(page)));
-    const pagedDataResultForEmployee: PagedDataResult = pagedDataResultDataForApplicant as PagedDataResult;
-    console.log(pagedDataResultForEmployee)
-    const applicants: User[] = (pagedDataResultForEmployee?.data?.content) as User[];
+  const { data: pagedDataResultDataForApplicant, isLoading, error, isSuccess } = useGetUserPagedSimplifiedQuery(new Pagination(Number(page)));
+  const pagedDataResultForEmployee: PagedDataResult = pagedDataResultDataForApplicant as PagedDataResult;
+  console.log(pagedDataResultForEmployee)
+  const applicants: User[] = (pagedDataResultForEmployee?.data?.content) as User[];
 
-    const totalPages = pagedDataResultForEmployee?.data?.totalPages || 1;
+  const totalPages = pagedDataResultForEmployee?.data?.totalPages || 1;
+
     const [deleteUser, { data }] = useDeleteUserByIdMutation();
 
+  if (isSuccess)
+    ResolveResult(pagedDataResultForEmployee)
     async function handleDelete(id: any) {
       const result = await deleteUser(id);
       //ResolveResult(result)
     }
 
-    const navigate = useNavigate();
-    function handleNavigateToDetail(id: string) {
-        navigate(navigationUrlProvider.employeeDetailUrl + id)
-    }
+  const navigate = useNavigate();
+  function handleNavigateToDetail(id: string) {
+    navigate(navigationUrlProvider.employeeDetailUrl + id)
+  }
     function handleNavigateToUpdate(id: string) {
       navigate(navigationUrlProvider.userUpdateUrl + id)
     }
@@ -42,7 +46,7 @@ export default function UserList() {
     //USER APİ BACKEND TARAFINDA YOK, BACKEND YAZ
   return (
     <div>
-      <AddModelButtonComponent buttonName={"Add User"} redirectionUrl={navigationUrlProvider.userAddUrl}/>
+      <AddModelButtonComponent buttonName={"Add User"} redirectionUrl={navigationUrlProvider.userAddUrl} />
       <Table striped className='listTable'>
         <thead>
           <tr>
@@ -63,7 +67,7 @@ export default function UserList() {
               <tr onClick={() => { (handleNavigateToDetail(user.id)) }}>
                 <td>{user.email}</td>
                 <td>
-                  
+
                   <Button variant="warning" onClick={() => {handleNavigateToUpdate(user.id) }}>Update</Button>
                 </td>
                 <td>
@@ -77,7 +81,7 @@ export default function UserList() {
         </tbody>
       </Table>
 
-      <PaginationComponent totalPages={totalPages} currentPage={page}/>
+      <PaginationComponent totalPages={totalPages} currentPage={page} />
     </div>
   );
 }

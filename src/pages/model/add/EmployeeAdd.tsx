@@ -27,7 +27,7 @@ import { Employee } from '../../../models/base/Employee';
 export default function EmployeeAdd() {
   const [addEmployee, { isLoading }] = useAddEmployeeMutation();
   async function onSubmit(values: any, actions: any) {
-    console.log(values as Employee)
+    console.log(values)
     // const result = await addEmployee(values)
     // actions.resetForm();
     // ResolveResult(result)
@@ -42,7 +42,7 @@ export default function EmployeeAdd() {
     <div>
       <Formik
         // initialValues={employeeInitialValue}
-        initialValues={new employeeInitialValue()}
+        initialValues={new employeeInitialValue().toJSON()}
         validationSchema={yup.object({
           name: yup.string().required("Name required!").min(3, "Name is too short!"),
           surname: yup.string().required("Description required!").min(6, "Description is too short!"),
