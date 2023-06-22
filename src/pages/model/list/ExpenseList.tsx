@@ -5,25 +5,38 @@ import { useGetExpensesPagedSimplifiedQuery } from '../../../features/api/expens
 import { Pagination } from '../../../results/pagination/Pagination';
 import { PagedDataResult } from '../../../results/PagedDataResult';
 import navigationUrlProvider from '../../../providers/navigationUrlProvider';
-import { Table } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
 import PaginationComponent from '../../../components/PaginationComponent';
 import { formatDate } from '../../../functions/FormatDateFunction';
 import AddModelButtonComponent from '../../../components/AddModelButtonComponent';
+import { ResolveResult } from '../../../functions/toastify/ResolveResult';
+import { useDeleteExpenseTypeByIdMutation } from '../../../features/api/expenseTypeApi';
 
 export default function ExpenseList() {
   
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get("page")
 
-  const { data: pagedDataResultDataForExpense, isLoading, error } = useGetExpensesPagedSimplifiedQuery(new Pagination(Number(page)));
+  const { data: pagedDataResultDataForExpense, isLoading, error, isSuccess } = useGetExpensesPagedSimplifiedQuery(new Pagination(Number(page)));
   const pagedDataResultForExpense: PagedDataResult = pagedDataResultDataForExpense as PagedDataResult;
   const expenses: Expense[] = (pagedDataResultForExpense?.data?.content) as Expense[];
 
   const totalPages = pagedDataResultForExpense?.data?.totalPages || 1;
-  
+  const [deleteExpense, { data }] = useDeleteExpenseTypeByIdMutation();
+
+  if(isSuccess)
+    ResolveResult(pagedDataResultForExpense)
+
+  async function handleDelete(id: any) {
+    const result = await deleteExpense(id);
+    //ResolveResult(result)
+  }
   const navigate = useNavigate();
   function handleNavigateToDetail(id: string) {
       navigate(navigationUrlProvider.expenseDetailUrl + id)
+  }
+  function handleNavigateToUpdate(id: string) {
+    navigate(navigationUrlProvider.expenseUpdateUrl + id)
   }
 return (
   <div>
@@ -37,16 +50,27 @@ return (
           <th>Spended By</th>
           <th>Expense Type</th>
           <th>Spent Date Time</th>
+          <th> </th>
+            <th> </th>
         </tr>
       </thead>
       <tbody>
         {expenses &&
           expenses.map((exp: Expense) => (
-            <tr onClick={() => { (handleNavigateToDetail(exp.id)) }}>
-              <td>{exp.name}</td>
-              <td>{exp.spendedBy?.name} {exp.spendedBy?.surname}</td>
-              <td>{exp.expenseType.name}</td> 
-              <td>{formatDate(exp.spentDateTime)}</td>
+            <tr >
+              <td onClick={() => { (handleNavigateToDetail(exp.id)) }}>{exp.name}</td>
+              <td onClick={() => { (handleNavigateToDetail(exp.id)) }}>{exp.spendedBy?.name} {exp.spendedBy?.surname}</td>
+              <td onClick={() => { (handleNavigateToDetail(exp.id)) }}>{exp.expenseType.name}</td>
+              <td onClick={() => { (handleNavigateToDetail(exp.id)) }}>{formatDate(exp.spentDateTime)}</td>
+              <td>
+
+                  <Button variant="warning" onClick={() => {handleNavigateToUpdate(exp.id) }}>Update</Button>
+                </td>
+                <td>
+                  <Button variant="danger" onClick={() => {handleDelete(exp.id)}}>
+                    Delete
+                  </Button>
+                </td>
             </tr>
           ))}
 

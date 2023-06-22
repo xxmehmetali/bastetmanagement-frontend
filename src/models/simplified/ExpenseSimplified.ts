@@ -5,7 +5,7 @@ export interface ExpenseSimplified extends Model {
   id: string;
   name: string;
   description: string;
-  vaucherNo: number;
+  voucherNo: string;
   expenseType: ExpenseTypeSimplified;
   spentDateTime: Date;
 }

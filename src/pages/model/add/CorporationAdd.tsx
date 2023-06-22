@@ -23,7 +23,7 @@ export default function CorporationAdd() {
       {/* <CorporationAddForm/> */}
       {/* <Calendar value={dateTime24h} onChange={(e) => setDateTime24h(e.value as Date)} showTime hourFormat="24" /> */}
       <Formik
-        initialValues={corporationInitialValue}
+        initialValues={new corporationInitialValue().toJSON()}
         validationSchema={yup.object({
           name: yup.string().required("Name required!").min(3, "Name is too short!"),
           description: yup.string().required("Description required!").min(6, "Description is too short!"),

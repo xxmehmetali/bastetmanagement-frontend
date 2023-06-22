@@ -72,28 +72,30 @@ import { RootState } from '../app/store';
 import Login from '../pages/model/auth/Login';
 import Profile from '../pages/profile/Profile';
 import EmployeeUpdate from '../pages/model/update/EmployeeUpdate';
+import ApplicantUpdate from '../pages/model/update/ApplicantUpdate';
+import ApplicantMeetingUpdate from '../pages/model/update/ApplicantMeetingUpdate';
+import BranchUpdate from '../pages/model/update/BranchUpdate';
+import ContextUpdate from '../pages/model/update/Context.update';
+import CorporationUpdate from '../pages/model/update/CorporationUpdate';
+import CurrencyUpdate from '../pages/model/update/CurrencyUpdate';
+import DayoffUpdate from '../pages/model/update/DayoffUpdate';
+import DepartmentUpdate from '../pages/model/update/DepartmentUpdate';
+import ExpenseUpdate from '../pages/model/update/ExpenseUpdate';
+import ExpenseTypeUpdate from '../pages/model/update/ExpenseTypeUpdate';
+import MeetingUpdate from '../pages/model/update/MeetingUpdate';
+import MeetingPlatformUpdate from '../pages/model/update/MeetingPlatformUpdate';
+import OccupationUpdate from '../pages/model/update/OccupationUpdate';
+import ProjectUpdate from '../pages/model/update/ProjectUpdate';
+import SocialActivityUpdate from '../pages/model/update/SocialActivityUpdate';
+import SocialActivityTypeUpdate from '../pages/model/update/SocialActivityTypeUpdate';
+import TaskUpdate from '../pages/model/update/TaskUpdate';
+import PageNotFound from '../pages/PageNotFound';
 
 export default function Dashboard() {
     const { isUserLoggedIn } = useSelector((state: RootState) => state.userSlice);
     return (
         <div>
             <ToastContainer position="bottom-right" />
-            <Routes>
-                {/* Login sreen if user not authenticated */}
-
-
-                {/* KALDIRILACAK ALTTAKİ */}
-
-
-            </Routes>
-
-
-            {/* burda eğer login olmadıysa menuyu göster  */}
-            {/* <Menu /> */}
-
-
-            {/* LOGİN OLDUYSA AŞAĞIYI GÖSTER */}
-
             {(() => {
                 if (isUserLoggedIn) {
                     // if (true) {
@@ -110,7 +112,6 @@ export default function Dashboard() {
                                         <Route path={navigationUrlProvider.applicantmeetingListUrl} element={<ApplicantMeetingList />} />
                                         <Route path={navigationUrlProvider.employeeListUrl} element={<EmployeeList />} />
                                         <Route path={navigationUrlProvider.branchListUrl} element={<BranchList />} />
-                                        <Route path={navigationUrlProvider.contextListUrl} element={<ContextList />} />
                                         <Route path={navigationUrlProvider.corporationListUrl} element={<CorporationList />} />
                                         <Route path={navigationUrlProvider.currencyListUrl} element={<CurrencyList />} />
                                         <Route path={navigationUrlProvider.cvListUrl} element={<CvList />} />
@@ -176,9 +177,28 @@ export default function Dashboard() {
 
 
                                         {/* UPDATE */}
-                                        <Route path={navigationUrlProvider.employeeUpdateUrl + ":id"} element={<EmployeeUpdate />} />
+                                        {/* <Route path={navigationUrlProvider.employeeUpdateUrl + ":id"} element={<EmployeeUpdate />} /> */}
 
-
+                                        <Route path={navigationUrlProvider.applicantUpdateUrl + ":id"} element={<ApplicantUpdate />} />
+                                        <Route path={navigationUrlProvider.applicatMeetingUpdateUrl + ":id"} element={<ApplicantMeetingUpdate />} />
+                                        <Route path={navigationUrlProvider.branchUpdateUrl + ":id"} element={<BranchUpdate />} />
+                                        <Route path={navigationUrlProvider.contextUpdateUrl + ":id"} element={<ContextUpdate />} />
+                                        <Route path={navigationUrlProvider.coporationUpdateUrl + ":id"} element={<CorporationUpdate />} />
+                                        <Route path={navigationUrlProvider.currencyUpdateUrl + ":id"} element={<CurrencyUpdate />} />
+                                        <Route path={navigationUrlProvider.cvUpdateUrl + ":id"} element={<CvDetail />} />
+                                        <Route path={navigationUrlProvider.dayoffUpdateUrl + ":id"} element={<DayoffUpdate />} />
+                                        <Route path={navigationUrlProvider.departmentUpdateUrl + ":id"} element={<DepartmentUpdate />} />
+                                        <Route path={navigationUrlProvider.expenseUpdateUrl + ":id"} element={<ExpenseUpdate />} />
+                                        <Route path={navigationUrlProvider.expenseTypeUpdateUrl + ":id"} element={<ExpenseTypeUpdate />} />
+                                        <Route path={navigationUrlProvider.meetingUpdateUrl + ":id"} element={<MeetingUpdate />} />
+                                        <Route path={navigationUrlProvider.meetingPlatformUpdateUrl + ":id"} element={<MeetingPlatformUpdate />} />
+                                        <Route path={navigationUrlProvider.occupationUpdateUrl + ":id"} element={<OccupationUpdate />} />
+                                        <Route path={navigationUrlProvider.projectUpdateUrl + ":id"} element={<ProjectUpdate />} />
+                                        {/* <Route path='/model/roleDetail/:id' element={<Role/>} /> */}
+                                        <Route path={navigationUrlProvider.socialActivityUpdateUrl + ":id"} element={<SocialActivityUpdate />} />
+                                        <Route path={navigationUrlProvider.socialActivityTypeUpdateUrl + ":id"} element={<SocialActivityTypeUpdate />} />
+                                        <Route path={navigationUrlProvider.taskUpdateUrl + ":id"} element={<TaskUpdate />} />
+                                        {/* <Route path='/model/userDetail/:id' element={<UserDet />} /> */}
 
                                         {/* PERSONAL */}
                                         <Route path={navigationUrlProvider.profile} element={<Profile />} />
@@ -207,9 +227,10 @@ export default function Dashboard() {
                 }
             })()}
 
-            {/* ALTTAKİ NE İŞ BURAYI İNCELE */}
 
+            <Routes>
+                {/* <Route path="*" element={<PageNotFound />} /> */}
+            </Routes>
         </div>
-
     )
 }

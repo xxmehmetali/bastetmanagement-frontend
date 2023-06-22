@@ -29,7 +29,7 @@ export default function ExpenseTableComponent({ expense }: any) {
                     </tr>
                     <tr>
                         <td>Vaucher No</td>
-                        <td>{expense.vaucherNo}</td>
+                        <td>{expense.voucherNo}</td>
                     </tr>
                     <tr>
                         <td colSpan={2}>
@@ -48,7 +48,7 @@ export default function ExpenseTableComponent({ expense }: any) {
 
     private EmployeeDto spendedBy;
 
-    private Double vaucherNo;
+    private Double voucherNo;
 
     private ExpenseTypeDto expenseType;
 

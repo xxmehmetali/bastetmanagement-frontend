@@ -15,22 +15,22 @@ export class employeeInitialValue {
     department: object;
     salaryAmount: number;
     salaryCurrency: object;
-
+    
     constructor(
-        id : string = "",
-        name : string =  "",
-        surname : string = "",
-        address : string = "",
-        phoneNumber : string = "",
-        nationalId : string = "",
-        gender : Gender = Gender.MALE,
-        occupation : object = {id : ""},
-        startDate : Date = new Date(),
-        endDate : Date = new Date(),
-        branch : object = {id : ""},
-        department : object = {id : ""},
-        salaryAmount : number = 0,
-        salaryCurrency : object = {id : ""}
+        id: string = "",
+        name: string = "",
+        surname: string = "",
+        address: string = "",
+        phoneNumber: string = "",
+        nationalId: string = "",
+        gender: Gender = Gender.MALE,
+        occupation: object = { id: "" },
+        startDate: Date = new Date(),
+        endDate: Date = new Date(),
+        branch: object = { id: "" },
+        department: object = { id: "" },
+        salaryAmount: number = 0,
+        salaryCurrency: object = { id: "" }
     ) {
         this.id = id;
         this.name = name;
@@ -46,5 +46,24 @@ export class employeeInitialValue {
         this.department = department;
         this.salaryAmount = salaryAmount;
         this.salaryCurrency = salaryCurrency;
+    }
+
+    toJSON(){
+        return{
+            id: this.id,
+            name: this.name,
+            surname: this.surname,
+            address: this.address,
+            phoneNumber: this.phoneNumber,
+            nationalId: this.nationalId,
+            gender: this.gender,
+            occupation: this.occupation,
+            startDate: this.startDate,
+            endDate: this.endDate,
+            branch: this.branch,
+            department: this.department,
+            salaryAmount: this.salaryAmount,
+            salaryCurrency: this.salaryCurrency
+        };
     }
 }

@@ -20,7 +20,7 @@ export default function CurrencyAdd() {
   return (
     <div>
       <Formik
-        initialValues={currencyInitialValue}
+        initialValues={new currencyInitialValue().toJSON()}
         validationSchema={yup.object({
           currencyName: yup.string().required("Currency Name required!").min(2, "Currency Name is too short!").max(20, "Currency Name is too long!"),
           currencySymbol: yup.string().required("Currency Symbol required!").min(1, "Currency Symbol is too short!").max(5, "Currency Symbol is too long!")

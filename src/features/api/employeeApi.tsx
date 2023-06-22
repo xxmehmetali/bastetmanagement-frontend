@@ -9,56 +9,78 @@ import { Employee } from "../../models/base/Employee";
 import { Pagination } from "../../results/pagination/Pagination";
 
 export const employeeApi = createApi({
-    reducerPath: "employeeApi",
-    baseQuery: fetchBaseQuery({ 
-        baseUrl: apiUrlProvider.apiBaseUrl,
-        prepareHeaders:  (headers, { getState }) => {
-            const loggedInUserInfo = JSON.parse(localStorage.getItem("loggedInUserInfo") || "{}")
-            headers.set('Authorization', "Bearer " + loggedInUserInfo.jwt);
-            return headers;
-          },
+  reducerPath: "employeeApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: apiUrlProvider.apiBaseUrl,
+    prepareHeaders: (headers, { getState }) => {
+      const loggedInUserInfo = JSON.parse(localStorage.getItem("loggedInUserInfo") || "{}")
+      headers.set('Authorization', "Bearer " + loggedInUserInfo.jwt);
+      return headers;
+    },
+  }),
+  tagTypes: ['employees'],
+  endpoints: (builder) => ({
+
+    getEmployeeById: builder.query<DataResult<Employee>, string>({
+      query: (id: string) => apiUrlProvider.employee + `/findById/${id}`,
+      providesTags: ['employees']
     }),
-    tagTypes: ['employees'],
-    endpoints: (builder) => ({
 
-        getEmployeeById: builder.query<DataResult<Employee>, string>({
-            query: (id : string) => apiUrlProvider.employee + `/findById/${id}`,
-        }),
-        getEmployeeByIdSimplified: builder.query<Model, string>({
-            query: (id : string) => apiUrlProvider.employee + `/simplified/findById/${id}`,
-        }),
-        getEmployeesPaged: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.employee + `/findAll?page=${pagination.page}&size=${pagination.size}`,
-        }),
-
-        getEmployeesPagedSimplified: builder.query<PagedDataResult, Pagination>({
-            query: (pagination : Pagination) => apiUrlProvider.employee + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
-        }),
-
-        getSelectElementEmployees: builder.query<Model, void>({
-            query: () => apiUrlProvider.employee + "/" + apiUrlProvider.selectElement + "/findAll",
-        }),
-
-        addEmployee: builder.mutation<Employee, Partial<Employee>>({
-            query: (employee) => ({
-              url: apiUrlProvider.employee + `/add`,
-              method: 'POST',
-              body : employee,
-            }),
-            invalidatesTags: ['employees'],
-          }),
-
-          updateEmployee: builder.mutation<Employee, Partial<Employee>>({
-            query: (employee) => ({
-              url: apiUrlProvider.employee + `/update`,
-              method: 'POST',
-              body : JSON.parse(JSON.stringify(employee)),
-            }),
-            invalidatesTags: ['employees'],
-          }),
-
-
+    getEmployeeByIdSimplified: builder.query<Model, string>({
+      query: (id: string) => apiUrlProvider.employee + `/simplified/findById/${id}`,
+      providesTags: ['employees']
     }),
+
+    getEmployeesPaged: builder.query<PagedDataResult, Pagination>({
+      query: (pagination: Pagination) => apiUrlProvider.employee + `/findAll?page=${pagination.page}&size=${pagination.size}`,
+      providesTags: ['employees']
+    }),
+
+    getEmployeesPagedSimplified: builder.query<PagedDataResult, Pagination>({
+      query: (pagination: Pagination) => apiUrlProvider.employee + `/simplified/findAll?page=${pagination.page}&size=${pagination.size}`,
+      providesTags: ['employees']    
+    }),
+
+    getSelectElementEmployees: builder.query<Model, void>({
+      query: () => apiUrlProvider.employee + "/" + apiUrlProvider.selectElement + "/findAll",
+      providesTags: ['employees']
+    }),
+
+    addEmployee: builder.mutation<Employee, Partial<Employee>>({
+      query: (employee) => ({
+        url: apiUrlProvider.employee + `/add`,
+        method: "POST",
+        body: employee,
+      }),
+      invalidatesTags: ['employees'],
+    }),
+    deleteEmployeesById: builder.mutation({
+      query: (id: string) => ({
+        url: apiUrlProvider.employee + `/deleteById?id=${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ['employees'],
+    }),
+
+    updateEmployee: builder.mutation<Employee, Partial<Employee>>({
+      query: (employee) => ({
+        url: apiUrlProvider.employee + `/update`,
+        method: 'POST',
+        body: employee,
+      }),
+      invalidatesTags: ['employees'],
+    }),
+
+  }),
 });
 
-export const { useGetEmployeeByIdQuery, useGetEmployeeByIdSimplifiedQuery, useGetEmployeesPagedQuery, useGetEmployeesPagedSimplifiedQuery, useAddEmployeeMutation, useGetSelectElementEmployeesQuery, useUpdateEmployeeMutation } = employeeApi;
+export const {
+  useGetEmployeeByIdQuery,
+  useGetEmployeeByIdSimplifiedQuery,
+  useGetEmployeesPagedQuery,
+  useGetEmployeesPagedSimplifiedQuery,
+  useAddEmployeeMutation,
+  useGetSelectElementEmployeesQuery,
+  useDeleteEmployeesByIdMutation,
+  useUpdateEmployeeMutation
+} = employeeApi;

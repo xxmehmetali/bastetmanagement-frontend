@@ -24,12 +24,10 @@ export default function ApplicantMeetingAdd() {
   async function onSubmit(values: any, actions: any) {
     console.log(values)
     const result = await addApplicantMeeting(values)
-    actions.resetForm();
+    // actions.resetForm();
     ResolveResult(result)
 
   }
-  // applicant meeting dto to applicant meeting 
-  // mapper da sıkıntı var backend araştır
 
   const meetingOwnerSelectElementList: EmployeeSelectElement[] = GetEmployeeSelectElements();
   const meetingPlatformSelectElementList: MeetingPlatformSelectElement[] = GetMeetingPlatformSelectElements();
@@ -38,7 +36,7 @@ export default function ApplicantMeetingAdd() {
   return (
     <div>
       <Formik
-        initialValues={applicantMeetingInitialValue}
+        initialValues={new applicantMeetingInitialValue().toJSON()}
         validationSchema={yup.object({
           beginHour: yup.date().required("Begin Hour is required!"),
           endHour: yup.date().required("Begin Hour is required!"),
@@ -46,7 +44,7 @@ export default function ApplicantMeetingAdd() {
             id: yup.string().required()
           }),
           meetingPlatform: yup.object().shape({
-            id: yup.string().required().max(100, "Maximum charachter for platform is reached!")
+            id: yup.string().required()
           }),
           applicant: yup.object().shape({
             id: yup.string().required()

@@ -28,6 +28,7 @@ const detailWord = 'Detail'
 const addWord = 'Add'
 const updateWord = 'Update'
 const slash = '/'
+const deleteWord = 'Delete'
 
 // Authentication
 const register = "/register"
@@ -109,11 +110,30 @@ const taskAddUrl =  model + task + addWord + slash
 const userAddUrl =  model + user + addWord + slash
 
 // Update
+const applicantUpdateUrl = model + applicant + updateWord + slash
+const applicatMeetingUpdateUrl = model + applicantmeeting + updateWord + slash
+const branchUpdateUrl = model + branch + updateWord + slash
+const contextUpdateUrl = model + context + updateWord + slash
+const coporationUpdateUrl = model + corporation + updateWord + slash
+const currencyUpdateUrl = model + currency + updateWord + slash
+const cvUpdateUrl = model + cv + updateWord + slash
+const dayoffUpdateUrl = model + dayoff + updateWord + slash
+const departmentUpdateUrl = model + department + updateWord + slash
 const employeeUpdateUrl = model + employee + updateWord + slash
+const expenseUpdateUrl = model + expense  + updateWord + slash
+const expenseTypeUpdateUrl = model + expensetype  + updateWord + slash
+const meetingUpdateUrl = model +meeting  + updateWord + slash
+const meetingPlatformUpdateUrl = model +meetingplatform  + updateWord + slash
+const occupationUpdateUrl = model + occupation + updateWord + slash
+const projectUpdateUrl = model + project + updateWord + slash
+const socialActivityUpdateUrl = model + socialActivity + updateWord + slash
+const socialActivityTypeUpdateUrl = model + socialActivityType + updateWord + slash
+const taskUpdateUrl = model + task + updateWord + slash
+const userUpdateUrl = model + user + updateWord + slash
 
 export default {applicantListUrl, employeeListUrl, applicantmeetingListUrl, branchListUrl, contextListUrl, corporationListUrl, currencyListUrl, cvListUrl, dayoffListUrl, departmentListUrl, expenseListUrl, expensetypeListUrl, meetingListUrl, meetingplatformListUrl, occupationListUrl, projectListUrl, roleListUrl, socialActivityListUrl, socialActivityTypeListUrl, taskListUrl, userListUrl,
     applicantDetailUrl, applicantmeetingDetailUrl, branchDetailUrl, contextDetailUrl, corporationDetailUrl, currencyDetailUrl, cvDetailUrl, dayoffDetailUrl, departmentDetailUrl, employeeDetailUrl, expenseDetailUrl, expensetypeDetailUrl, roleDetailUrl, meetingDetailUrl, meetingplatformDetailUrl, occupationDetailUrl, projectDetailUrl, socialActivityDetailUrl, socialActivityTypeDetailUrl, taskDetailUrl, userDetailUrl,
     applicantAddUrl, applicantmeetingAddUrl, branchAddUrl, contextAddUrl, corporationAddUrl, currencyAddUrl, cvAddUrl, dayoffAddUrl, departmentAddUrl, employeeAddUrl, expenseAddUrl, expensetypeAddUrl, roleAddUrl, meetingAddUrl, meetingplatformAddUrl, occupationAddUrl, projectAddUrl, socialActivityAddUrl, socialActivityTypeAddUrl, taskAddUrl, userAddUrl,
-    employeeUpdateUrl,
+    employeeUpdateUrl,userUpdateUrl,taskUpdateUrl,socialActivityTypeUpdateUrl,socialActivityUpdateUrl,projectUpdateUrl,occupationUpdateUrl,meetingPlatformUpdateUrl,meetingUpdateUrl,expenseTypeUpdateUrl,expenseUpdateUrl,departmentUpdateUrl,dayoffUpdateUrl,cvUpdateUrl,currencyUpdateUrl,coporationUpdateUrl,branchUpdateUrl,applicatMeetingUpdateUrl,applicantUpdateUrl,contextUpdateUrl,
     register, login, auth, profile
 }

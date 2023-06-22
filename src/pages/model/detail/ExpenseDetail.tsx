@@ -49,7 +49,7 @@ export default function ExpenseDetail() {
             </tr>
             <tr>
               <td>Vaucher Number</td>
-              <td>{expense.vaucherNo}</td>
+              <td>{expense.voucherNo}</td>
             </tr>   
             <tr>
               <td colSpan={2}>
